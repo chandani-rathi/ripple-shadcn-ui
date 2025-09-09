@@ -1,0 +1,7 @@
+import { CardDemo } from './CardDemo.ripple';
+
+export component App() {
+	<div class='min-h-screen bg-gradient-to-br from-gray-100 to-white p-8 flex flex-col items-center justify-center'>
+		<CardDemo />
+	</div>
+}

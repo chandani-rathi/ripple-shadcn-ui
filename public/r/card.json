@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "card",
+  "type": "registry:ui",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/new-york/ui/card.ripple",
+      "content": "import type { Component } from 'ripple';\r\nimport { cn } from \"@/lib/utils\"\r\n\r\nexport component Card(props: { $children: Component, $class: string }) {\r\n\t<div\r\n        data-slot=\"card\"\r\n        $class={cn(\r\n            \"bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm\", \r\n            props.$class\r\n        )}>\r\n        if(props.$children) {\r\n            <props.$children />\r\n        }\r\n    </div>\r\n}\r\n\r\nexport component CardHeader(props: { $children: Component, $class: string }) {\r\n\t<div \r\n        data-slot=\"card-header\"\r\n        $class={cn(\r\n            \"@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6\", \r\n            props.$class\r\n        )}>\r\n        if(props.$children) {\r\n            <props.$children />\r\n        }\r\n    </div>\r\n}\r\n\r\nexport component CardTitle(props: { $children: Component, $class: string }) {\r\n\t<div \r\n        data-slot=\"card-title\"\r\n        $class={cn(\r\n            \"leading-none font-semibold\", \r\n            props.$class\r\n        )}>\r\n        if(props.$children) {\r\n            <props.$children />\r\n        }\r\n    </div>\r\n}\r\n\r\nexport component CardDescription(props: { $children: Component, $class: string }) {\r\n\t<div \r\n        data-slot=\"card-description\"\r\n        $class={cn(\r\n            \"text-muted-foreground text-sm\", \r\n            props.$class\r\n        )}>\r\n        if(props.$children) {\r\n            <props.$children />\r\n        }\r\n    </div>\r\n}\r\n\r\n\r\nexport component CardAction(props: { $children: Component, $class: string }) {\r\n\t<div \r\n        data-slot=\"card-action\"\r\n        $class={cn(\r\n            \"col-start-2 row-span-2 row-start-1 self-start justify-self-end\", \r\n            props.$class\r\n        )}>\r\n        if(props.$children) {\r\n            <props.$children />\r\n        }\r\n    </div>\r\n}\r\n\r\nexport component CardContent(props: { $children: Component, $class: string }) {\r\n\t<div \r\n        data-slot=\"card-content\"\r\n        $class={cn(\"px-6\",props.$class)}>\r\n        if(props.$children) {\r\n            <props.$children />\r\n        }\r\n    </div>\r\n}\r\n\r\nexport component CardFooter(props: { $children: Component, $class: string }) {\r\n\t<div \r\n        data-slot=\"card-footer\"\r\n        $class={cn(\"flex items-center px-6 [.border-t]:pt-6\", props.$class)}>\r\n        if(props.$children) {\r\n            <props.$children />\r\n        }\r\n    </div>\r\n}",
+      "type": "registry:ui"
+    }
+  ]
+}

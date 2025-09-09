@@ -1,0 +1,70 @@
+import {
+     Card, 
+     CardHeader, 
+     CardTitle,
+     CardDescription,
+     CardAction,
+     CardFooter,
+     CardContent
+} from '@/ui/card.ripple';
+import { Button } from '@/ui/button.ripple';
+import { Input } from '@/ui/input.ripple';
+import { Label } from '@/ui/label.ripple';
+
+export component CardDemo() {
+    let $showPassword = false;
+	<Card $class='w-full max-w-sm'>
+        <CardHeader>
+            <CardTitle>{"Login to your account"}</CardTitle>
+            <CardDescription>
+                {"Enter your email below to login to your account"}
+            </CardDescription>
+            <CardAction>
+                <Button $variant="link">{"Sign Up"}</Button>
+            </CardAction>
+        </CardHeader>
+        <CardContent>
+            <form>
+                <div class="flex flex-col gap-6">
+                    <div class="grid gap-2">
+                        <Label $htmlFor="email">{"Email"}</Label>
+                        <Input $id="email" $type="email" $placeholder="m@example.com" $required={true} />
+                    </div>
+                    <div class="grid gap-2">
+                        <div class="flex items-center">
+                            <Label $htmlFor="password">{"Password"}</Label>
+                            <a
+                                href="#"
+                                class="ml-auto inline-block text-sm underline-offset-4 hover:underline"
+                            >
+                                {"Forgot your password?"}
+                            </a>
+                        </div>
+                        <div class="flex items-center gap-2 relative">
+                            <Input $id="password" $type={$showPassword ? "text" :"password"} $required={true} />
+                            <Button $variant="ghost" $size="icon" $class="absolute right-0 size-8"
+                                onClick={e => {
+                                    e.preventDefault();
+                                    $showPassword = !$showPassword;
+                                }}>
+                                if(!$showPassword) {
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-icon lucide-eye"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg>
+                                } else {
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-off-icon lucide-eye-off"><path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49"/><path d="M14.084 14.158a3 3 0 0 1-4.242-4.242"/><path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143"/><path d="m2 2 20 20"/></svg>
+                                }   
+                               </Button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </CardContent>
+        <CardFooter $class="flex-col gap-2">
+            <Button $type="submit" $class="w-full">
+                {"Login"}
+            </Button>
+            <Button $variant="outline" $class="w-full">
+                {"Login with Google"}
+            </Button>
+        </CardFooter>
+    </Card>
+}

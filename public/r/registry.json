@@ -1,0 +1,80 @@
+{
+    "$schema": "https://ui.shadcn.com/schema/registry.json",
+    "name": "ripple-shadcn-ui",
+    "homepage": "https://ripplejs.com",
+    "items": [
+        {
+            "name": "index",
+            "type": "registry:style",
+            "dependencies": [
+                "class-variance-authority"
+            ],
+            "devDependencies": [
+                "tw-animate-css"
+            ],
+            "registryDependencies": [
+                "utils"
+            ],
+            "files": [],
+            "cssVars": {}
+        },
+        {
+            "name": "button",
+            "type": "registry:ui",
+            "dependencies": [],
+            "files": [
+                {
+                    "path": "registry/new-york/ui/button.ripple",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
+            "name": "card",
+            "type": "registry:ui",
+            "dependencies": [],
+            "registryDependencies": [],
+            "files": [
+                {
+                    "path": "registry/new-york/ui/card.ripple",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
+            "name": "input",
+            "type": "registry:ui",
+            "files": [
+                {
+                    "path": "registry/new-york/ui/input.ripple",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
+            "name": "label",
+            "type": "registry:ui",
+            "dependencies": [],
+            "files": [
+                {
+                    "path": "registry/new-york/ui/label.ripple",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
+            "name": "utils",
+            "type": "registry:lib",
+            "dependencies": [
+                "clsx",
+                "tailwind-merge"
+            ],
+            "files": [
+                {
+                    "path": "registry/new-york/lib/utils.ts",
+                    "type": "registry:lib"
+                }
+            ]
+        }
+    ]
+}

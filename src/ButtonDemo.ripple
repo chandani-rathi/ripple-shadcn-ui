@@ -1,0 +1,9 @@
+import { Card, CardFooter } from '@/ui/card.ripple';
+
+import { Button } from '@/ui/button.ripple';
+
+export component ButtonDemo() {
+	<div $class='w-full max-w-sm'>
+        <Button $type='submit' $class='w-full'>{'Submit'}</Button>
+    </div>
+}

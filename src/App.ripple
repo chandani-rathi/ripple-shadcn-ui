@@ -1,7 +1,76 @@
 import { CardDemo } from './CardDemo.ripple';
+import { ButtonDemo } from './ButtonDemo.ripple';
+
+import { Button } from '@/ui/button.ripple';
+
+const repositoryUrl = 'https://chandani-rathi.github.io/ripple-shadcn-ui';
+
+const components = [{
+	name: 'Button',
+	description: 'Customize a button or a component that looks like a button.',
+	repositoryUrl: `${repositoryUrl}/r/button.json`,
+}, {
+	name: 'Card',
+	description: 'Customize a card with header, content, and footer.',
+	repositoryUrl: `${repositoryUrl}/r/card.json`,
+}, {
+	name: 'Input',
+	description: 'Customize a form input field or a component that looks like an input field.',
+	repositoryUrl: `${repositoryUrl}/r/input.json`,
+}, {
+	name: 'Label',
+	description: 'Renders an accessible label associated with fields.',
+	repositoryUrl: `${repositoryUrl}/r/label.json`,
+}];
+
+component RenderDemo(props: { component: any }) {
+	const { component } = props;
+	if(component.name === 'Button') {
+		<ButtonDemo />;
+	} else if(component.name === 'Card') {
+		<CardDemo />;
+	} else {
+		<div>{'Preview not found'}</div>;
+	}
+}
+
+component CopyButton(props: { text: string }) {
+	const { text } = props;
+
+
+	let $copied = false;
+
+
+	let $timeoutId;
+	const onCopy = () => {
+		navigator.clipboard.writeText(text);
+		$copied = true;
+		clearTimeout($timeoutId);
+		$timeoutId = setTimeout(() => {
+			$copied = false;
+		}, 2000);
+	};
+	<Button $variant='outline' $size='sm' $class={`absolute top-2 right-2`} onClick={onCopy}>{$copied ? 'Copied!' : 'Copy'}</Button>
+}
 
 export component App() {
-	<div class='min-h-screen bg-gradient-to-br from-gray-100 to-white p-8 flex flex-col items-center justify-center'>
-		<CardDemo />
-	</div>
+	<div class='min-h-screen bg-gradient-to-br from-gray-100 to-white p-8 flex flex-col gap-8'>for (const component of components) {
+		<div class='flex flex-col gap-2'>
+			<h1 class='scroll-m-20 text-4xl font-semibold tracking-tight sm:text-3xl xl:text-4xl'>{component.name}</h1>
+			<p class='text-md text-gray-500'>{component.description}</p>
+		</div>
+		<div>
+			<div class='text-lg font-semibold'>{'Installation'}</div>
+			<pre class='flex-1 bg-gray-200 rounded-md outline-none mt-0 px-4 py-3.5 relative'>
+				<CopyButton text={component.repositoryUrl} />
+				<code class='relative font-mono text-sm leading-none'>{component.repositoryUrl}</code>
+			</pre>
+		</div>
+		<div>
+			<div class='text-lg font-semibold'>{'Preview'}</div>
+			<div class='p-10 border rounded-lg flex justify-center items-center'>
+				<RenderDemo component={component} />
+			</div>
+		</div>
+	}</div>
 }

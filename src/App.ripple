@@ -8,19 +8,19 @@ const repositoryUrl = 'https://chandani-rathi.github.io/ripple-shadcn-ui';
 const components = [{
 	name: 'Button',
 	description: 'Customize a button or a component that looks like a button.',
-	repositoryUrl: `${repositoryUrl}/r/button.json`,
+	installation: `npx shadcn@latest add ${repositoryUrl}/r/button.json`,
 }, {
 	name: 'Card',
 	description: 'Customize a card with header, content, and footer.',
-	repositoryUrl: `${repositoryUrl}/r/card.json`,
+	installation: `npx shadcn@latest add ${repositoryUrl}/r/card.json`,
 }, {
 	name: 'Input',
 	description: 'Customize a form input field or a component that looks like an input field.',
-	repositoryUrl: `${repositoryUrl}/r/input.json`,
+	installation: `npx shadcn@latest add ${repositoryUrl}/r/input.json`,
 }, {
 	name: 'Label',
 	description: 'Renders an accessible label associated with fields.',
-	repositoryUrl: `${repositoryUrl}/r/label.json`,
+	installation: `npx shadcn@latest add ${repositoryUrl}/r/label.json`,
 }];
 
 component RenderDemo(props: { component: any }) {
@@ -62,8 +62,8 @@ export component App() {
 		<div>
 			<div class='text-lg font-semibold'>{'Installation'}</div>
 			<pre class='flex-1 bg-gray-200 rounded-md outline-none mt-0 px-4 py-3.5 relative'>
-				<CopyButton text={component.repositoryUrl} />
-				<code class='relative font-mono text-sm leading-none'>{component.repositoryUrl}</code>
+				<CopyButton text={component.installation} />
+				<code class='relative font-mono text-sm leading-none'>{component.installation}</code>
 			</pre>
 		</div>
 		<div>

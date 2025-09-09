@@ -6,21 +6,30 @@ import { Button } from '@/ui/button.ripple';
 const repositoryUrl = 'https://chandani-rathi.github.io/ripple-shadcn-ui';
 
 const components = [{
+	name: 'Ripple Tailwindcss Template',
+	description: 'Starter Ripple template with tailwindcss and shadcn ui support.',
+	installation: `npx degit chandani-rathi/ripple-starter-templates/tailwindcss hello-ripple`,
+	preview: false
+},{
 	name: 'Button',
 	description: 'Customize a button or a component that looks like a button.',
 	installation: `npx shadcn@latest add ${repositoryUrl}/r/button.json`,
+	preview: true
 }, {
 	name: 'Card',
 	description: 'Customize a card with header, content, and footer.',
 	installation: `npx shadcn@latest add ${repositoryUrl}/r/card.json`,
+	preview: true
 }, {
 	name: 'Input',
 	description: 'Customize a form input field or a component that looks like an input field.',
 	installation: `npx shadcn@latest add ${repositoryUrl}/r/input.json`,
+	preview: false
 }, {
 	name: 'Label',
 	description: 'Renders an accessible label associated with fields.',
 	installation: `npx shadcn@latest add ${repositoryUrl}/r/label.json`,
+	preview: false
 }];
 
 component RenderDemo(props: { component: any }) {
@@ -66,11 +75,14 @@ export component App() {
 				<code class='relative font-mono text-sm leading-none'>{component.installation}</code>
 			</pre>
 		</div>
-		<div>
-			<div class='text-lg font-semibold'>{'Preview'}</div>
-			<div class='p-10 border rounded-lg flex justify-center items-center'>
-				<RenderDemo component={component} />
+		if(component.preview) {
+			<div>
+				<div class='text-lg font-semibold'>{'Preview'}</div>
+				<div class='p-10 border rounded-lg flex justify-center items-center'>
+					<RenderDemo component={component} />
+				</div>
 			</div>
-		</div>
+		}
+		<hr class='mt-8 border-gray-300' />
 	}</div>
 }

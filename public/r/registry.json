@@ -22,6 +22,8 @@
             "name": "button",
             "type": "registry:ui",
             "dependencies": [],
+            "devDependencies": [],
+            "registryDependencies": [],
             "files": [
                 {
                     "path": "registry/new-york/ui/button.ripple",
@@ -33,6 +35,7 @@
             "name": "card",
             "type": "registry:ui",
             "dependencies": [],
+            "devDependencies": [],
             "registryDependencies": [],
             "files": [
                 {
@@ -44,6 +47,9 @@
         {
             "name": "input",
             "type": "registry:ui",
+            "dependencies": [],
+            "devDependencies": [],
+            "registryDependencies": [],
             "files": [
                 {
                     "path": "registry/new-york/ui/input.ripple",
@@ -55,6 +61,8 @@
             "name": "label",
             "type": "registry:ui",
             "dependencies": [],
+            "devDependencies": [],
+            "registryDependencies": [],
             "files": [
                 {
                     "path": "registry/new-york/ui/label.ripple",
@@ -69,6 +77,8 @@
                 "clsx",
                 "tailwind-merge"
             ],
+            "devDependencies": [],
+            "registryDependencies": [],
             "files": [
                 {
                     "path": "registry/new-york/lib/utils.ts",

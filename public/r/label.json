@@ -3,10 +3,12 @@
   "name": "label",
   "type": "registry:ui",
   "dependencies": [],
+  "devDependencies": [],
+  "registryDependencies": [],
   "files": [
     {
       "path": "registry/new-york/ui/label.ripple",
-      "content": "import type { Component } from 'ripple';\r\nimport { cn } from \"@/lib/utils\"\r\n\r\nexport component Label(props: { $children: Component, $class: string, $htmlFor: string }) {\r\n\t<label\r\n        data-slot=\"label\"\r\n        $for ={props.$htmlFor}\r\n        $class={cn(\r\n            \"flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50\", \r\n            props.$class\r\n        )}\r\n        onMouseDown={(event) => {\r\n            console.log(event);\r\n            // only prevent text selection if clicking inside the label itself\r\n            const target = event.target;\r\n            if (target.closest('button, input, select, textarea')) return;\r\n\r\n            props.onMouseDown?.(event);\r\n            // prevent text selection when double clicking label\r\n            if (!event.defaultPrevented && event.detail > 1) event.preventDefault();\r\n        }}\r\n      >\r\n        if(props.$children) {\r\n            <props.$children />\r\n        }\r\n    </label>\r\n}\r\n",
+      "content": "import type { Component } from 'ripple';\r\nimport { cn } from \"@/lib/utils\"\r\n\r\nexport component Label(props: { $children: Component, $class: string, $htmlFor: string }) {\r\n\t<label\r\n        data-slot=\"label\"\r\n        $for={props.$htmlFor}\r\n        $class={cn(\r\n            \"flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50\", \r\n            props.$class\r\n        )}\r\n        onMouseDown={(event) => {\r\n            // only prevent text selection if clicking inside the label itself\r\n            const target = event.target;\r\n            if (target.closest('button, input, select, textarea')) return;\r\n\r\n            props.onMouseDown?.(event);\r\n            // prevent text selection when double clicking label\r\n            if (!event.defaultPrevented && event.detail > 1) event.preventDefault();\r\n        }}\r\n      >\r\n        if(props.$children) {\r\n            <props.$children />\r\n        }\r\n    </label>\r\n}\r\n",
       "type": "registry:ui"
     }
   ]

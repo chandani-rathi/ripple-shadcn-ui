@@ -9,7 +9,8 @@ export component Card(props: { $children: Component, $class: string }) {
             props.$class
         )}>
         if(props.$children) {
-            <props.$children />
+            const $children = props.$children;
+            <$children />
         }
     </div>
 }
@@ -22,7 +23,8 @@ export component CardHeader(props: { $children: Component, $class: string }) {
             props.$class
         )}>
         if(props.$children) {
-            <props.$children />
+            const $children = props.$children;
+            <$children />
         }
     </div>
 }
@@ -35,7 +37,8 @@ export component CardTitle(props: { $children: Component, $class: string }) {
             props.$class
         )}>
         if(props.$children) {
-            <props.$children />
+            const $children = props.$children;
+            <$children />
         }
     </div>
 }
@@ -48,7 +51,8 @@ export component CardDescription(props: { $children: Component, $class: string }
             props.$class
         )}>
         if(props.$children) {
-            <props.$children />
+            const $children = props.$children;
+            <$children />
         }
     </div>
 }
@@ -62,7 +66,8 @@ export component CardAction(props: { $children: Component, $class: string }) {
             props.$class
         )}>
         if(props.$children) {
-            <props.$children />
+            const $children = props.$children;
+            <$children />
         }
     </div>
 }
@@ -72,7 +77,8 @@ export component CardContent(props: { $children: Component, $class: string }) {
         data-slot="card-content"
         $class={cn("px-6",props.$class)}>
         if(props.$children) {
-            <props.$children />
+            const $children = props.$children;
+            <$children />
         }
     </div>
 }
@@ -82,7 +88,8 @@ export component CardFooter(props: { $children: Component, $class: string }) {
         data-slot="card-footer"
         $class={cn("flex items-center px-6 [.border-t]:pt-6", props.$class)}>
         if(props.$children) {
-            <props.$children />
+            const $children = props.$children;
+            <$children />
         }
     </div>
 }

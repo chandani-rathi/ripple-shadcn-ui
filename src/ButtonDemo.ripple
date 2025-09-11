@@ -1,5 +1,3 @@
-import { Card, CardFooter } from '@/ui/card.ripple';
-
 import { Button } from '@/ui/button.ripple';
 
 export component ButtonDemo() {

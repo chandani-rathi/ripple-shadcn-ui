@@ -14,12 +14,22 @@ const components = [{
 	name: 'Button',
 	description: 'Customize a button or a component that looks like a button.',
 	installation: `npx shadcn@latest add ${repositoryUrl}/r/button.json`,
-	preview: true
+	preview: true,
+	code: `import { Button } from '@/components/ui/button.ripple';
+
+export component ButtonDemo() {
+	<div $class='w-full max-w-sm'>
+        <Button $type='submit' $variant="default" $class='w-full'>{'Submit'}</Button>
+    </div>
+}
+
+	`
 }, {
 	name: 'Card',
 	description: 'Customize a card with header, content, and footer.',
 	installation: `npx shadcn@latest add ${repositoryUrl}/r/card.json`,
-	preview: true
+	preview: true,
+	code: ``,
 }, {
 	name: 'Input',
 	description: 'Customize a form input field or a component that looks like an input field.',
@@ -83,6 +93,18 @@ export component App() {
 				<div class='text-lg font-semibold'>{'Preview'}</div>
 				<div class='p-10 border rounded-lg flex justify-center items-center'>
 					<RenderDemo component={component} />
+				</div>
+			</div>
+		}
+		
+		if(component.code) {
+			<div>
+				<div class='text-lg font-semibold'>{'Code'}</div>
+				<div class='relative flex items-center'>
+					<CopyButton text={component.code} />
+					<pre class='flex-1 bg-gray-200 rounded-md outline-none mt-0 px-4 py-3.5 overflow-auto'>
+						<code class='relative font-mono text-sm leading-none'>{component.code}</code>
+					</pre>
 				</div>
 			</div>
 		}

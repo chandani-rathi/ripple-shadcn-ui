@@ -4,6 +4,7 @@ import { ripple } from 'vite-plugin-ripple';
 import path from 'path';
 
 export default defineConfig({
+	base: './',
 	resolve: {
 		alias: {
 			'@': path.resolve(__dirname, './registry/new-york'),

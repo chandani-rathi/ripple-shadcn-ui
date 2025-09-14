@@ -1,48 +1,49 @@
-# Ripple TailwindCss Basic Template
+# Ripple Tailwindcss Template
+Starter Ripple template with tailwindcss and shadcn ui support.
 
-A minimal Ripple application template with TypeScript and Vite.
+### Installation
+```bash
+npx degit chandani-rathi/ripple-starter-templates/tailwindcss hello-ripple
+```
 
-## Getting Started
+# Button
+Customize a button or a component that looks like a button.
 
-1. Install dependencies:
+### Installation
+```bash
+npx shadcn@latest add https://chandani-rathi.github.io/ripple-shadcn-ui/r/button.json
+```
 
-   ```bash
-   npm install # or pnpm or yarn
-   ```
-2. Start the development server:
+## Code
+```tsx
+import { Button } from '@/components/ui/button.ripple';
 
-   ```bash
-   npm run dev
-   ```
-3. Build for production:
+export component ButtonDemo() {
+   <div $class='w-full max-w-sm'>
+         <Button $type='submit' $variant="default" $class='w-full'>{'Submit'}</Button>
+   </div>
+}
+```
+	
+# Card
+Customize a card with header, content, and footer.
 
-   ```bash
-   npm run build
-   ```
+### Installation
+```bash
+npx shadcn@latest add https://chandani-rathi.github.io/ripple-shadcn-ui/r/card.json
+```
+# Input
+Customize a form input field or a component that looks like an input field.
 
-## Code Formatting
+### Installation
+```bash
+npx shadcn@latest add https://chandani-rathi.github.io/ripple-shadcn-ui/r/input.json
+```
 
-This template includes Prettier with the Ripple plugin for consistent code formatting.
+# Label
+Renders an accessible label associated with fields.
 
-### Available Commands
-
-- `npm run format` - Format all files
-- `npm run format:check` - Check if files are formatted correctly
-
-### Configuration
-
-Prettier is configured in `.prettierrc` with the following settings:
-
-- Uses tabs for indentation
-- Single quotes for strings
-- 100 character line width
-- Includes the `prettier-plugin-ripple` for `.ripple` file formatting
-
-### VS Code Integration
-
-For the best development experience, install the [Prettier VS Code extension](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) and the [Ripple VS Code extension](https://marketplace.visualstudio.com/items?itemName=ripplejs.ripple-vscode-plugin).
-
-## Learn More
-
-- [Ripple Documentation](https://github.com/trueadm/ripple)
-- [Vite Documentation](https://vitejs.dev/)
+### Installation
+```bash
+npx shadcn@latest add https://chandani-rathi.github.io/ripple-shadcn-ui/r/label.json
+```

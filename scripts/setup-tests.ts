@@ -35,7 +35,10 @@ beforeEach(() => {
     query => {
       globalThis.container[query] = (...params) => dom.queries[query](globalThis.container, ...params);
     }
-  )
+  );
+  globalThis.container.debug = () => {
+    console.log(globalThis.container.innerHTML)
+  }
 	globalThis.error = undefined;
 });
 

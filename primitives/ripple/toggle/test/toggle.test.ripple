@@ -44,10 +44,10 @@ describe('given a Toggle with text and defaultPressed="true"', () => {
 			<Toggle defaultPressed>{TEXT_CHILD}</Toggle>
 		}
 		render(Test);
-		console.log(container.innerHTML)
 	});
 
 	it('should render with attributes true/on by default', () => {
+		container.debug()
 		const button = container.getByRole('button', { name: TEXT_CHILD });
 
 		expect(button).toHaveAttribute('aria-pressed', 'true');
@@ -59,7 +59,7 @@ describe('given a Toggle with text and defaultPressed="true"', () => {
 		userEvent.click(button);
 		ripple.flushSync();
 		
-
+		//TO DO - failed
 		// expect(button).toHaveAttribute('aria-pressed', 'false');
 		// expect(button).toHaveAttribute('data-state', 'off');
 	});

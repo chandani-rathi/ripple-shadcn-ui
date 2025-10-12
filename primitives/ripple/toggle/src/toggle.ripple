@@ -1,4 +1,4 @@
-import { track, trackSplit, effect } from "ripple";
+import { track, trackSplit, effect, isTracked } from "ripple";
 import { composeEventHandlers } from '@ripple-primitives/primitive';
 // import { useControllableState } from '@ripple-primitives/ripple-use-controllable-state';
 import { Primitive } from "@ripple-primitives/primitive-ui";
@@ -13,7 +13,6 @@ function useUncontrolledState({
       return current;
     },
     (next, prev) => {
-      console.log("onChange:useUncontrolledState")
       onChange(next)
       return next;
     });
@@ -24,14 +23,11 @@ function useControllableState({
   prop, defaultProp, onChange = () => {}, caller
 }){
 
-  console.log("defaultProp", defaultProp)
-
   const uncontrolledProp = useUncontrolledState({
     defaultProp,
     onChange,
   });
-  const isControlled = prop !== undefined;
-  console.log("isControlled", isControlled)
+  const isControlled = prop !== undefined && prop.v !== undefined;
 
   if(!isControlled){
     return uncontrolledProp;
@@ -41,7 +37,6 @@ function useControllableState({
       return current;
     },
     (next, prev) => {
-      console.log("onChange:useControlledState")
       onChange(next);
       @prop = next;
       return next;
@@ -61,6 +56,8 @@ export component Toggle(props){
       'defaultPressed', 
       'onPressedChange'
     ]);
+
+
     const pressed = useControllableState({
         prop: pressedProp,
         onChange: @onPressedChange,
@@ -70,12 +67,11 @@ export component Toggle(props){
     <Primitive.button 
         class={@buttonProps.class}
         type="button"
-        aria-pressed={@pressed}
+        aria-pressed={!!@pressed}
         data-state={@pressed ? 'on' : 'off'}
         data-disabled={props.disabled ? '' : undefined}
         onClick={composeEventHandlers(props.onClick, () => {
           if (!props.disabled) {
-            console.log("on clicked!", !@pressed)
             @pressed = !@pressed
           }
         })}

@@ -1,0 +1,42 @@
+import { Toggle } from "@ripple-primitives/toggle";
+import style from './toggle.stories.module.css';
+import { fn } from 'storybook/test';
+import { track } from 'ripple'
+
+export default { title: 'Components/Toggle' };
+
+export const Styled = () => {
+  component Styled() {
+    <Toggle class={style.root}>{"Toggle"}</Toggle>
+  }
+  return Styled;
+};
+
+export const Controlled = {
+  args: {
+    pressed: true,
+    onClick: fn(),
+    onPressedChange: fn()
+  },
+  render: (props) => {
+    component Controlled() {
+      const pressed = track(props.pressed)
+      console.log(style.root)
+      <Toggle class={style.root} {pressed}  onClick={props.onClick} onPressedChange={props.onPressedChange}>{"Toggle"}</Toggle>
+    }
+    return Controlled;
+  }
+}
+
+export const Uncontrolled = {
+  args: {
+    onClick: fn(),
+    onPressedChange: fn()
+  },
+  render: (props) => {
+    component Uncontrolled() {
+      <Toggle class={style.root} onClick={props.onClick} onPressedChange={props.onPressedChange}>{"Toggle"}</Toggle>
+    }
+    return Uncontrolled;
+  }
+}

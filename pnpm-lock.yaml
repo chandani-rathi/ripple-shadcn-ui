@@ -24,11 +24,11 @@ importers:
         specifier: ^9.37.0
         version: 9.37.0(jiti@2.6.1)
       eslint-plugin-ripple:
-        specifier: 0.2.116
-        version: 0.2.116(eslint@9.37.0(jiti@2.6.1))
+        specifier: 0.2.121
+        version: 0.2.121(eslint@9.37.0(jiti@2.6.1))
       ripple:
-        specifier: 0.2.116
-        version: 0.2.116
+        specifier: 0.2.121
+        version: 0.2.121
       tailwind-merge:
         specifier: ^3.3.1
         version: 3.3.1
@@ -52,8 +52,8 @@ importers:
         specifier: ^3.6.2
         version: 3.6.2
       prettier-plugin-ripple:
-        specifier: 0.2.116
-        version: 0.2.116(prettier@3.6.2)
+        specifier: 0.2.121
+        version: 0.2.121(prettier@3.6.2)
       shadcn:
         specifier: ^3.4.0
         version: 3.4.0(typescript@5.9.3)
@@ -67,13 +67,11 @@ importers:
         specifier: ^7.1.9
         version: 7.1.9(jiti@2.6.1)(lightningcss@1.30.1)
       vite-plugin-ripple:
-        specifier: 0.2.116
-        version: 0.2.116
+        specifier: 0.2.121
+        version: 0.2.121
       vitest:
         specifier: ^3.2.4
         version: 3.2.4(jiti@2.6.1)(jsdom@27.0.0(postcss@8.5.6))(lightningcss@1.30.1)(msw@2.11.5(typescript@5.9.3))
-
-  apps/ripple-storybook-framework: {}
 
   apps/storybook:
     dependencies:
@@ -1349,11 +1347,15 @@ packages:
     resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
     engines: {node: '>=10'}
 
-  eslint-plugin-ripple@0.2.116:
-    resolution: {integrity: sha512-GA6GIppXbnLEEeIHhh2V3AVuQ41OkDvlXe7CyE84f2y41aIqJEe0dcrWKmG74y7zLfmBZz5rF2dkc2ZqAFjFuw==}
-    engines: {node: '>=18.0.0'}
+  eslint-plugin-ripple@0.2.121:
+    resolution: {integrity: sha512-X20aT9P8GAaTt5Bm4wihG22/fDR/yqfNdnUcHtpUfuEp/3cW6JF9Dc+NNtWoy4mBz9JLHIWDOxarcjD1TeIbXQ==}
+    engines: {node: '>=20.0.0'}
     peerDependencies:
       eslint: '>=9.0.0'
+      eslint-parser-ripple: 0.2.121
+    peerDependenciesMeta:
+      eslint-parser-ripple:
+        optional: true
 
   eslint-plugin-storybook@9.1.10:
     resolution: {integrity: sha512-HAVQ9HTMydcFj5KjnzsETOwPe19eIViwRBhc47lvU04YEFTgEg2rlXN1xozxHUlQ+XkkoKYkIUYoqo7KgGhkIA==}
@@ -2155,8 +2157,8 @@ packages:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
 
-  prettier-plugin-ripple@0.2.116:
-    resolution: {integrity: sha512-wdbok+QXtlou7bf6CmpAB6mvQywKHuvxkJgQPcq77vbB+iVCLSb/0FaY3bg9ov3gQ/mztyJQG58kqWYPpTMaAw==}
+  prettier-plugin-ripple@0.2.121:
+    resolution: {integrity: sha512-GPRlpmtJsSahLynCpRcavlEkKRiaOBKk7jXgVih5SJZmkxy8OMkrJMpgWcfBHO1h2oD5LTGpG+tzq4fNpJ/gwg==}
     peerDependencies:
       prettier: '>=2.0.0'
 
@@ -2236,6 +2238,9 @@ packages:
 
   ripple@0.2.116:
     resolution: {integrity: sha512-LmSsxnegLzzM8rKEh4F9BBzQcAdYZlauFi+makkZP+zF+SxmkUlI6lRj06zcYRMQ69t9TOVe0O7znPVgaZYCxA==}
+
+  ripple@0.2.121:
+    resolution: {integrity: sha512-TvEFBnlbY7BseNneLJ+IYCJLA1rgH8utEWA737NUXPAotnYZza/ZHxum+cPlwZeLZaEDwHs4+SGA3qWh3iML/Q==}
 
   rollup@4.52.4:
     resolution: {integrity: sha512-CLEVl+MnPAiKh5pl4dEWSyMTpuflgNQiLGhMv8ezD5W/qP8AKvmYpCOKRRNOh7oRKnauBZ4SyeYkMS+1VSyKwQ==}
@@ -2553,8 +2558,8 @@ packages:
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
     hasBin: true
 
-  vite-plugin-ripple@0.2.116:
-    resolution: {integrity: sha512-x7OAxoWGzTTz9aZc25nHGNIvDNkOW1NK4g95MkamtPfYZmOawEeaHgN5uXc5GBZiBCsohR1qSxWZmBRbfDb1hA==}
+  vite-plugin-ripple@0.2.121:
+    resolution: {integrity: sha512-DTDveImb/FKfsfzTT+IuMzxAqBfpW4IW+MruiZUCkmth2Uwc5vWM7qiz+E59xOhv+hf27+3DS07AdzS95iMUMw==}
 
   vite@7.1.9:
     resolution: {integrity: sha512-4nVGliEpxmhCL8DslSAUdxlB6+SMrhB0a1v5ijlh1xB1nEPuy1mxaHxysVucLHuWryAxLWg6a5ei+U4TLn/rFg==}
@@ -3893,7 +3898,7 @@ snapshots:
 
   escape-string-regexp@4.0.0: {}
 
-  eslint-plugin-ripple@0.2.116(eslint@9.37.0(jiti@2.6.1)):
+  eslint-plugin-ripple@0.2.121(eslint@9.37.0(jiti@2.6.1)):
     dependencies:
       eslint: 9.37.0(jiti@2.6.1)
 
@@ -4681,7 +4686,7 @@ snapshots:
 
   prelude-ls@1.2.1: {}
 
-  prettier-plugin-ripple@0.2.116(prettier@3.6.2):
+  prettier-plugin-ripple@0.2.121(prettier@3.6.2):
     dependencies:
       prettier: 3.6.2
 
@@ -4755,6 +4760,20 @@ snapshots:
   reusify@1.1.0: {}
 
   ripple@0.2.116:
+    dependencies:
+      '@jridgewell/sourcemap-codec': 1.5.5
+      '@sveltejs/acorn-typescript': 1.0.6(acorn@8.15.0)
+      acorn: 8.15.0
+      clsx: 2.1.1
+      devalue: 5.3.2
+      esm-env: 1.2.2
+      esrap: 2.1.0
+      is-reference: 3.0.3
+      magic-string: 0.30.19
+      muggle-string: 0.4.1
+      zimmerframe: 1.1.4
+
+  ripple@0.2.121:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.5
       '@sveltejs/acorn-typescript': 1.0.6(acorn@8.15.0)
@@ -5153,7 +5172,7 @@ snapshots:
       - tsx
       - yaml
 
-  vite-plugin-ripple@0.2.116: {}
+  vite-plugin-ripple@0.2.121: {}
 
   vite@7.1.9(jiti@2.6.1)(lightningcss@1.30.1):
     dependencies:

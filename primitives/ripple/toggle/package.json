@@ -22,5 +22,5 @@
     "@ripple-primitives/primitive-ui": "workspace:*",
     "ripple": "*"
   },
-  "packageManager": "pnpm@10.16.1"
+  "packageManager": "pnpm@10.18.2"
 }

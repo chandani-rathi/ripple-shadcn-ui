@@ -22,8 +22,8 @@
 		"class-variance-authority": "^0.7.1",
 		"clsx": "^2.1.1",
 		"eslint": "^9.37.0",
-		"eslint-plugin-ripple": "0.2.116",
-		"ripple": "0.2.116",
+		"eslint-plugin-ripple": "0.2.121",
+		"ripple": "0.2.121",
 		"tailwind-merge": "^3.3.1",
 		"tw-animate-css": "^1.4.0",
 		"vitest-axe": "^0.1.0"
@@ -33,12 +33,12 @@
 		"@testing-library/jest-dom": "^6.9.1",
 		"jsdom": "^27.0.0",
 		"prettier": "^3.6.2",
-		"prettier-plugin-ripple": "0.2.116",
+		"prettier-plugin-ripple": "0.2.121",
 		"shadcn": "^3.4.0",
 		"tailwindcss": "^4.1.14",
 		"typescript": "^5.9.3",
 		"vite": "^7.1.9",
-		"vite-plugin-ripple": "0.2.116",
+		"vite-plugin-ripple": "0.2.121",
 		"vitest": "^3.2.4"
 	}
 }

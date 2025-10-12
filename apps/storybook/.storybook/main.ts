@@ -1,8 +1,9 @@
-import type { StorybookConfig } from '@storybook/web-components-vite';
+// import type { StorybookConfig } from '@storybook/web-components-vite';
+import type { StorybookConfig } from 'storybook/internal/types';
 import { compile } from 'ripple/compiler';
 import fsPromise from "node:fs/promises"
 import fs from 'node:fs';
-import { readCsf, loadCsf } from '@storybook/csf-tools';
+import { loadCsf } from '@storybook/csf-tools';
 
 const VITE_FS_PREFIX = '/@fs/';
 const IS_WINDOWS = process.platform === 'win32';
@@ -14,7 +15,7 @@ async function existsInRoot(filename: string, root: string) {
   return fs.existsSync(root + filename);
 }
 
-async function createVirtualImportId(filename: string, root:string, type:string) {
+async function createVirtualImportId(filename: string, root: string, type: string) {
   const parts = ['ripple', `type=${type}`];
   if (type === 'style') {
     parts.push('lang.css');
@@ -38,7 +39,7 @@ const config: StorybookConfig = {
   experimental_indexers: [
     {
       test: /\.ripple$/,
-      createIndex: async (fileName, { makeTitle  }) => {
+      createIndex: async (fileName, { makeTitle }) => {
         console.log(fileName);
         const code = await fsPromise.readFile(fileName, 'utf8');
         const { js, css } = await compile(code, fileName, {
@@ -46,17 +47,17 @@ const config: StorybookConfig = {
         });
 
         if (css !== '') {
-            const cssId = createVirtualImportId(fileName, "", 'style');
-            js.code += `\nimport ${JSON.stringify(cssId)};\n`;
-            
+          const cssId = createVirtualImportId(fileName, "", 'style');
+          js.code += `\nimport ${JSON.stringify(cssId)};\n`;
+
         }
 
         const file = await loadCsf(js.code, { fileName, makeTitle })
-         const { meta, stories } = file.parse();
-         return stories.map(({ name  }) => ({
+        const { meta, stories } = file.parse();
+        return stories.map(({ name }) => ({
           type: 'story',
           importPath: fileName,
-          exportName: name ,
+          exportName: name,
           title: makeTitle(meta.title),
         }))
       },
@@ -64,7 +65,9 @@ const config: StorybookConfig = {
   ],
   "framework": {
     "name": "@storybook/ripple",
-    "options": {}
+    "options": {
+
+    }
   }
 };
 export default config;

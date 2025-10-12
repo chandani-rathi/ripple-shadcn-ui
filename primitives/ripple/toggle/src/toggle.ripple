@@ -1,0 +1,94 @@
+import { track, trackSplit, effect } from "ripple";
+import { composeEventHandlers } from '@ripple-primitives/primitive';
+// import { useControllableState } from '@ripple-primitives/ripple-use-controllable-state';
+import { Primitive } from "@ripple-primitives/primitive-ui";
+
+const NAME = 'Toggle';
+
+function useUncontrolledState({
+  defaultProp, onChange
+})
+{
+  const value = track(defaultProp, (current) => {
+      return current;
+    },
+    (next, prev) => {
+      console.log("onChange:useUncontrolledState")
+      onChange(next)
+      return next;
+    });
+  return value;
+}
+
+function useControllableState({
+  prop, defaultProp, onChange = () => {}, caller
+}){
+
+  console.log("defaultProp", defaultProp)
+
+  const uncontrolledProp = useUncontrolledState({
+    defaultProp,
+    onChange,
+  });
+  const isControlled = prop !== undefined;
+  console.log("isControlled", isControlled)
+
+  if(!isControlled){
+    return uncontrolledProp;
+  }
+
+  return track(() => @prop, (current) => {
+      return current;
+    },
+    (next, prev) => {
+      console.log("onChange:useControlledState")
+      onChange(next);
+      @prop = next;
+      return next;
+    });
+}
+
+export component Toggle(props){
+    const [
+      children, 
+      pressedProp, 
+      defaultPressed, 
+      onPressedChange, 
+      buttonProps 
+    ] = trackSplit(props, [
+      'children', 
+      'pressed', 
+      'defaultPressed', 
+      'onPressedChange'
+    ]);
+    const pressed = useControllableState({
+        prop: pressedProp,
+        onChange: @onPressedChange,
+        defaultProp: @defaultPressed ?? false,
+        caller: NAME,
+    });
+    <Primitive.button 
+        class={@buttonProps.class}
+        type="button"
+        aria-pressed={@pressed}
+        data-state={@pressed ? 'on' : 'off'}
+        data-disabled={props.disabled ? '' : undefined}
+        onClick={composeEventHandlers(props.onClick, () => {
+          if (!props.disabled) {
+            console.log("on clicked!", !@pressed)
+            @pressed = !@pressed
+          }
+        })}
+      >
+        {/* {...@buttonProps} */}
+      if(@children) {
+        <@children />
+      }
+    </Primitive.button>
+}
+
+const Root = Toggle
+
+export {
+  Root
+}

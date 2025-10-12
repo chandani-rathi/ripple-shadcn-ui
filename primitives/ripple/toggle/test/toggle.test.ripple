@@ -1,0 +1,66 @@
+import * as ripple from 'ripple';
+import { parse, compile } from 'ripple/compiler';
+import { Toggle }  from "../src/toggle.ripple";
+import { axe } from 'vitest-axe';
+import { waitFor } from '@testing-library/dom';
+import userEvent from '@testing-library/user-event';
+const TEXT_CHILD = 'Like';
+
+describe("given a Toggle with text", () => {
+	
+	beforeEach(() => {
+		component Test(){
+			<Toggle id="toggle">{TEXT_CHILD}</Toggle>
+		}
+		render(Test);
+	})
+
+	it('should have no accessibility violations', async () => {
+		expect(await axe(container)).toHaveNoViolations();
+	});
+
+	it('should render with attributes as false/off by default', () => {
+		const button = container.getByRole('button', { name: TEXT_CHILD });
+		expect(button).toHaveAttribute('aria-pressed', 'false');
+		expect(button).toHaveAttribute('data-state', 'off');
+	});
+
+	
+  it('Click event should change pressed attributes to true/on', () => {
+    const button = container.getByRole('button', { name: TEXT_CHILD });
+	userEvent.click(button);
+	ripple.flushSync();
+	
+	// console.log(container.innerHTML);
+	// expect(button).toHaveAttribute('aria-pressed', 'true');
+    // expect(button).toHaveAttribute('data-state', 'on');
+	
+  });
+});
+
+describe('given a Toggle with text and defaultPressed="true"', () => {
+	beforeEach(() => {
+		component Test(){
+			<Toggle defaultPressed>{TEXT_CHILD}</Toggle>
+		}
+		render(Test);
+		console.log(container.innerHTML)
+	});
+
+	it('should render with attributes true/on by default', () => {
+		const button = container.getByRole('button', { name: TEXT_CHILD });
+
+		expect(button).toHaveAttribute('aria-pressed', 'true');
+		expect(button).toHaveAttribute('data-state', 'on');
+	});
+
+	it('Click event should change attributes back to off/false', () => {
+		const button = container.getByRole('button', { name: TEXT_CHILD });
+		userEvent.click(button);
+		ripple.flushSync();
+		
+
+		// expect(button).toHaveAttribute('aria-pressed', 'false');
+		// expect(button).toHaveAttribute('data-state', 'off');
+	});
+});

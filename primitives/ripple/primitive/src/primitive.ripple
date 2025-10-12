@@ -1,0 +1,60 @@
+import { createRefKey, track, trackSplit } from "ripple";
+// import type { PropsWithChildren } from "ripple";
+
+const NODES = [
+  'a',
+  'button',
+  'div',
+  'form',
+  'h2',
+  'h3',
+  'img',
+  'input',
+  'label',
+  'li',
+  'nav',
+  'ol',
+  'p',
+  'select',
+  'span',
+  'svg',
+  'ul',
+];
+
+/*
+    <Primitive.div />
+    <Primitive.button />
+*/
+const Primitive = NODES.reduce(
+    (primitive, node) => {
+        component Node(props){
+            let tag = track(node);
+            const [children, rest] = trackSplit(props, ['children']);
+            
+            if(node == "button") {
+                <button {...@rest}>
+                    if(@children) {
+                        <@children />
+                    }
+                </button>
+            }
+            else {
+                <@tag {...@rest}>
+                    if(@children) {
+                        <@children />
+                    }
+                </@tag> 
+            }
+        }
+        return {
+            ...primitive, [node]: Node
+        }
+    }, {}
+)
+
+const Root = Primitive;
+
+export {
+    Root,
+    Primitive
+}

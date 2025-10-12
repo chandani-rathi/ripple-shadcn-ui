@@ -1,0 +1,135 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Primitive UI 1`] = `
+<a>
+  <!---->
+  <!---->
+  <!---->
+</a>
+`;
+
+exports[`Primitive UI 2`] = `
+<button>
+  <!---->
+</button>
+`;
+
+exports[`Primitive UI 3`] = `
+<div>
+  <!---->
+  <!---->
+  <!---->
+</div>
+`;
+
+exports[`Primitive UI 4`] = `
+<form>
+  <!---->
+  <!---->
+  <!---->
+</form>
+`;
+
+exports[`Primitive UI 5`] = `
+<h2>
+  <!---->
+  <!---->
+  <!---->
+</h2>
+`;
+
+exports[`Primitive UI 6`] = `
+<h3>
+  <!---->
+  <!---->
+  <!---->
+</h3>
+`;
+
+exports[`Primitive UI 7`] = `
+<img>
+  <!---->
+  <!---->
+  <!---->
+</img>
+`;
+
+exports[`Primitive UI 8`] = `
+<input>
+  <!---->
+  <!---->
+  <!---->
+</input>
+`;
+
+exports[`Primitive UI 9`] = `
+<label>
+  <!---->
+  <!---->
+  <!---->
+</label>
+`;
+
+exports[`Primitive UI 10`] = `
+<li>
+  <!---->
+  <!---->
+  <!---->
+</li>
+`;
+
+exports[`Primitive UI 11`] = `
+<nav>
+  <!---->
+  <!---->
+  <!---->
+</nav>
+`;
+
+exports[`Primitive UI 12`] = `
+<ol>
+  <!---->
+  <!---->
+  <!---->
+</ol>
+`;
+
+exports[`Primitive UI 13`] = `
+<p>
+  <!---->
+  <!---->
+  <!---->
+</p>
+`;
+
+exports[`Primitive UI 14`] = `
+<select>
+  <!---->
+  <!---->
+  <!---->
+</select>
+`;
+
+exports[`Primitive UI 15`] = `
+<span>
+  <!---->
+  <!---->
+  <!---->
+</span>
+`;
+
+exports[`Primitive UI 16`] = `
+<svg>
+  <!---->
+  <!---->
+  <!---->
+</svg>
+`;
+
+exports[`Primitive UI 17`] = `
+<ul>
+  <!---->
+  <!---->
+  <!---->
+</ul>
+`;

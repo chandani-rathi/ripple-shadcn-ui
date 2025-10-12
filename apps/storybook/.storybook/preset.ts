@@ -2,7 +2,10 @@ import { ripple } from 'vite-plugin-ripple';
 
 export default {
   name: '@storybook/ripple',
-  core: { builder: '@storybook/builder-vite' },
+  core: {
+    disableTelemetry: true,
+    builder: '@storybook/builder-vite',
+  },
   framework: {
     name: '@storybook/ripple',
     options: {},

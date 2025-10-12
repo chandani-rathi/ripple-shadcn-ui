@@ -1,10 +1,9 @@
-// import type { StorybookConfig } from '@storybook/web-components-vite';
-import type { StorybookConfig } from 'storybook/internal/types';
+import type { IndexInput, StorybookConfig } from 'storybook/internal/types';
 import { compile } from 'ripple/compiler';
 import fsPromise from "node:fs/promises"
 import fs from 'node:fs';
-import { loadCsf } from '@storybook/csf-tools';
-
+import { dirname } from 'node:path';
+import { loadCsf } from "storybook/internal/csf-tools";
 const VITE_FS_PREFIX = '/@fs/';
 const IS_WINDOWS = process.platform === 'win32';
 
@@ -31,6 +30,12 @@ async function createVirtualImportId(filename: string, root: string, type: strin
   return `${filename}?${parts.join('&')}`;
 }
 
+const getAbsolutePath = (packageName: string) => {
+  return "/.storybook/"
+}
+  dirname("/preset"); //require.resolve(packageName + "/preset")
+
+
 const config: StorybookConfig = {
   "stories": [
     '../stories/**/*stories.ripple',
@@ -54,20 +59,21 @@ const config: StorybookConfig = {
 
         const file = await loadCsf(js.code, { fileName, makeTitle })
         const { meta, stories } = file.parse();
-        return stories.map(({ name }) => ({
-          type: 'story',
-          importPath: fileName,
-          exportName: name,
-          title: makeTitle(meta.title),
-        }))
+        const storyEntries: IndexInput[] = []
+
+        stories.map(({ name, tags, id, localName, parameters, __stats }) => {
+          storyEntries.push({
+            type: 'story',
+            exportName: (name ?? "default"),
+            title: makeTitle(meta.title),
+            importPath: fileName,
+            tags: tags
+          })
+        })
+        return storyEntries;
       },
     },
   ],
-  "framework": {
-    "name": "@storybook/ripple",
-    "options": {
-
-    }
-  }
+  framework: getAbsolutePath("@storybook/ripple")
 };
 export default config;

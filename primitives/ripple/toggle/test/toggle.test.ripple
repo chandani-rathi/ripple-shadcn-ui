@@ -31,14 +31,11 @@ describe("given a Toggle with text", () => {
 	// userEvent.click(button);
 	button.click()
 	ripple.flushSync();
-	container.debug();	
 	
 	await waitFor(() => {
-		console.log("after clicked!", )
+		expect(button).toHaveAttribute('aria-pressed', 'true');
+    	expect(button).toHaveAttribute('data-state', 'on');
 	})
-	
-	expect(button).toHaveAttribute('aria-pressed', 'true');
-    expect(button).toHaveAttribute('data-state', 'on');
 	
   });
 });
@@ -64,8 +61,53 @@ describe('given a Toggle with text and defaultPressed="true"', () => {
 		button.click()
 		ripple.flushSync();
 		
-		//TO DO - failed
 		expect(button).toHaveAttribute('aria-pressed', 'false');
 		expect(button).toHaveAttribute('data-state', 'off');
 	});
 });
+
+describe(`given a Toggle with text and disabled="true"`, () => {
+	beforeEach(() => {
+		component Test(){
+			<Toggle disabled>{TEXT_CHILD}</Toggle>
+		}
+		render(Test);
+	})
+	it(`on click the attributes do not change`, () => {
+		const button = container.getByRole('button', { name: TEXT_CHILD });
+		expect(button).toHaveAttribute('aria-pressed', 'false');
+		expect(button).toHaveAttribute('data-state', 'off');
+		expect(button).toHaveAttribute('disabled', '');
+		// userEvent.click(button);
+		button.click();
+		expect(button).toHaveAttribute('aria-pressed', 'false');
+    	expect(button).toHaveAttribute('data-state', 'off');
+	})
+
+})
+
+describe('given a controlled Toggle (with pressed and onPressedChange)', () => {
+	const onPressedChangeMock = vi.fn();
+	beforeEach(() => {
+		component Test(){
+			<Toggle pressed onPressedChange={onPressedChangeMock}>{TEXT_CHILD}</Toggle>
+		}
+		render(Test);
+	})
+	it('Click event should keep the same attributes, and pass the new state to onPressedChange', () => {
+    const button = container.getByRole('button', { name: TEXT_CHILD });
+
+    expect(button).toHaveAttribute('aria-pressed', 'true');
+    expect(button).toHaveAttribute('data-state', 'on');
+
+	button.click();
+
+    expect(onPressedChangeMock).toHaveBeenCalledTimes(1);
+    expect(onPressedChangeMock).toHaveBeenCalledWith(false);
+
+    // The attributes do not change, they keep the same
+    // because it's a controlled component.
+    expect(button).toHaveAttribute('aria-pressed', 'true');
+    expect(button).toHaveAttribute('data-state', 'on');
+  });
+})

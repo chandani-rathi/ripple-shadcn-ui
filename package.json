@@ -13,7 +13,8 @@
 		"serve": "vite preview",
 		"format": "prettier --write .",
 		"format:check": "prettier --check .",
-		"registry:build": "shadcn build"
+		"registry:build": "shadcn build",
+		"create:primitive" : "plop primitive"
 	},
 	"license": "MIT",
 	"dependencies": {
@@ -32,6 +33,7 @@
 		"@tailwindcss/vite": "^4.1.14",
 		"@testing-library/jest-dom": "^6.9.1",
 		"jsdom": "^27.0.0",
+		"plop": "^4.0.4",
 		"prettier": "^3.6.2",
 		"prettier-plugin-ripple": "0.2.121",
 		"shadcn": "^3.4.0",

@@ -14,11 +14,6 @@ export default {
     const { mergeConfig } = await import('vite');
     return mergeConfig(config, {
       plugins: [ripple()],
-      resolve: {
-        alias: {
-          "@ripple-primitives/toggle" : "primitives/ripple/toggle/src"
-        }
-      }
     });
   },
 };

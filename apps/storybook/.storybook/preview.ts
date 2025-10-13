@@ -15,15 +15,19 @@ const preview: Preview = {
   },
   renderToCanvas: (context) => {
     console.log("renderer", context);
-    const output = context.storyFn();
-    console.log(output)
+    context.showMain();
     const canvasElement = context.storyContext.canvasElement;
+    let component = context.storyContext.originalStoryFn;
+    if(!context.storyContext.originalStoryFn.isRippleComponent) {
+      component = context.storyFn();
+      console.log(component)
+    }
+    
     // document.body.innerHTML = "";
-    const cleanup =  mount(output, {
+    const cleanup =  mount(component, {
       target : canvasElement,
       props: context.storyContext.args ?? {}
     });
-    context.showMain();
     return cleanup;
   }
 };

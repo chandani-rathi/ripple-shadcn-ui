@@ -1,4 +1,4 @@
-import { track, trackSplit, effect, isTracked } from "ripple";
+import { track, trackSplit, effect } from "ripple";
 import { composeEventHandlers } from '@ripple-primitives/primitive';
 // import { useControllableState } from '@ripple-primitives/ripple-use-controllable-state';
 import { Primitive } from "@ripple-primitives/primitive-ui";
@@ -70,13 +70,14 @@ export component Toggle(props){
         aria-pressed={!!@pressed}
         data-state={@pressed ? 'on' : 'off'}
         data-disabled={props.disabled ? '' : undefined}
+        disabled={props.disabled}
         onClick={composeEventHandlers(props.onClick, () => {
           if (!props.disabled) {
             @pressed = !@pressed
           }
         })}
       >
-        {/* {...@buttonProps} */}
+      //{...@buttonProps}
       if(@children) {
         <@children />
       }

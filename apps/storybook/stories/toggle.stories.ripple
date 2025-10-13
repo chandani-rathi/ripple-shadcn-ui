@@ -1,5 +1,5 @@
 import { Toggle } from "@ripple-primitives/toggle";
-import style from './toggle.stories.module.css';
+import styles from './toggle.stories.module.css';
 import { fn } from 'storybook/test';
 import { track } from 'ripple'
 
@@ -7,7 +7,7 @@ export default { title: 'Components/Toggle' };
 
 export const Styled = () => {
   component Styled() {
-    <Toggle class={style.root}>{"Toggle"}</Toggle>
+    <Toggle class={styles.root}>{"Toggle"}</Toggle>
   }
   return Styled;
 };
@@ -21,8 +21,10 @@ export const Controlled = {
   render: (props) => {
     component Controlled() {
       const pressed = track(props.pressed)
-      console.log(style.root)
-      <Toggle class={style.root} {pressed}  onClick={props.onClick} onPressedChange={props.onPressedChange}>{"Toggle"}</Toggle>
+      console.log(styles.root)
+      <Toggle class={styles.root} {pressed}  onClick={props.onClick} onPressedChange={props.onPressedChange}>
+       {@pressed ? 'On' : 'Off'}
+      </Toggle>
     }
     return Controlled;
   }
@@ -35,8 +37,48 @@ export const Uncontrolled = {
   },
   render: (props) => {
     component Uncontrolled() {
-      <Toggle class={style.root} onClick={props.onClick} onPressedChange={props.onPressedChange}>{"Toggle"}</Toggle>
+      <Toggle class={styles.root} onClick={props.onClick} onPressedChange={props.onPressedChange}>{"Toggle"}</Toggle>
     }
     return Uncontrolled;
   }
 }
+
+export component Chromatic() {
+      <h1>{"Uncontrolled"}</h1>
+      <h2>{"Off"}</h2>
+      <Toggle class={styles.root}>{"Toggle"}</Toggle>
+
+      <h2>{"On"}</h2>
+      <Toggle class={styles.root} defaultPressed>
+        {"Toggle"}
+      </Toggle>
+
+      <h1>{"Controlled"}</h1>
+      <h2>{"Off"}</h2>
+      <Toggle class={styles.root} pressed={false}>
+        {"Toggle"}
+      </Toggle>
+
+      <h2>{"On"}</h2>
+      <Toggle class={styles.root} pressed>
+        {"Toggle"}
+      </Toggle>
+
+      <h1>{"Disabled"}</h1>
+      <Toggle class={styles.root} disabled>
+        {"Toggle"}
+      </Toggle>
+
+      <h1>{"State attributes"}</h1>
+      <Toggle class={styles.rootAttr}>{"Toggle"}</Toggle>
+      <Toggle class={styles.rootAttr} disabled>
+        {"Toggle"}
+      </Toggle>
+};
+Chromatic.parameters = { 
+  chromatic: {
+    diffThreshold: 0.2,
+    disableSnapshot: false,
+  }
+};
+Chromatic.isRippleComponent = true;

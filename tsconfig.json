@@ -12,7 +12,9 @@
 		"noEmit": true,
 		"isolatedModules": true,
 		"paths": {
-			"@/*": ["registry/new-york/*"]
+			"@/*": ["registry/new-york/*"],
+			"@ripple-primitives/toggle" : ["primitives/ripple/toggle/src"],
+			"@ripple-primitives/primitive-ui" : ["primitives/ripple/primitive/src"]
 		}
 	}
 }

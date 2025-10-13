@@ -13,7 +13,12 @@ export default {
   async viteFinal(config) {
     const { mergeConfig } = await import('vite');
     return mergeConfig(config, {
-      plugins: [ripple()] // <-- plural "plugins"
+      plugins: [ripple()],
+      resolve: {
+        alias: {
+          "@ripple-primitives/toggle" : "primitives/ripple/toggle/src"
+        }
+      }
     });
   },
 };

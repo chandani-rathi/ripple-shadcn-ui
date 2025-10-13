@@ -11,5 +11,8 @@
 		"jsxImportSource": "ripple",
 		"noEmit": true,
 		"isolatedModules": true,
+		"paths": {
+			"@ripple-primitives/toggle" : ["primitives/ripple/toggle/src"]
+		}
 	}
 }

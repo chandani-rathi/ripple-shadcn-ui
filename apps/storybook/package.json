@@ -1,26 +1,22 @@
 {
   "name": "storybook",
   "version": "1.0.0",
-  "description": "",
   "type": "module",
   "scripts": {
     "start": "storybook dev -p 6006",
     "build": "storybook build"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "packageManager": "pnpm@10.18.2",
+  "dependencies": {
+    "@ripple-primitives/primitive": "workspace:*",
+    "@ripple-primitives/primitive-ui": "workspace:*",
+    "@ripple-primitives/toggle": "workspace:*",
+    "ripple": "catalog:"
+  },
   "devDependencies": {
     "@storybook/builder-vite": "^9.1.10",
     "eslint-plugin-storybook": "9.1.10",
     "lit": "3.3.1",
     "storybook": "9.1.10"
   },
-  "dependencies": {
-    "@ripple-primitives/primitive": "workspace:*",
-    "@ripple-primitives/primitive-ui": "workspace:*",
-    "@ripple-primitives/toggle": "workspace:*",
-    "ripple": "*"
-  }
+  "packageManager": "pnpm@10.18.2"
 }

@@ -94,8 +94,8 @@ importers:
         specifier: workspace:*
         version: link:../../primitives/ripple/toggle
       ripple:
-        specifier: '*'
-        version: 0.2.116
+        specifier: 'catalog:'
+        version: 0.2.124
     devDependencies:
       '@storybook/builder-vite':
         specifier: ^9.1.10
@@ -2512,9 +2512,6 @@ packages:
   reusify@1.1.0:
     resolution: {integrity: sha512-g6QUff04oZpHs0eG5p83rFLhHeV00ug/Yf9nZM6fLeUrPguBTkTQOdpAWWspMh55TZfVQDPaN3NQJfbVRAxdIw==}
     engines: {iojs: '>=1.0.0', node: '>=0.10.0'}
-
-  ripple@0.2.116:
-    resolution: {integrity: sha512-LmSsxnegLzzM8rKEh4F9BBzQcAdYZlauFi+makkZP+zF+SxmkUlI6lRj06zcYRMQ69t9TOVe0O7znPVgaZYCxA==}
 
   ripple@0.2.124:
     resolution: {integrity: sha512-0N67kLXso2LhZcfvmVJuJE4XmEZST0DAZYurBnENuFgvW5Kn1/TYRCvGrgCXwrlqtKzWGst0zpPXSV0//R7s5A==}
@@ -5418,20 +5415,6 @@ snapshots:
   rettime@0.7.0: {}
 
   reusify@1.1.0: {}
-
-  ripple@0.2.116:
-    dependencies:
-      '@jridgewell/sourcemap-codec': 1.5.5
-      '@sveltejs/acorn-typescript': 1.0.6(acorn@8.15.0)
-      acorn: 8.15.0
-      clsx: 2.1.1
-      devalue: 5.3.2
-      esm-env: 1.2.2
-      esrap: 2.1.0
-      is-reference: 3.0.3
-      magic-string: 0.30.19
-      muggle-string: 0.4.1
-      zimmerframe: 1.1.4
 
   ripple@0.2.124:
     dependencies:

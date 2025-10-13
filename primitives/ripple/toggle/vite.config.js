@@ -2,11 +2,15 @@ import { defineConfig } from 'vite';
 import { ripple } from 'vite-plugin-ripple';
 import path from "node:path"
 
+
+
 export default defineConfig({
 	plugins: [ripple()],
 	resolve: {
 		alias: {
 			'@': path.resolve(__dirname, './src'),
+			'@ripple-primitives/primitive': path.resolve(__dirname, '../../core', 'primitive', 'src'),
+			'@ripple-primitives/primitive-ui': path.resolve(__dirname, '../', 'primitive', 'src'),
 		},
 	},
 	build: {

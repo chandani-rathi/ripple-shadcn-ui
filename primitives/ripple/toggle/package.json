@@ -20,7 +20,7 @@
   "dependencies": {
     "@ripple-primitives/primitive": "workspace:*",
     "@ripple-primitives/primitive-ui": "workspace:*",
-    "ripple": "*"
+    "ripple": "catalog:"
   },
   "packageManager": "pnpm@10.18.2"
 }

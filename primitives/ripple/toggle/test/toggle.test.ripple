@@ -1,9 +1,9 @@
 import * as ripple from 'ripple';
-import { parse, compile } from 'ripple/compiler';
 import { Toggle }  from "../src/toggle.ripple";
 import { axe } from 'vitest-axe';
-import { waitFor } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
+import { waitFor } from "@testing-library/dom"
+
 const TEXT_CHILD = 'Like';
 
 describe("given a Toggle with text", () => {
@@ -26,14 +26,19 @@ describe("given a Toggle with text", () => {
 	});
 
 	
-  it('Click event should change pressed attributes to true/on', () => {
+  it('Click event should change pressed attributes to true/on', async () => {
     const button = container.getByRole('button', { name: TEXT_CHILD });
-	userEvent.click(button);
+	// userEvent.click(button);
+	button.click()
 	ripple.flushSync();
+	container.debug();	
 	
-	// console.log(container.innerHTML);
-	// expect(button).toHaveAttribute('aria-pressed', 'true');
-    // expect(button).toHaveAttribute('data-state', 'on');
+	await waitFor(() => {
+		console.log("after clicked!", )
+	})
+	
+	expect(button).toHaveAttribute('aria-pressed', 'true');
+    expect(button).toHaveAttribute('data-state', 'on');
 	
   });
 });
@@ -47,7 +52,6 @@ describe('given a Toggle with text and defaultPressed="true"', () => {
 	});
 
 	it('should render with attributes true/on by default', () => {
-		container.debug()
 		const button = container.getByRole('button', { name: TEXT_CHILD });
 
 		expect(button).toHaveAttribute('aria-pressed', 'true');
@@ -56,11 +60,12 @@ describe('given a Toggle with text and defaultPressed="true"', () => {
 
 	it('Click event should change attributes back to off/false', () => {
 		const button = container.getByRole('button', { name: TEXT_CHILD });
-		userEvent.click(button);
+		// userEvent.click(button);
+		button.click()
 		ripple.flushSync();
 		
 		//TO DO - failed
-		// expect(button).toHaveAttribute('aria-pressed', 'false');
-		// expect(button).toHaveAttribute('data-state', 'off');
+		expect(button).toHaveAttribute('aria-pressed', 'false');
+		expect(button).toHaveAttribute('data-state', 'off');
 	});
 });

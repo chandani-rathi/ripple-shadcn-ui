@@ -76,8 +76,9 @@ export component Toggle(props){
             @pressed = !@pressed
           }
         })}
+        
       >
-      //{...@buttonProps}
+      // {...@buttonProps}
       if(@children) {
         <@children />
       }

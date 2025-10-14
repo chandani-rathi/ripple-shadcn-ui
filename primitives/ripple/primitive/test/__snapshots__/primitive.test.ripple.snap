@@ -11,6 +11,8 @@ exports[`Primitive UI 1`] = `
 exports[`Primitive UI 2`] = `
 <button>
   <!---->
+  <!---->
+  <!---->
 </button>
 `;
 

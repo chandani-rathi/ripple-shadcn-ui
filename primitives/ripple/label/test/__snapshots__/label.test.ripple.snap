@@ -1,0 +1,52 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`label > should work 1`] = `
+<div>
+  <!---->
+  <!---->
+  <!---->
+  <!---->
+  <label>
+    <!---->
+    <!---->
+    <!---->
+    TEST
+    <input
+      type="number"
+    />
+    <!---->
+    <!---->
+    <!---->
+    <!---->
+  </label>
+  <!---->
+  <!---->
+  <!---->
+  <!---->
+  <!---->
+  <!---->
+  <!---->
+  <label
+    for="control"
+  >
+    <!---->
+    <!---->
+    <!---->
+    TEST
+    <!---->
+    <!---->
+    <!---->
+    <!---->
+  </label>
+  <!---->
+  <!---->
+  <!---->
+  <button
+    id="control"
+  >
+    Control
+  </button>
+  <!---->
+  
+</div>
+`;

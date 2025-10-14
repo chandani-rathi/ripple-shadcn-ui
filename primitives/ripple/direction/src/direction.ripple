@@ -1,0 +1,13 @@
+import { Context } from "ripple"
+type Direction = 'ltr' | 'rtl';
+const DirectionContext = new Context<Direction | undefined>(undefined);
+
+function useDirection(localDir?: Direction) {
+  const globalDir = DirectionContext.get();
+  return localDir || globalDir || 'ltr';
+}
+
+export {
+  useDirection,
+  DirectionContext
+}

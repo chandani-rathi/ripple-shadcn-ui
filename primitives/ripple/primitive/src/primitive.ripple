@@ -30,21 +30,11 @@ const Primitive = NODES.reduce(
         component Node(props){
             let tag = track(node);
             const [children, rest] = trackSplit(props, ['children']);
-            
-            if(node == "button") {
-                <button {...@rest}>
-                    if(@children) {
-                        <@children />
-                    }
-                </button>
-            }
-            else {
-                <@tag {...@rest}>
-                    if(@children) {
-                        <@children />
-                    }
-                </@tag> 
-            }
+            <@tag {...@rest}>
+                if(props.@children) {
+                    <props.@children />
+                }
+            </@tag> 
         }
         return {
             ...primitive, [node]: Node

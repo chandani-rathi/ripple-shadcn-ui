@@ -17,11 +17,29 @@ test("Primitive UI", () => {
     )
 });
 
-test("button click", () => {
+test("should attributes and event works", () => {
     let container = document.createElement('div');
     const onClick = vi.fn();
     component Test(){
         <Primitive.button id="test" data-state="open" onClick={onClick}>
+            {"Test"}
+        </Primitive.button>
+    }
+    render(Test, container);
+    const button = container.querySelector("#test");
+    expect(button.id).toBe("test");
+    expect(button).toHaveAttribute('data-state', 'open')
+    button.click();
+    expect(onClick).toHaveBeenCalled(1);
+})
+
+
+test.todo("should pros spread works", () => {
+    let container = document.createElement('div');
+    const onClick = vi.fn();
+    component Test(){
+        const props = { id: 'test', ["data-state"]: "open", onClick:onClick }
+        <Primitive.button {...props} >
             {"Test"}
         </Primitive.button>
     }

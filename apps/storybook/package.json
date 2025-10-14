@@ -7,12 +7,14 @@
     "build": "storybook build"
   },
   "dependencies": {
+    "@ripple-primitives/label": "workspace:*",
     "@ripple-primitives/primitive": "workspace:*",
     "@ripple-primitives/primitive-ui": "workspace:*",
     "@ripple-primitives/toggle": "workspace:*",
     "ripple": "catalog:"
   },
   "devDependencies": {
+    "@radix-ui/colors": "^3.0.0",
     "@storybook/builder-vite": "^9.1.10",
     "eslint-plugin-storybook": "9.1.10",
     "lit": "3.3.1",

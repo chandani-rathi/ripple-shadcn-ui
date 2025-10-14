@@ -1,0 +1,26 @@
+import { axe } from 'vitest-axe';
+import { useDirection, DirectionContext }  from "../src/direction.ripple";
+
+const TEXT_CHILD = "TEST"
+
+describe("direction", () => {
+    beforeEach(() => {
+		component RightSideDiv(){
+			const direction = useDirection();
+			<div dir={direction}>{TEXT_CHILD}</div>
+		}
+		component Test(){
+			DirectionContext.set("rlt")
+			<RightSideDiv />
+		}
+		render(Test);
+	});
+
+    it('should have no accessibility violations', async () => {
+		expect(await axe(container)).toHaveNoViolations();
+	});
+    
+    it("should work", () => {
+         expect(container).toMatchSnapshot()
+    })
+})

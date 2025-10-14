@@ -1,0 +1,31 @@
+import { axe } from 'vitest-axe';
+import { Label }  from "../src/label.ripple";
+
+const TEXT_CHILD = "TEST"
+
+describe("label", () => {
+    beforeEach(() => {
+		component WrappingControl(){
+			<Label>
+				{TEXT_CHILD} <input type="number" />
+			</Label>
+		}
+		component ReferencingControl(){
+			<Label htmlFor="control">{TEXT_CHILD}</Label>
+			<button id="control">{"Control"}</button>
+		}
+		component Test(){
+			<WrappingControl />
+			<ReferencingControl />
+		}
+		render(Test);
+	});
+
+    it('should have no accessibility violations', async () => {
+		expect(await axe(container)).toHaveNoViolations();
+	});
+    
+    it("should work", () => {
+         expect(container).toMatchSnapshot()
+    })
+})

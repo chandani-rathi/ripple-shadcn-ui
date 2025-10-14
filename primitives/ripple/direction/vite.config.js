@@ -1,12 +1,6 @@
 import { defineConfig } from 'vite';
 import { ripple } from 'vite-plugin-ripple';
 import path from "node:path"
-import packageJson from "./package.json";
-
-const workspaceDeps = Object.keys(packageJson.dependencies).filter(
-	k => packageJson.dependencies[k].startsWith("workspace")
-)
-
 
 export default defineConfig({
 	plugins: [ripple()],
@@ -31,7 +25,7 @@ export default defineConfig({
 				globals: {},
 				exports: 'named',
 			},
-			external: ['ripple', 'ripple/internal/client', ...workspaceDeps],
+			external: ['ripple', 'ripple/internal/client'],
 			plugins: [],
 		},
 	},

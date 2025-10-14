@@ -1,6 +1,6 @@
 packages:
-  - "primitives/*/*"
-  - "apps/*"
+  - primitives/*/*
+  - apps/*
 
 catalog:
-  ripple: ^0.2.121
+  ripple: 0.2.124

@@ -1,0 +1,42 @@
+import { Label } from "@ripple-primitives/label"
+export default { title: 'Components/Label' };
+import styles from "./label.stories.module.css"
+
+export const Styled = () => {
+    component Test(){
+        console.log(styles)
+        <Label class={styles.root}>{"Label"}</Label>
+    }
+
+    return Test;
+};
+
+export const WithControl = () => {
+  component Test(){
+        <h1>{"Wrapping control"}</h1>
+        <Label>
+            <Control className={styles.control} /> {"Label"}
+        </Label>
+
+        <h1>{"Referencing control"}</h1>
+        <Control id="control" className={styles.control} />
+        <Label htmlFor="control">{"Label"}</Label>
+  }
+  return Test
+};
+
+export const WithInputNumber = (_props: any) => {
+  component Test() {
+    <Label>
+      <span>{"Name:"}</span>
+      <input type="number" />
+    </Label>
+  };
+  return Test;
+};
+
+component Control(props){
+    <button class={styles.control} {...props} onClick={() => window.alert('clicked')}>
+      Control
+    </button>
+}

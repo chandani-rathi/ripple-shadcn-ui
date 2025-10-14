@@ -1,0 +1,27 @@
+import { Primitive } from '@ripple-primitives/primitive-ui';
+const NAME = 'LABEL';
+
+export component Label(props) {
+  <Primitive.label //{...props}
+    for={props.htmlFor}
+    class={props.class}
+    onMouseDown={(event) => {
+        // only prevent text selection if clicking inside the label itself
+        const target = event.target as HTMLElement;
+        if (target.closest('button, input, select, textarea')) return;
+
+        props.onMouseDown?.(event);
+        // prevent text selection when double clicking label
+        if (!event.defaultPrevented && event.detail > 1) event.preventDefault();
+    }}
+    >
+    <props.@children />
+  </Primitive.label>
+}
+
+
+const Root = Label
+
+export {
+  Root
+}

@@ -3,6 +3,15 @@ import { defineConfig } from 'vite';
 import { ripple } from 'vite-plugin-ripple';
 import path from 'path';
 
+export const getWorkspaceDeps = async (packageJson) => {
+	if(!packageJson) {
+		packageJson = await import("./package.json");
+	}
+	return Object.keys(packageJson.dependencies).filter(
+		k => packageJson.dependencies[k].startsWith("workspace")
+	)
+}
+
 export default defineConfig({
 	base: './',
 	resolve: {

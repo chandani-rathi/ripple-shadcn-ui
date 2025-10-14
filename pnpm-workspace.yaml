@@ -3,4 +3,7 @@ packages:
   - apps/*
 
 catalog:
+  eslint-plugin-ripple: 0.2.124
+  prettier-plugin-ripple: 0.2.124
   ripple: 0.2.124
+  vite-plugin-ripple: 0.2.124

@@ -1,0 +1,23 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`visually-hidden > should work 1`] = `
+<div>
+  <!---->
+  <!---->
+  <!---->
+  <span
+    style="position: absolute; border: 0px; padding: 0px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; word-wrap: normal;"
+  >
+    <!---->
+    <!---->
+    TEST
+    <!---->
+    <!---->
+    <!---->
+  </span>
+  <!---->
+  <!---->
+  <!---->
+  
+</div>
+`;

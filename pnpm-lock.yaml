@@ -124,6 +124,9 @@ importers:
 
   primitives/ripple/accessible-icon:
     dependencies:
+      '@ripple-primitives/visually-hidden':
+        specifier: workspace:*
+        version: link:../visually-hidden
       ripple:
         specifier: 'catalog:'
         version: 0.2.131

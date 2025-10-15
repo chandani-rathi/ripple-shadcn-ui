@@ -18,6 +18,7 @@
     "test:watch": "vitest"
   },
   "dependencies": {
+    "@ripple-primitives/visually-hidden": "workspace:*",
     "ripple": "catalog:"
   },
   "packageManager": "pnpm@10.18.2"

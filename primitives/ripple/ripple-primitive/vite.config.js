@@ -18,8 +18,6 @@ const resolveAlias = () => {
 	)
 }
 
-console.log(resolveAlias())
-
 export default defineConfig({
 	plugins: [...viteConfig.plugins],
 	resolve: {

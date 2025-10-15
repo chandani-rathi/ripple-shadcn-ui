@@ -1,13 +1,15 @@
-
+import { trackSplit } from "ripple"
+import { VisuallyHidden } from "@ripple-primitives/visually-hidden"
 const NAME = 'ACCESSIBLE_ICON';
 
+
+
 export component AccessibleIcon(props){
-  <props.@children />
-}
-
-
-const Root = AccessibleIcon
-
-export {
-  Root
+  const accessibilityProps = {
+    'aria-hidden': 'true',
+    focusable: 'false', // See: https://allyjs.io/tutorials/focusing-in-svg.html#making-svg-elements-focusable
+  }
+  const [children, label, rest] = trackSplit(props, ['children', 'label'])
+  <@children {...@rest} {...accessibilityProps} />
+  <VisuallyHidden>{@label}</VisuallyHidden>
 }

@@ -1,0 +1,42 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`accessible-icon > should work 1`] = `
+<div>
+  <!---->
+  <!---->
+  <!---->
+  <svg
+    aria-hidden="true"
+    data-id="TEST"
+    fill="none"
+    focusable="false"
+    height="24"
+    stroke="currentColor"
+    viewBox="0 0 32 32"
+    width="24"
+  >
+    <path
+      d="M2 30 L30 2 M30 30 L2 2"
+    />
+  </svg>
+  <!---->
+  <!---->
+  <!---->
+  <!---->
+  <span
+    style="position: absolute; border: 0px; padding: 0px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; word-wrap: normal;"
+  >
+    <!---->
+    <!---->
+    TEST
+    <!---->
+    <!---->
+    <!---->
+  </span>
+  <!---->
+  <!---->
+  <!---->
+  <!---->
+  
+</div>
+`;

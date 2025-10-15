@@ -3,8 +3,10 @@ import { AccessibleIcon } from 'ripple-primitives';
 export default { title: 'Utilities/AccessibleIcon' };
 
 export component Styled() {
-    <AccessibleIcon label="Close">
-        <CrossIcon />
+    <AccessibleIcon label="Close" data-id="close">
+        component children(props){
+            <CrossIcon {...props} />
+        }
     </AccessibleIcon>
     
 }
@@ -22,8 +24,8 @@ Chromatic.isRippleComponent = true
 
 Chromatic.parameters = { chromatic: { disable: false } };
 
-component CrossIcon() {
-     <svg viewBox="0 0 32 32" width={24} height={24} fill="none" stroke="currentColor">
+component CrossIcon(props) {
+     <svg viewBox="0 0 32 32" width={24} height={24} fill="none" stroke="currentColor" {...props}>
         <path d="M2 30 L30 2 M30 30 L2 2" />
     </svg>
 }

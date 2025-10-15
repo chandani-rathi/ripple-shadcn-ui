@@ -1,0 +1,21 @@
+import { axe } from 'vitest-axe';
+import { VisuallyHidden }  from "../src/visually-hidden.ripple";
+
+const TEXT_CHILD = "TEST"
+
+describe("visually-hidden", () => {
+    beforeEach(() => {
+		component Test(){
+			<VisuallyHidden>{TEXT_CHILD}</VisuallyHidden>
+		}
+		render(Test);
+	});
+
+    it('should have no accessibility violations', async () => {
+		expect(await axe(container)).toHaveNoViolations();
+	});
+    
+    it("should work", () => {
+         expect(container).toMatchSnapshot()
+    })
+})

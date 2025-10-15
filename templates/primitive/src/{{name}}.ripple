@@ -1,5 +1,5 @@
 
-const NAME = '{{constantCase name}}';
+const NAME = '{{pascalCase name}}';
 
 export component {{pascalCase name}}(props){
   <props.@children />

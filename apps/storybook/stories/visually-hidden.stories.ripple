@@ -1,0 +1,10 @@
+import { VisuallyHidden } from 'ripple-primitives';
+
+export default { title: 'Utilities/VisuallyHidden' };
+
+export component Basic(){
+    <button>
+        <VisuallyHidden>{"Save the file"}</VisuallyHidden>
+        <span aria-hidden>{"💾"}</span>
+    </button>
+}

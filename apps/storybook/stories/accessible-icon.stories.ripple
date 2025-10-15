@@ -3,12 +3,20 @@ import { AccessibleIcon } from 'ripple-primitives';
 export default { title: 'Utilities/AccessibleIcon' };
 
 export component Styled() {
+    <AccessibleIcon label="Close">
+        <CrossIcon />
+    </AccessibleIcon>
     
 }
 Chromatic.Styled = true
 
 export component Chromatic() {
-    
+    <p>
+        {"Some text with an inline accessible icon"}
+        <AccessibleIcon label="Close">
+            <CrossIcon />
+        </AccessibleIcon>
+    </p>
 }
 Chromatic.isRippleComponent = true
 

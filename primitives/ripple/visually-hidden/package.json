@@ -1,5 +1,5 @@
 {
-  "name": "ripple-primitives",
+  "name": "@ripple-primitives/visually-hidden",
   "version": "1.0.0",
   "type": "module",
   "source": "./src/index.ts",
@@ -18,11 +18,7 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@ripple-primitives/accessible-icon": "workspace:*",
-    "@ripple-primitives/label": "workspace:*",
-    "@ripple-primitives/primitive": "workspace:*",
-    "@ripple-primitives/toggle": "workspace:*",
-    "@ripple-primitives/visually-hidden": "workspace:*",
+    "@ripple-primitives/primitive-ui": "workspace:*",
     "ripple": "catalog:"
   },
   "packageManager": "pnpm@10.18.2"

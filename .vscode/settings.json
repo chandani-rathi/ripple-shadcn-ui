@@ -1,5 +1,6 @@
 {
     "tailwindCSS.includeLanguages": {
         "ripple": "html"
-    }
+    },
+    "vitest.disableWorkspaceWarning": true
 }

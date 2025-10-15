@@ -1,0 +1,23 @@
+import { Primitive } from "@ripple-primitives/primitive-ui"
+const NAME = 'Separator';
+const DEFAULT_ORIENTATION = 'horizontal';
+const ORIENTATIONS = ['horizontal', 'vertical'] as const;
+
+type Orientation = (typeof ORIENTATIONS)[number];
+
+export component Separator({ decorative, orientation: orientationProp = DEFAULT_ORIENTATION, ...domProps}){
+  const orientation = isValidOrientation(orientationProp) ? orientationProp : DEFAULT_ORIENTATION;
+  const ariaOrientation = orientation === 'vertical' ? orientation : undefined;
+  const semanticProps = decorative
+    ? { role: 'none' }
+    : { 'aria-orientation': ariaOrientation, role: 'separator' };
+  
+  <Primitive.div  data-orientation={orientation} {...semanticProps} {...domProps}/>
+  //<domProps.@children />
+}
+
+/* -----------------------------------------------------------------------------------------------*/
+
+function isValidOrientation(orientation: any): orientation is Orientation {
+  return ORIENTATIONS.includes(orientation);
+}

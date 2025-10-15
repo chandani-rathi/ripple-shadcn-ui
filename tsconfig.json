@@ -16,7 +16,8 @@
 			"@ripple-primitives/toggle" : ["primitives/ripple/toggle/src"],
 			"@ripple-primitives/primitive-ui" : ["primitives/ripple/primitive/src"],
 			"@ripple-primitives/accessible-icon" : ["primitives/ripple/accessible-icon/src"],
-			"@ripple-primitives/visually-hidden" : ["primitives/ripple/visually-hidden/src"]
+			"@ripple-primitives/visually-hidden" : ["primitives/ripple/visually-hidden/src"],
+			"@ripple-primitives/separator" : ["primitives/ripple/separator/src"]
 		}
 	}
 }

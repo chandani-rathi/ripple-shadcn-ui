@@ -163,12 +163,21 @@ importers:
       '@ripple-primitives/primitive':
         specifier: workspace:*
         version: link:../../core/primitive
+      '@ripple-primitives/separator':
+        specifier: workspace:*
+        version: link:../separator
       '@ripple-primitives/toggle':
         specifier: workspace:*
         version: link:../toggle
       '@ripple-primitives/visually-hidden':
         specifier: workspace:*
         version: link:../visually-hidden
+      ripple:
+        specifier: 'catalog:'
+        version: 0.2.131
+
+  primitives/ripple/separator:
+    dependencies:
       ripple:
         specifier: 'catalog:'
         version: 0.2.131

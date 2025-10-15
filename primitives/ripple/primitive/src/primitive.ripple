@@ -19,7 +19,7 @@ const NODES = [
   'span',
   'svg',
   'ul',
-];
+] as const;
 
 /*
     <Primitive.div />
@@ -27,14 +27,16 @@ const NODES = [
 */
 const Primitive = NODES.reduce(
     (primitive, node) => {
-        component Node(props){
+        component Node({children, asChild, ...props}){
             let tag = track(node);
-            const [children, rest] = trackSplit(props, ['children']);
-            <@tag {...@rest}>
-                if(props.@children) {
-                    <props.@children />
-                }
-            </@tag> 
+            if(asChild) {
+                <@children {...@props} />
+            }
+            else {
+                <@tag {...@props}>
+                    <@children />
+                </@tag> 
+            }
         }
         return {
             ...primitive, [node]: Node

@@ -20,10 +20,8 @@ export const Controlled = {
   },
   render: (props) => {
     component Controlled() {
-      const pressed = track(props.pressed)
-      console.log(styles.root)
-      <Toggle class={styles.root} {pressed}  onClick={props.onClick} onPressedChange={props.onPressedChange}>
-       {@pressed ? 'On' : 'Off'}
+      <Toggle class={styles.root} pressed={props.pressed}  onClick={props.onClick} onPressedChange={props.onPressedChange}>
+       {props.pressed ? 'On' : 'Off'}
       </Toggle>
     }
     return Controlled;

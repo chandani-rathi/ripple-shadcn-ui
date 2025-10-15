@@ -1,0 +1,13 @@
+
+const NAME = 'ACCESSIBLE_ICON';
+
+export component AccessibleIcon(props){
+  <props.@children />
+}
+
+
+const Root = AccessibleIcon
+
+export {
+  Root
+}

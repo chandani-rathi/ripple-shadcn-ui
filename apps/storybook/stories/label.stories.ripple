@@ -1,4 +1,4 @@
-import { Label } from "@ripple-primitives/label"
+import { Label } from "ripple-primitives"
 export default { title: 'Components/Label' };
 import styles from "./label.stories.module.css"
 

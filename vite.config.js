@@ -4,13 +4,13 @@ import { ripple } from 'vite-plugin-ripple';
 import path from 'path';
 
 export const getWorkspaceDeps = async (packageJson) => {
-	if(!packageJson) {
-		packageJson = await import("./package.json");
+	if (!packageJson) {
+		packageJson = await import('./package.json');
 	}
-	return Object.keys(packageJson.dependencies).filter(
-		k => packageJson.dependencies[k].startsWith("workspace")
-	)
-}
+	return Object.keys(packageJson.dependencies).filter((k) =>
+		packageJson.dependencies[k].startsWith('workspace')
+	);
+};
 
 export default defineConfig({
 	base: './',
@@ -19,7 +19,10 @@ export default defineConfig({
 			'@': path.resolve(__dirname, './registry/new-york'),
 		},
 	},
-	plugins: [ripple(), tailwindcss()],
+	plugins: [
+		ripple(),
+		tailwindcss()
+	],
 	server: {
 		port: 3000,
 	},

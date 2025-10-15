@@ -1,4 +1,4 @@
-import { Toggle } from "@ripple-primitives/toggle";
+import { Toggle } from "ripple-primitives";
 import styles from './toggle.stories.module.css';
 import { fn } from 'storybook/test';
 import { track } from 'ripple'

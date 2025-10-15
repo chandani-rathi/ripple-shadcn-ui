@@ -1,0 +1,22 @@
+import { axe } from 'vitest-axe';
+import userEvent from '@testing-library/user-event';
+import { RippleUi }  from "../src/ripple-ui.ripple";
+
+const TEXT_CHILD = "TEST"
+
+describe("ripple-ui", () => {
+    beforeEach(() => {
+		component Test(){
+			<RippleUi>{TEXT_CHILD}</RippleUi>
+		}
+		render(Test);
+	});
+
+    it('should have no accessibility violations', async () => {
+		expect(await axe(container)).toHaveNoViolations();
+	});
+    
+    it("should work", () => {
+         expect(container).toMatchSnapshot()
+    })
+})

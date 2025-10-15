@@ -93,21 +93,12 @@ importers:
 
   apps/storybook:
     dependencies:
-      '@ripple-primitives/label':
-        specifier: workspace:*
-        version: link:../../primitives/ripple/label
-      '@ripple-primitives/primitive':
-        specifier: workspace:*
-        version: link:../../primitives/core/primitive
-      '@ripple-primitives/primitive-ui':
-        specifier: workspace:*
-        version: link:../../primitives/ripple/primitive
-      '@ripple-primitives/toggle':
-        specifier: workspace:*
-        version: link:../../primitives/ripple/toggle
       ripple:
         specifier: 'catalog:'
         version: 0.2.129
+      ripple-primitives:
+        specifier: workspace:*
+        version: link:../../primitives/ripple/ripple-primitive
     devDependencies:
       '@radix-ui/colors':
         specifier: ^3.0.0
@@ -154,6 +145,24 @@ importers:
 
   primitives/ripple/primitive:
     dependencies:
+      ripple:
+        specifier: 'catalog:'
+        version: 0.2.129
+
+  primitives/ripple/ripple-primitive:
+    dependencies:
+      '@ripple-primitives/accessible-icon':
+        specifier: workspace:*
+        version: link:../accessible-icon
+      '@ripple-primitives/label':
+        specifier: workspace:*
+        version: link:../label
+      '@ripple-primitives/primitive':
+        specifier: workspace:*
+        version: link:../../core/primitive
+      '@ripple-primitives/toggle':
+        specifier: workspace:*
+        version: link:../toggle
       ripple:
         specifier: 'catalog:'
         version: 0.2.129

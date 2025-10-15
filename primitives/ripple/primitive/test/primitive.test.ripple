@@ -34,7 +34,7 @@ test("should attributes and event works", () => {
 })
 
 
-test.todo("should pros spread works", () => {
+test("should pros spread works", () => {
     let container = document.createElement('div');
     const onClick = vi.fn();
     component Test(){

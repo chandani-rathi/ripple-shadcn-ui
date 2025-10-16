@@ -1,0 +1,24 @@
+import { UseSize, Primitive } from 'ripple-primitives';
+import { effect } from "ripple"
+export default {
+	title: 'Utilities/Use Size',
+}
+
+export component CustomArrow() {
+
+    const size = UseSize();
+    
+    effect(() => {
+        console.log("size changed", @size)
+    })
+
+	<Primitive.div
+		style={{
+			width: 20,
+			height: 10,
+			borderBottomLeftRadius: 10,
+			borderBottomRightRadius: 10,
+			backgroundColor: 'tomato',
+		}}
+	/>
+}

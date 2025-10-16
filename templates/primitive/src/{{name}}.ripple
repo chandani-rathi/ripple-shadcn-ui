@@ -4,10 +4,3 @@ const NAME = '{{pascalCase name}}';
 export component {{pascalCase name}}(props){
   <props.@children />
 }
-
-
-const Root = {{pascalCase name}}
-
-export {
-  Root
-}

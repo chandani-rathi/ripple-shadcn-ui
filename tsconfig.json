@@ -1,25 +1,51 @@
 {
-	"compilerOptions": {
-		"baseUrl": ".",
-		"target": "ESNext",
-		"module": "ESNext",
-		"lib": ["ES2022", "DOM", "DOM.Iterable"],
-		"allowSyntheticDefaultImports": true,
-		"esModuleInterop": true,
-		"moduleResolution": "bundler",
-		"jsx": "preserve",
-		"jsxImportSource": "ripple",
-		"noEmit": true,
-		"isolatedModules": true,
-		"paths": {
-			"@/*": ["registry/new-york/*"],
-			"@ripple-primitives/toggle": ["primitives/ripple/toggle/src"],
-			"@ripple-primitives/primitive-ui": ["primitives/ripple/primitive/src"],
-			"@ripple-primitives/accessible-icon": ["primitives/ripple/accessible-icon/src"],
-			"@ripple-primitives/visually-hidden": ["primitives/ripple/visually-hidden/src"],
-			"@ripple-primitives/separator": ["primitives/ripple/separator/src"],
-			"@ripple-primitives/arrow": ["primitives/ripple/arrow/src"],
-			"@ripple-primitives/utils": ["primitives/core/utils/src"]
-		}
-	}
+    "compilerOptions": {
+        "baseUrl": ".",
+        "target": "ESNext",
+        "module": "ESNext",
+        "lib": [
+            "ES2022",
+            "DOM",
+            "DOM.Iterable"
+        ],
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "moduleResolution": "bundler",
+        "jsx": "preserve",
+        "jsxImportSource": "ripple",
+        "noEmit": true,
+        "isolatedModules": true,
+        "paths": {
+            "@/*": [
+                "registry/new-york/*"
+            ],
+            "@ripple-primitives/toggle": [
+                "primitives/ripple/toggle/src"
+            ],
+            "@ripple-primitives/primitive-ui": [
+                "primitives/ripple/primitive/src"
+            ],
+            "@ripple-primitives/accessible-icon": [
+                "primitives/ripple/accessible-icon/src"
+            ],
+            "@ripple-primitives/visually-hidden": [
+                "primitives/ripple/visually-hidden/src"
+            ],
+            "@ripple-primitives/separator": [
+                "primitives/ripple/separator/src"
+            ],
+            "@ripple-primitives/arrow": [
+                "primitives/ripple/arrow/src"
+            ],
+            "@ripple-primitives/utils": [
+                "primitives/core/utils/src"
+            ],
+            "@ripple-primitives/use-size": [
+                "primitives/ripple/use-size/src"
+            ],
+            "@ripple-primitives/aspect-ratio": [
+                "primitives/ripple/aspect-ratio/src"
+            ]
+        }
+    }
 }

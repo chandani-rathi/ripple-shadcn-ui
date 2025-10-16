@@ -1,0 +1,22 @@
+import { axe } from 'vitest-axe';
+import userEvent from '@testing-library/user-event';
+import { UseSize }  from "../src/use-size.ripple";
+
+const TEXT_CHILD = "TEST"
+
+describe("use-size", () => {
+    beforeEach(() => {
+		component Test(){
+			<UseSize>{TEXT_CHILD}</UseSize>
+		}
+		render(Test);
+	});
+
+    it('should have no accessibility violations', async () => {
+		expect(await axe(container)).toHaveNoViolations();
+	});
+    
+    it("should work", () => {
+         expect(container).toMatchSnapshot()
+    })
+})

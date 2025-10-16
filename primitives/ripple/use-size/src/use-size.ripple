@@ -1,0 +1,44 @@
+import { track, effect } from "ripple"
+const NAME = 'UseSize';
+
+export function UseSize(element: HTMLElement | null){
+  const size = track<{ width: number; height: number } | undefined>(undefined);
+  effect(() => {
+    if (element) {
+      @size = { width: element.offsetWidth, height: element.offsetHeight }
+      const resizeObserver = new ResizeObserver((entries) => {
+        if (!Array.isArray(entries)) {
+          return;
+        }
+
+        if (!entries.length) {
+          return;
+        }
+
+        const entry = entries[0];
+        let width: number;
+        let height: number;
+
+        if ('borderBoxSize' in entry) {
+          const borderSizeEntry = entry['borderBoxSize'];
+          // iron out differences between browsers
+          const borderSize = Array.isArray(borderSizeEntry) ? borderSizeEntry[0] : borderSizeEntry;
+          width = borderSize['inlineSize'];
+          height = borderSize['blockSize'];
+        } else {
+          // for browsers that don't support `borderBoxSize`
+          // we calculate it ourselves to get the correct border box.
+          width = element.offsetWidth;
+          height = element.offsetHeight;
+        }
+
+        @size = { width, height };
+      })
+      return () => resizeObserver.unobserve(element);
+    }
+    else if(@size != undefined) {
+      @size = undefined;
+    }
+  })
+  return size;
+}

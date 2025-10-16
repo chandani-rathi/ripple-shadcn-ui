@@ -26,7 +26,9 @@
         "@ripple-primitives/visually-hidden": "workspace:*",
         "ripple": "catalog:",
         "@ripple-primitives/arrow": "workspace:*",
-        "@ripple-primitives/utils": "workspace:*"
+        "@ripple-primitives/utils": "workspace:*",
+        "@ripple-primitives/use-size": "workspace:*",
+        "@ripple-primitives/aspect-ratio": "workspace:*"
     },
     "packageManager": "pnpm@10.18.2"
 }

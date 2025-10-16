@@ -6,3 +6,6 @@ export * from "@ripple-primitives/separator";
 export * from "@ripple-primitives/arrow";
 export * from "@ripple-primitives/primitive-ui"
 export * from "@ripple-primitives/utils";
+export * from "@ripple-primitives/use-size";
+
+export * from "@ripple-primitives/aspect-ratio";

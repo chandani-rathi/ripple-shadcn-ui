@@ -1,0 +1,23 @@
+import { Primitive } from "@ripple-primitives/primitive-ui"
+const NAME = 'Arrow';
+
+export component Arrow({ children, width = 10, height = 5, ...arrowProps } ){
+  const ArrowChildren = children
+  <Primitive.svg
+      {...arrowProps}
+      width={width}
+      height={height}
+      viewBox="0 0 30 10"
+      preserveAspectRatio="none"
+    >
+      component children(props){
+        {/* We use their children if they're slotting to replace the whole svg */}
+        if(arrowProps.asChild) {
+          <@ArrowChildren {...props} />
+        }
+        else {
+          <polygon points="0,0 30,0 15,10" />
+        }
+      }
+    </Primitive.svg>
+}

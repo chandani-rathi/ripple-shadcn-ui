@@ -1,0 +1,12 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`utils > should work 1`] = `
+<div>
+  <!---->
+  <!---->
+  TEST
+  <!---->
+  <!---->
+  
+</div>
+`;

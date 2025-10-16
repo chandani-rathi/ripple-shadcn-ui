@@ -2,34 +2,17 @@ import { defineConfig } from 'vite';
 import { ripple } from 'vite-plugin-ripple';
 import path from "node:path"
 import packageJson from "./package.json";
-import viteConfig from '../../../vite.config';
-import fs from 'node:fs';
 
 const workspaceDeps = Object.keys(packageJson.dependencies).filter(
 	k => packageJson.dependencies[k].startsWith("workspace")
-);
+)
 
-const resolveAlias = () => {
-	return workspaceDeps.reduce(
-		(alias, dep) => {
-			const folderName = dep.split("/").pop()
-			alias[dep] = path.resolve(__dirname, `../${folderName}/src`)
-			if(!fs.existsSync(alias[dep])) {
-				alias[dep] = path.resolve(__dirname, `../../core/${folderName}/src`)
-			}
-			return alias;
-		}, {}
-	)
-}
 
 export default defineConfig({
-	plugins: [...viteConfig.plugins],
+	plugins: [ripple()],
 	resolve: {
 		alias: {
 			'@': path.resolve(__dirname, './src'),
-			...resolveAlias(),
-			'@ripple-primitives/primitive': path.resolve(__dirname, '../../core/primitive/src'),
-			'@ripple-primitives/primitive-ui': path.resolve(__dirname, '../primitive/src'),
 		},
 	},
 	build: {
@@ -48,7 +31,7 @@ export default defineConfig({
 				globals: {},
 				exports: 'named',
 			},
-			external: ['ripple', 'ripple/internal/client'],
+			external: ['ripple', 'ripple/internal/client', ...workspaceDeps],
 			plugins: [],
 		},
 	},

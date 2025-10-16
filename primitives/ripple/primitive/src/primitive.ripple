@@ -1,5 +1,6 @@
 import { track } from "ripple"
 import type { PropsWithChildren } from "ripple";
+import { normalizeStyleObject } from "@ripple-primitives/utils" 
 
 const NODES = [
   'a',
@@ -31,13 +32,13 @@ type PrimitiveProps<T extends object = {}> = PropsWithChildren<{ asChild?: boole
 */
 export const Primitive = NODES.reduce(
     (primitive, node) => {
-        component Node({children, asChild, ...props} : PrimitiveProps){
+        component Node({children, asChild, style, ...props} : PrimitiveProps){
             let tag = track(node);
             if(asChild) {
-                <@children {...@props} />
+                <@children style={normalizeStyleObject(style)} {...@props} />
             }
             else {
-                <@tag {...@props}>
+                <@tag style={normalizeStyleObject(style)} {...@props}>
                     <@children />
                 </@tag> 
             }

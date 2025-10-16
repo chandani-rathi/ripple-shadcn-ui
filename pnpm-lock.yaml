@@ -122,11 +122,23 @@ importers:
         specifier: 'catalog:'
         version: 0.2.131
 
+  primitives/core/utils:
+    dependencies:
+      ripple:
+        specifier: 'catalog:'
+        version: 0.2.131
+
   primitives/ripple/accessible-icon:
     dependencies:
       '@ripple-primitives/visually-hidden':
         specifier: workspace:*
         version: link:../visually-hidden
+      ripple:
+        specifier: 'catalog:'
+        version: 0.2.131
+
+  primitives/ripple/arrow:
+    dependencies:
       ripple:
         specifier: 'catalog:'
         version: 0.2.131
@@ -148,6 +160,9 @@ importers:
 
   primitives/ripple/primitive:
     dependencies:
+      '@ripple-primitives/utils':
+        specifier: workspace:*
+        version: link:../../core/utils
       ripple:
         specifier: 'catalog:'
         version: 0.2.131
@@ -157,6 +172,9 @@ importers:
       '@ripple-primitives/accessible-icon':
         specifier: workspace:*
         version: link:../accessible-icon
+      '@ripple-primitives/arrow':
+        specifier: workspace:*
+        version: link:../arrow
       '@ripple-primitives/label':
         specifier: workspace:*
         version: link:../label
@@ -169,6 +187,9 @@ importers:
       '@ripple-primitives/toggle':
         specifier: workspace:*
         version: link:../toggle
+      '@ripple-primitives/utils':
+        specifier: workspace:*
+        version: link:../../core/utils
       '@ripple-primitives/visually-hidden':
         specifier: workspace:*
         version: link:../visually-hidden

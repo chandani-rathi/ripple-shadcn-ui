@@ -1,30 +1,32 @@
 {
-  "name": "ripple-primitives",
-  "version": "1.0.0",
-  "type": "module",
-  "source": "./src/index.ts",
-  "main": "./src/index.ts",
-  "module": "./src/index.ts",
-  "exports": {
-    ".": {
-      "import": "./dist/index.es.js",
-      "require": "./dist/index.cjs.js"
-    }
-  },
-  "scripts": {
-    "build": "vite build",
-    "watch": "vite build --watch",
-    "test": "vitest run",
-    "test:watch": "vitest"
-  },
-  "dependencies": {
-    "@ripple-primitives/accessible-icon": "workspace:*",
-    "@ripple-primitives/label": "workspace:*",
-    "@ripple-primitives/primitive": "workspace:*",
-    "@ripple-primitives/separator": "workspace:*",
-    "@ripple-primitives/toggle": "workspace:*",
-    "@ripple-primitives/visually-hidden": "workspace:*",
-    "ripple": "catalog:"
-  },
-  "packageManager": "pnpm@10.18.2"
+    "name": "ripple-primitives",
+    "version": "1.0.0",
+    "type": "module",
+    "source": "./src/index.ts",
+    "main": "./src/index.ts",
+    "module": "./src/index.ts",
+    "exports": {
+        ".": {
+            "import": "./dist/index.es.js",
+            "require": "./dist/index.cjs.js"
+        }
+    },
+    "scripts": {
+        "build": "vite build",
+        "watch": "vite build --watch",
+        "test": "vitest run",
+        "test:watch": "vitest"
+    },
+    "dependencies": {
+        "@ripple-primitives/accessible-icon": "workspace:*",
+        "@ripple-primitives/label": "workspace:*",
+        "@ripple-primitives/primitive": "workspace:*",
+        "@ripple-primitives/separator": "workspace:*",
+        "@ripple-primitives/toggle": "workspace:*",
+        "@ripple-primitives/visually-hidden": "workspace:*",
+        "ripple": "catalog:",
+        "@ripple-primitives/arrow": "workspace:*",
+        "@ripple-primitives/utils": "workspace:*"
+    },
+    "packageManager": "pnpm@10.18.2"
 }

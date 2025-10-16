@@ -1,0 +1,6 @@
+
+const NAME = 'FocusScope';
+
+export component FocusScope(props){
+  <props.@children />
+}

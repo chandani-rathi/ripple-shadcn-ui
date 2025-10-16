@@ -1,17 +1,13 @@
 import { axe } from 'vitest-axe';
 import userEvent from '@testing-library/user-event';
-import { AspectRatio }  from "../src/aspect-ratio.ripple";
+import { FocusScope }  from "../src/focus-scope.ripple";
 
-const RATIO = 1 / 2;
+const TEXT_CHILD = "TEST"
 
-describe("aspect-ratio", () => {
+describe("focus-scope", () => {
     beforeEach(() => {
 		component Test(){
-			<div style={{ width: '500px' }}>
-				<AspectRatio ratio={RATIO}>
-				<span>{"Hello"}</span>
-				</AspectRatio>
-			</div>
+			<FocusScope>{TEXT_CHILD}</FocusScope>
 		}
 		render(Test);
 	});

@@ -45,6 +45,9 @@
             ],
             "@ripple-primitives/aspect-ratio": [
                 "primitives/ripple/aspect-ratio/src"
+            ],
+            "@ripple-primitives/focus-scope": [
+                "primitives/ripple/focus-scope/src"
             ]
         }
     }

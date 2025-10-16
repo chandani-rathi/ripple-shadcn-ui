@@ -28,7 +28,8 @@
         "@ripple-primitives/arrow": "workspace:*",
         "@ripple-primitives/utils": "workspace:*",
         "@ripple-primitives/use-size": "workspace:*",
-        "@ripple-primitives/aspect-ratio": "workspace:*"
+        "@ripple-primitives/aspect-ratio": "workspace:*",
+        "@ripple-primitives/focus-scope": "workspace:*"
     },
     "packageManager": "pnpm@10.18.2"
 }

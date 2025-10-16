@@ -9,3 +9,5 @@ export * from "@ripple-primitives/utils";
 export * from "@ripple-primitives/use-size";
 
 export * from "@ripple-primitives/aspect-ratio";
+
+export * from "@ripple-primitives/focus-scope";

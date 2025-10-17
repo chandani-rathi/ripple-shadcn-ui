@@ -1,0 +1,265 @@
+import { FocusScope, Primitive } from 'ripple-primitives';
+import { track } from 'ripple';
+
+export default {
+	title: 'Utilities/FocusScope',
+}
+
+export component Basic() {
+	const trapped = track(false);
+    const hasDestroyButton = track(true)
+	<div>
+		<button type="button" onClick={() => @trapped = true}>{'Trap'}</button>
+		{' '}
+		<input />
+		<input />
+	</div>
+    if(@trapped) {
+        <FocusScope asChild loop={trapped} trapped={trapped}>
+            component children(props){
+                <Primitive.form
+                    {...props}
+                    style={{
+                    display: 'inline-flex',
+                    flexDirection: 'column',
+                    gap: 20,
+                    padding: 20,
+                    margin: 50,
+                    maxWidth: 500,
+                    border: '2px solid',
+                    }}
+                >
+                    <input type="text" placeholder="First name" />
+                    <input type="text" placeholder="Last name" />
+                    <input type="number" placeholder="Age" />
+                    if(@hasDestroyButton) {
+                        <div>
+                        <button type="button" onClick={() => @hasDestroyButton = false}>
+                        {"Destroy me"}
+                        </button>
+                    </div>
+                    }
+                    <button type="button" onClick={() => @trapped=false}>
+                    {"Close"}
+                    </button>
+            </Primitive.form>
+            }
+        </FocusScope>
+    }
+	<div>
+		<input />
+		<input />
+	</div>
+}
+
+
+export component Multiple() {
+    const trapped1 = track(false);
+    const trapped2 = track(false);
+    <Primitive.div style={{ display: 'inline-flex', flexDirection: 'column', gap: 10 }}>
+        <div>
+            <button type="button" onClick={() => @trapped1 = true}>
+            {"Trap 1"}
+            </button>
+        </div>
+        if(@trapped1) {
+            <FocusScope asChild loop={trapped1} trapped={trapped1}>
+                component children(props) {
+                    <Primitive.form {...props}
+                    style={{
+                        display: 'inline-flex',
+                        flexDirection: 'column',
+                        gap: 20,
+                        padding: 20,
+                        maxWidth: 500,
+                        border: '2px solid',
+                    }}
+                    >
+                        <h1>{"One"}</h1>
+                        <input type="text" placeholder="First name" />
+                        <input type="text" placeholder="Last name" />
+                        <input type="number" placeholder="Age" />
+                        <button type="button" onClick={() => @trapped1 = false}>
+                        {"Close"}
+                        </button>
+                    </Primitive.form>
+                }
+            </FocusScope>
+        }
+        <div>
+            <button type="button" onClick={() => @trapped2 = true}>
+            {"Trap 2"}
+            </button>
+        </div>
+        if(@trapped2) {
+            <FocusScope asChild loop={trapped2} trapped={trapped2}>
+                component children(props) {
+                    <Primitive.form {...props}
+                    style={{
+                        display: 'inline-flex',
+                        flexDirection: 'column',
+                        gap: 20,
+                        padding: 20,
+                        maxWidth: 500,
+                        border: '2px solid',
+                    }}
+                    >
+                        <h1>{"Two"}</h1>
+                        <input type="text" placeholder="First name" />
+                        <input type="text" placeholder="Last name" />
+                        <input type="number" placeholder="Age" />
+                        <button type="button" onClick={() => @trapped2 = false}>
+                        {"Close"}
+                        </button>
+                    </Primitive.form>
+                }
+            </FocusScope>
+        }
+    </Primitive.div>
+}
+
+export component WithOptions() {
+    const open = track(false)
+    const isEmptyForm = track(false)
+    const trapFocus = track(false)
+    const focusOnMount = track(false)
+    const focusOnUnmount = track(false);
+
+    let ageFieldEle = track(null);
+    let nextButtonEle = track(null);
+
+    <Primitive.div style={{ fontFamily: 'sans-serif', textAlign: 'center' }}>
+        <h1>{"Focus Scope"}</h1>
+        <Primitive.div style={{ display: 'inline-block', textAlign: 'left', marginBottom: 20 }}>
+            <label style={{ display: 'block' }}>
+                <input
+                    type="checkbox"
+                    checked={@trapFocus}
+                    onChange={(event) => @trapFocus = event.target.checked}
+                />{' '}
+                {"Trap focus?"}
+            </label>
+            <label style={{ display: 'block' }}>
+                <input
+                    type="checkbox"
+                    checked={@focusOnMount !== false}
+                    onChange={(event) => {
+                    @focusOnMount = event.target.checked;
+                    if (event.target.checked === false) {
+                        @isEmptyForm = false
+                    }
+                    }}
+                />{' '}
+                {"Focus on mount?"}
+            </label>
+            if(@focusOnMount && !@isEmptyForm) {
+                <Primitive.label style={{ display: 'block', marginLeft: 20 }}>
+                <input
+                    type="checkbox"
+                    checked={@focusOnMount !== true}
+                    onChange={(event) => @focusOnMount= event.target.checked ? @ageFieldEle : true}
+                    />{' '}
+                    {"on \"age\" field?"}
+                </Primitive.label>
+            }
+            if(@focusOnMount) {
+                 <Primitive.label style={{ display: 'block', marginLeft: 20 }}>
+                    <input
+                        type="checkbox"
+                        checked={@isEmptyForm}
+                        onChange={(event) => {
+                            @isEmptyForm = event.target.checked;
+                            @focusOnMount = true;
+                        }}
+                    />{' '}
+                    {"empty form?"}
+                </Primitive.label>
+            }
+            <label style={{ display: 'block' }}>
+                    <input
+                        type="checkbox"
+                        checked={@focusOnUnmount !== false}
+                        onChange={(event) => @focusOnUnmount = event.target.checked}
+                    />{' '}
+                    {"Focus on unmount?"}
+                </label>
+                if(@focusOnUnmount) {
+                    <Primitive.label style={{ display: 'block', marginLeft: 20 }}>
+                        <input
+                            type="checkbox"
+                            checked={@focusOnUnmount !== true}
+                            onChange={(event) => @focusOnUnmount = (event.target.checked ? @nextButtonEle : true)}
+                        />{' '}
+                        {"on \"next\" button?"}
+                    </Primitive.label>
+                }
+        </Primitive.div>
+
+        <Primitive.div style={{ marginBottom: 20 }}>
+            <button type="button" onClick={() => @open = !@open}>
+                {@open ? 'Close' : 'Open'} {" form in between buttons"}
+            </button>
+        </Primitive.div>
+        
+        if(@open) {
+            <FocusScope asChild loop={@trapFocus} trapped={@trapFocus}
+                onMountAutoFocus={(event) => {
+                    console.log(event)
+                    if(@focusOnMount) {
+                        event.preventDefault();
+                        if(@focusOnMount) {
+                            @focusOnMount.focus();
+                        }
+                    }
+                }}
+                onUnmountAutoFocus={(event) => {
+                    console.log(event)
+                    if(@focusOnUnmount) {
+                        event.preventDefault();
+                        if(@focusOnUnmount) {
+                            @focusOnUnmount.focus();
+                            console.log("next focus", document.activeElement)
+                        }
+                    }
+                }}
+            >
+                component children(props){
+                    <Primitive.form 
+                        {...props}
+                        style={{
+                            display: 'inline-flex',
+                            flexDirection: 'column',
+                            gap: 20,
+                            padding: 20,
+                            margin: 50,
+                            maxWidth: 500,
+                            border: '2px solid',
+                        }}>
+                        if(!@isEmptyForm) {
+                            <input type="text" placeholder="First name" />
+                            <input type="text" placeholder="Last name" />
+                            <input {ref (n) => {
+                                console.log(n)
+                                @ageFieldEle = n
+                            }} type="number" placeholder="Age" />
+                            <button type="button" onClick={() => @open = false}>
+                                {"Close"}
+                            </button>
+                        }
+                    </Primitive.form>
+                }
+            </FocusScope>
+        }
+
+        <Primitive.button class="button" {ref (n) => {
+            console.log(n);
+            @nextButtonEle=n;
+        }} type="button" style={{ marginLeft: 10 }}
+        onFocus={() => {
+            console.log("got focus")
+        }}
+        >
+            {"next"}
+        </Primitive.button>
+    </Primitive.div>
+}

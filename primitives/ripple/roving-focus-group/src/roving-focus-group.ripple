@@ -1,0 +1,197 @@
+import { Primitive } from "@ripple-primitives/primitive-ui"
+import { composeEventHandlers } from '@ripple-primitives/primitive';
+import { track, Context, untrack, effect } from 'ripple';
+const NAME = 'RovingFocusGroup';
+
+const ENTRY_FOCUS = 'rovingFocusGroup.onEntryFocus';
+const EVENT_OPTIONS = { bubbles: false, cancelable: true };
+/* -------------------------------------------------------------------------------------------------
+ * RovingFocusGroup
+ * -----------------------------------------------------------------------------------------------*/
+
+const GROUP_NAME = 'RovingFocusGroup';
+export const RovingFocusContext = new Context({});
+
+export component RovingFocusGroup(props){
+  <RovingFocusGroupImpl {...props} />
+}
+
+component RovingFocusGroupImpl({
+  orientation,
+  loop = false,
+  dir,
+  currentTabStopId,
+  defaultCurrentTabStopId,
+  onCurrentTabStopIdChange,
+  onEntryFocus,
+  preventScrollOnEntryFocus,
+  style,
+  ...groupProps
+}){
+  const isTabbingBackOut = track(false);
+  const focusableItemsCount = #[];
+  const isClickFocus = track(false);
+  const tabIndex = track(() => @isTabbingBackOut || focusableItemsCount.length === 0 ? -1 : 0) 
+  const context = RovingFocusContext.get();
+  context.getItems = () => focusableItemsCount;
+  context.currentTabStopId = track(() => currentTabStopId)
+  context.onFocusableItemAdd = (item) => {
+    focusableItemsCount.push(item)
+  }
+  context.onFocusableItemRemove = (id) => {
+    const index = focusableItemsCount.indexOf(i => i.id == id);
+    focusableItemsCount.splice(index, 1)
+  }
+  context.onItemShiftTab = () => {
+    @isTabbingBackOut = true;
+  }
+  context.onItemFocus = (id) => {
+    context.currentTabStopId = id;
+  }
+  RovingFocusContext.set(context);
+  <Primitive.div 
+    {...groupProps}
+    data-orientation={orientation}
+    tabIndex={tabIndex}
+    style={{ ...style, outline: 'none',  }} 
+    onMouseDown={composeEventHandlers(groupProps.onMouseDown, () => {
+          @isClickFocus = true;
+    })}
+     onFocus={composeEventHandlers(groupProps.onFocus, (event) => {
+          // We normally wouldn't need this check, because we already check
+          // that the focus is on the current target and not bubbling to it.
+          // We do this because Safari doesn't focus buttons when clicked, and
+          // instead, the wrapper will get focused and not through a bubbling event.
+          const isKeyboardFocus = !@isClickFocus;
+          if (event.target === event.currentTarget && isKeyboardFocus && !@isTabbingBackOut) {
+            const entryFocusEvent = new CustomEvent(ENTRY_FOCUS, EVENT_OPTIONS);
+            event.currentTarget.dispatchEvent(entryFocusEvent);
+            if (!entryFocusEvent.defaultPrevented) {
+              const items = context.getItems().filter((item) => item.focusable);
+                const activeItem = items.find((item) => item.active);
+                const currentItem = items.find((item) => item.id === @currentTabStopId);
+                const candidateItems = [activeItem, currentItem, ...items].filter(
+                  Boolean
+                ) as typeof items;
+                const candidateNodes = candidateItems.map((item) => item.node);
+                focusFirst(candidateNodes, preventScrollOnEntryFocus);
+            }
+          }
+     })}
+     onBlur={composeEventHandlers(groupProps.onBlur, () => @isTabbingBackOut = false)}
+  ></Primitive.div>
+}
+
+
+/* -------------------------------------------------------------------------------------------------
+ * RovingFocusGroupItem
+ * -----------------------------------------------------------------------------------------------*/
+export component RovingFocusGroupItem({
+  focusable = true,
+  active = false,
+  tabStopId,
+  children,
+  ...itemProps
+}){
+  const Children = track (() => @children)
+  const context = RovingFocusContext.get();
+  const id = track(() => Date.now())
+  const isCurrentTabStop = track(() => context.@currentTabStopId === @id)
+  const itemRef = (node) => {
+    untrack(() => {
+      if (focusable) {
+        setTimeout(() => {
+          context.onFocusableItemAdd({id: @id, focusable, active, node});
+        })
+      }
+    })
+      return () => setTimeout(() => context.onFocusableItemRemove(@id));
+  }
+  
+  <Primitive.span
+    {ref itemRef}
+    tabIndex={@isCurrentTabStop ? 0 : -1}
+    data-orientation={context.orientation}
+    {...itemProps}
+    onMouseDown={composeEventHandlers(itemProps.onMouseDown, (event) => {
+      // We prevent focusing non-focusable items on `mousedown`.
+      // Even though the item has tabIndex={-1}, that only means take it out of the tab order.
+      if (!focusable) event.preventDefault();
+      else context.onItemFocus(@id);
+    })}
+    onFocus={composeEventHandlers(itemProps.onFocus, () => context.onItemFocus(@id))}
+    onKeyDown={composeEventHandlers(itemProps.onKeyDown, (event) => {
+      if (event.key === 'Tab' && event.shiftKey) {
+        context.onItemShiftTab();
+        return;
+      }
+      if (event.target !== event.currentTarget) return;
+      const focusIntent = getFocusIntent(event, context.orientation, context.dir);
+      if (focusIntent !== undefined) {
+        if (event.metaKey || event.ctrlKey || event.altKey || event.shiftKey) return;
+        event.preventDefault();
+        const items = context.getItems().filter((item) => item.focusable);
+        let candidateNodes = items.map((item) => item.node);
+        if (focusIntent === 'last') candidateNodes.reverse();
+        else if (focusIntent === 'prev' || focusIntent === 'next') {
+          if (focusIntent === 'prev') candidateNodes.reverse();
+          const currentIndex = candidateNodes.indexOf(event.currentTarget);
+          candidateNodes = context.loop
+            ? wrapArray(candidateNodes, currentIndex + 1)
+            : candidateNodes.slice(currentIndex + 1);
+        }
+        /**
+          * Imperative focus during keydown is risky so we prevent React's batching updates
+          * to avoid potential bugs. See: https://github.com/facebook/react/issues/20332
+          */
+         setTimeout(() => focusFirst(candidateNodes));
+      }
+    })}
+  >
+    component children(childProps){
+      <@Children {...childProps} isCurrentTabStop={@isCurrentTabStop} hasTabStop={context.@currentTabStopId != null} />
+    }
+  </Primitive.span>
+}
+
+/* -----------------------------------------------------------------------------------------------*/
+
+// prettier-ignore
+const MAP_KEY_TO_FOCUS_INTENT: Record<string, FocusIntent> = {
+  ArrowLeft: 'prev', ArrowUp: 'prev',
+  ArrowRight: 'next', ArrowDown: 'next',
+  PageUp: 'first', Home: 'first',
+  PageDown: 'last', End: 'last',
+};
+
+function getDirectionAwareKey(key: string, dir?: Direction) {
+  if (dir !== 'rtl') return key;
+  return key === 'ArrowLeft' ? 'ArrowRight' : key === 'ArrowRight' ? 'ArrowLeft' : key;
+}
+
+type FocusIntent = 'first' | 'last' | 'prev' | 'next';
+
+function getFocusIntent(event: React.KeyboardEvent, orientation?: Orientation, dir?: Direction) {
+  const key = getDirectionAwareKey(event.key, dir);
+  if (orientation === 'vertical' && ['ArrowLeft', 'ArrowRight'].includes(key)) return undefined;
+  if (orientation === 'horizontal' && ['ArrowUp', 'ArrowDown'].includes(key)) return undefined;
+  return MAP_KEY_TO_FOCUS_INTENT[key];
+}
+
+function focusFirst(candidates: HTMLElement[], preventScroll = false) {
+  const PREVIOUSLY_FOCUSED_ELEMENT = document.activeElement;
+  for (const candidate of candidates) {
+    // if focus is already where we want to go, we don't want to keep going through the candidates
+    if (candidate === PREVIOUSLY_FOCUSED_ELEMENT) return;
+    candidate.focus({ preventScroll });
+    if (document.activeElement !== PREVIOUSLY_FOCUSED_ELEMENT) return;
+  }
+}
+
+/**
+ * Wraps an array around itself at a given start index
+ * Example: `wrapArray(['a', 'b', 'c', 'd'], 2) === ['c', 'd', 'a', 'b']`
+ */
+function wrapArray<T>(array: T[], startIndex: number) {
+  return array.map<T>((_, index) => array[(startIndex + index) % array.length]);
+}

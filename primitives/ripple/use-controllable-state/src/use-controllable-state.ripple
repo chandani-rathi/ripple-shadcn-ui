@@ -1,0 +1,66 @@
+import { track, effect } from 'ripple'
+const NAME = 'UseControllableState';
+
+function useUncontrolledState({
+  defaultProp, onChange
+})
+{
+  const value = track(() => defaultProp, undefined,
+    (next, prev) => {
+      onChange(next);
+      return next;
+    });
+  return value;
+}
+
+export function UseControllableState({ prop, defaultProp, onChange = () => {}, caller  }){
+  
+  const isControlled = prop !== undefined;
+  if(!isControlled){
+    const uncontrolledProp = useUncontrolledState({
+      defaultProp,
+      onChange,
+    });
+    return uncontrolledProp;
+  }
+
+  
+  console.log("pressedProp", prop)
+  console.log("isControlled", isControlled)
+
+  return track(() => prop, undefined, (next, prev) => {
+      onChange(next);
+      return prev;
+  });
+}
+
+export component ControllableState({ prop, defaultProp, onChange = () => {}, caller, children, ...props }){
+
+  const isControlled = prop !== undefined;
+  effect(() => {
+    const hasControlled = prop !== undefined;
+    if(isControlled != hasControlled) {
+      const from = isControlled ? 'controlled' : 'uncontrolled';
+      const to = hasControlled ? 'controlled' : 'uncontrolled';
+      console.warn(
+          `${caller} is changing from ${from} to ${to}. Components should not switch from controlled to uncontrolled (or vice versa). Decide between using a controlled or uncontrolled value for the lifetime of the component.`
+      );
+    }
+  });
+ 
+  const doChange = v => setTimeout(() => onChange(v));
+  if(isControlled) {
+    const state = track(() => prop, undefined, (next, prev) => {
+      doChange(next);
+      return prev;
+    });
+    <@children {state} {...props} />
+  }
+  else {
+    const state = track(() => @defaultProp, undefined, (next, prev) => {
+      doChange(next);
+      return next;
+    });
+    <@children {state} {...props} />
+  }
+}

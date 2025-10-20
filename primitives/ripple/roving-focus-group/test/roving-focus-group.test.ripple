@@ -1,0 +1,22 @@
+import { axe } from 'vitest-axe';
+import userEvent from '@testing-library/user-event';
+import { RovingFocusGroup }  from "../src/roving-focus-group.ripple";
+
+const TEXT_CHILD = "TEST"
+
+describe("roving-focus-group", () => {
+    beforeEach(() => {
+		component Test(){
+			<RovingFocusGroup>{TEXT_CHILD}</RovingFocusGroup>
+		}
+		render(Test);
+	});
+
+    it('should have no accessibility violations', async () => {
+		expect(await axe(container)).toHaveNoViolations();
+	});
+    
+    it("should work", () => {
+         expect(container).toMatchSnapshot()
+    })
+})

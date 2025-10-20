@@ -18,10 +18,3 @@ export component Label(props) {
     <props.@children />
   </Primitive.label>
 }
-
-
-const Root = Label
-
-export {
-  Root
-}

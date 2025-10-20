@@ -20,8 +20,20 @@ export const Controlled = {
   },
   render: (props) => {
     component Controlled() {
+      <h1>{"Default Controlled"}</h1>
       <Toggle class={styles.root} pressed={props.pressed}  onClick={props.onClick} onPressedChange={props.onPressedChange}>
        {props.pressed ? 'On' : 'Off'}
+      </Toggle>
+
+      <h1>{"Tracked Controlled"}</h1>
+      const pressed = track(() => props.pressed);
+      const onPressedChange = (v) => @pressed = v
+      <Toggle asChild class={styles.root} pressed={@pressed} {onPressedChange}>
+        component children(props) {
+          <a {...props}>
+            {@pressed ? 'On' : 'Off'}
+          </a>
+        }
       </Toggle>
     }
     return Controlled;

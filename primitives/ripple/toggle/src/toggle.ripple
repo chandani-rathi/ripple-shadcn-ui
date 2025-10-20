@@ -1,90 +1,38 @@
 import { track, trackSplit, effect } from "ripple";
 import { composeEventHandlers } from '@ripple-primitives/primitive';
 import { Primitive } from "@ripple-primitives/primitive-ui";
+import { UseControllableState, ControllableState } from '@ripple-primitives/use-controllable-state';
 
 const NAME = 'Toggle';
 
-export function isTrackedObject(v) {
-	return typeof v === 'object' && v !== null && typeof ((v).f) === 'number';
-}
-
-function useUncontrolledState({
-  defaultProp, onChange
-})
-{
-  const value = track(() => defaultProp, undefined,
-    (next, prev) => {
-      onChange(next);
-      return next;
-    });
-  return value;
-}
-
-function useControllableState({
-  prop, defaultProp, onChange = () => {}, caller, isTracked
-}){
-  const uncontrolledProp = useUncontrolledState({
-    defaultProp,
-    onChange,
-  });
-  
-  const isControlled = isTracked;
-  if(!isControlled){
-    return uncontrolledProp;
-  }
-
-  return track(() => @prop, (current) => {
-      return current;
-    },
-    (next, prev) => {
-      onChange(next);
-      return prev;
-    });
-}
-
-export component Toggle(props){
-    const [
-      children, 
-      pressedProp, 
-      defaultPressed, 
-      onPressedChange, 
-      buttonProps 
-    ] = trackSplit(props, [
-      'children', 
-      'pressed', 
-      'defaultPressed', 
-      'onPressedChange'
-    ]);
-
-    const pressed = useControllableState({
-        prop: @pressedProp,
-        isTracked: typeof(props.pressed) === "boolean",
-        onChange: @onPressedChange,
-        defaultProp: @defaultPressed ?? false,
-        caller: NAME,
-    });
-
-    <Primitive.button 
-        {...@buttonProps}
-        type="button"
-        aria-pressed={!!@pressed}
-        data-state={@pressed ? 'on' : 'off'}
-        data-disabled={props.disabled ? '' : undefined}
-        onClick={composeEventHandlers(props.onClick || (() => {}), () => {
-          if (!props.disabled) {
-            @pressed = !@pressed
+export component Toggle({ pressed, defaultPressed, onPressedChange, children, ...buttonProps}){
+    const Children = track(() => @children);
+    <ControllableState 
+      prop={pressed} 
+      defaultProp={defaultPressed ?? false} 
+      caller={NAME} 
+      onChange={onPressedChange} 
+      {...buttonProps}
+    >
+      component children({ state, ...childProps }) {
+        <Primitive.button 
+          {...childProps}
+          type="button"
+          aria-pressed={!!@state}
+          data-state={@state ? 'on' : 'off'}
+          data-disabled={childProps.disabled ? '' : undefined}
+          onClick={composeEventHandlers(childProps.onClick || (() => {}), () => {
+            if (!childProps.disabled) {
+              @state = !@state
+            }
+          })}
+        >
+          component children(childProps2) {
+            <@Children {...childProps2} />
           }
-        })}
-        
-        
-        
-      >
-      <@children />
-    </Primitive.button>
-}
+        </Primitive.button>
+      }
+    </ControllableState>
 
-const Root = Toggle
-
-export {
-  Root
+    
 }

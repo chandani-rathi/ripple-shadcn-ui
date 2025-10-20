@@ -19,17 +19,21 @@
     },
     "dependencies": {
         "@ripple-primitives/accessible-icon": "workspace:*",
+        "@ripple-primitives/arrow": "workspace:*",
+        "@ripple-primitives/aspect-ratio": "workspace:*",
+        "@ripple-primitives/direction": "workspace:*",
+        "@ripple-primitives/focus-scope": "workspace:*",
         "@ripple-primitives/label": "workspace:*",
         "@ripple-primitives/primitive": "workspace:*",
+        "@ripple-primitives/roving-focus-group": "workspace:*",
         "@ripple-primitives/separator": "workspace:*",
         "@ripple-primitives/toggle": "workspace:*",
+        "@ripple-primitives/toggle-group": "workspace:*",
+        "@ripple-primitives/use-size": "workspace:*",
+        "@ripple-primitives/utils": "workspace:*",
         "@ripple-primitives/visually-hidden": "workspace:*",
         "ripple": "catalog:",
-        "@ripple-primitives/arrow": "workspace:*",
-        "@ripple-primitives/utils": "workspace:*",
-        "@ripple-primitives/use-size": "workspace:*",
-        "@ripple-primitives/aspect-ratio": "workspace:*",
-        "@ripple-primitives/focus-scope": "workspace:*"
+        "@ripple-primitives/use-controllable-state": "workspace:*"
     },
     "packageManager": "pnpm@10.18.2"
 }

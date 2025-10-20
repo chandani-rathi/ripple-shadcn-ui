@@ -143,7 +143,19 @@ importers:
         specifier: 'catalog:'
         version: 0.2.131
 
+  primitives/ripple/aspect-ratio:
+    dependencies:
+      ripple:
+        specifier: 'catalog:'
+        version: 0.2.131
+
   primitives/ripple/direction:
+    dependencies:
+      ripple:
+        specifier: 'catalog:'
+        version: 0.2.131
+
+  primitives/ripple/focus-scope:
     dependencies:
       ripple:
         specifier: 'catalog:'
@@ -175,24 +187,48 @@ importers:
       '@ripple-primitives/arrow':
         specifier: workspace:*
         version: link:../arrow
+      '@ripple-primitives/aspect-ratio':
+        specifier: workspace:*
+        version: link:../aspect-ratio
+      '@ripple-primitives/direction':
+        specifier: workspace:*
+        version: link:../direction
+      '@ripple-primitives/focus-scope':
+        specifier: workspace:*
+        version: link:../focus-scope
       '@ripple-primitives/label':
         specifier: workspace:*
         version: link:../label
       '@ripple-primitives/primitive':
         specifier: workspace:*
         version: link:../../core/primitive
+      '@ripple-primitives/roving-focus-group':
+        specifier: workspace:*
+        version: link:../roving-focus-group
       '@ripple-primitives/separator':
         specifier: workspace:*
         version: link:../separator
       '@ripple-primitives/toggle':
         specifier: workspace:*
         version: link:../toggle
+      '@ripple-primitives/toggle-group':
+        specifier: workspace:*
+        version: link:../toggle-group
+      '@ripple-primitives/use-size':
+        specifier: workspace:*
+        version: link:../use-size
       '@ripple-primitives/utils':
         specifier: workspace:*
         version: link:../../core/utils
       '@ripple-primitives/visually-hidden':
         specifier: workspace:*
         version: link:../visually-hidden
+      ripple:
+        specifier: 'catalog:'
+        version: 0.2.131
+
+  primitives/ripple/roving-focus-group:
+    dependencies:
       ripple:
         specifier: 'catalog:'
         version: 0.2.131
@@ -211,6 +247,18 @@ importers:
       '@ripple-primitives/primitive-ui':
         specifier: workspace:*
         version: link:../primitive
+      ripple:
+        specifier: 'catalog:'
+        version: 0.2.131
+
+  primitives/ripple/toggle-group:
+    dependencies:
+      ripple:
+        specifier: 'catalog:'
+        version: 0.2.131
+
+  primitives/ripple/use-size:
+    dependencies:
       ripple:
         specifier: 'catalog:'
         version: 0.2.131

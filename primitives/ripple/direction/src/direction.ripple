@@ -2,12 +2,19 @@ import { Context } from "ripple"
 type Direction = 'ltr' | 'rtl';
 const DirectionContext = new Context<Direction | undefined>(undefined);
 
-function useDirection(localDir?: Direction) {
+export function useDirection(localDir?: Direction) {
   const globalDir = DirectionContext.get();
   return localDir || globalDir || 'ltr';
 }
 
-export {
-  useDirection,
-  DirectionContext
+export function setDirection(dir?: Direction){
+  DirectionContext.set(dir)
+}
+
+export component DirectionProvider({
+  dir = "ltr",
+  children
+}){
+  DirectionContext.set(dir);
+  <@children />
 }

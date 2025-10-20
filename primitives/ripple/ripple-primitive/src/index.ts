@@ -7,7 +7,13 @@ export * from "@ripple-primitives/arrow";
 export * from "@ripple-primitives/primitive-ui"
 export * from "@ripple-primitives/utils";
 export * from "@ripple-primitives/use-size";
-
+export * from "@ripple-primitives/direction";
 export * from "@ripple-primitives/aspect-ratio";
 
 export * from "@ripple-primitives/focus-scope";
+
+export * from "@ripple-primitives/toggle-group";
+
+export * from "@ripple-primitives/roving-focus-group";
+
+export * from "@ripple-primitives/use-controllable-state";

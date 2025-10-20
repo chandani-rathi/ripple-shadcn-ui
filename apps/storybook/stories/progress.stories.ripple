@@ -1,0 +1,133 @@
+import { Progress, ProgressIndicator } from "ripple-primitives";
+import { track, effect } from "ripple";
+import styles from './progress.stories.module.css';
+
+export default {
+  title: 'Components/Progress',
+};
+
+export component Styled(){
+    const max = 150;
+    const [value, percentage] = useProgressValueState(0, max);
+    const toggleIndeterminate = useIndeterminateToggle(value);
+    effect(() => {
+        console.log("value", @value, @percentage)
+    })
+    <div>
+        <Progress class={styles.root} value={@value} max={max}>
+            <ProgressIndicator
+                class={styles.indicator}
+                style={{ width: @percentage != null ? `${@percentage}%` : undefined }}
+            />
+        </Progress>
+        <hr />
+        <button onClick={toggleIndeterminate}>{"Toggle Indeterminate"}</button>
+        <ProgressRange value={@value} setValue={(v) => @value = v} max={max} />
+    </div>
+}
+
+export component Chromatic() {
+    const max = 100;
+    <h1>{"Loading (not started)"}</h1>
+    const [value, percentage] = useProgressValueState(0, max);
+    <Progress class={styles.root} value={@value} >
+        <ProgressIndicator class={styles.chromaticIndicatorClass} 
+            style={{ width: @percentage != null ? `${@percentage}%` : undefined }}
+        />
+    </Progress>
+
+    <div>
+        const [value, percentage] = useProgressValueState(30, max);
+        <h1>{"Loading (started)"}</h1>
+        <Progress class={styles.root} value={@value} >
+            <ProgressIndicator class={styles.chromaticIndicatorClass} 
+                style={{ width: @percentage != null ? `${@percentage}%` : undefined }}
+            />
+        </Progress>
+    </div>
+
+    
+    <div>
+        const [value, percentage] = useProgressValueState(null, max);
+        <h1>{"Indeterminate"}</h1>
+        <Progress class={styles.root} value={@value}>
+        <ProgressIndicator class={styles.chromaticIndicatorClass} 
+                style={{ width: @percentage != null ? `${@percentage}%` : undefined }}
+            />
+        </Progress>
+    </div>
+
+    <div>
+        const [value, percentage] = useProgressValueState(100, max);
+        <h1>{"Complete"}</h1>
+        <Progress class={styles.root} value={@value}>
+        <ProgressIndicator class={styles.chromaticIndicatorClass} 
+                style={{ width: @percentage != null ? `${@percentage}%` : undefined }}
+            />
+        </Progress>
+    </div>
+
+    <h1>{"State attributes"}</h1>
+    <div>
+        const [value, percentage] = useProgressValueState(30, max);
+        <h2>{"Loading (started)"}</h2>
+        <Progress class={styles.rootAttr} value={@value}>
+        <ProgressIndicator class={styles.chromaticIndicatorClass} 
+                style={{ width: @percentage != null ? `${@percentage}%` : undefined }}
+            />
+        </Progress>
+    </div>
+
+    <div>
+        const [value, percentage] = useProgressValueState(undefined, max);
+        <h2>{"Indeterminate"}</h2>
+        <Progress class={styles.rootAttr} value={@value}>
+        <ProgressIndicator class={styles.chromaticIndicatorClass} 
+                style={{ width: @percentage != null ? `${@percentage}%` : undefined }}
+            />
+        </Progress>
+    </div>
+
+    <div>
+        const [value, percentage] = useProgressValueState(100, max);
+        <h2>{"Complete"}</h2>
+        <Progress class={styles.rootAttr} value={@value}>
+        <ProgressIndicator class={styles.chromaticIndicatorClass} 
+                style={{ width: @percentage != null ? `${@percentage}%` : undefined }}
+            />
+        </Progress>
+    </div>
+}
+
+type ProgressValue = number | null;
+function useProgressValueState(initialState: ProgressValue | (() => ProgressValue), max = 100) {
+  const value = track<number | null>(initialState);
+  const percentage = track(() => {
+    return @value != null ? Math.round((@value / max) * 100) : null
+  }, undefined, (n, p) => p);
+  return [value, percentage] as const;
+}
+
+function useIndeterminateToggle(value){
+ return () => {
+
+ }
+}
+
+component ProgressRange({
+    value, setValue, max = 100
+}){
+    <input
+      type="range"
+      disabled={value == null}
+      value={value}
+      max={max}
+      min={0}
+      onChange={(e) => {
+        const val = Number(e.target.value);
+        if (!isNaN(val)) {
+          setValue(val);
+        }
+      }}
+    />
+}

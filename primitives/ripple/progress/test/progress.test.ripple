@@ -1,0 +1,22 @@
+import { axe } from 'vitest-axe';
+import userEvent from '@testing-library/user-event';
+import { Progress }  from "../src/progress.ripple";
+
+const TEXT_CHILD = "TEST"
+
+describe("progress", () => {
+    beforeEach(() => {
+		component Test(){
+			<Progress>{TEXT_CHILD}</Progress>
+		}
+		render(Test);
+	});
+
+    it('should have no accessibility violations', async () => {
+		expect(await axe(container)).toHaveNoViolations();
+	});
+    
+    it("should work", () => {
+         expect(container).toMatchSnapshot()
+    })
+})

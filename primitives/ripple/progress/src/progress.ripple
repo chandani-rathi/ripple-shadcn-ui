@@ -1,0 +1,126 @@
+import { Context, track  } from "ripple";
+import { Primitive } from "@ripple-primitives/primitive-ui"
+
+const NAME = 'Progress';
+const DEFAULT_MAX = 100;
+
+type ProgressState = 'indeterminate' | 'complete' | 'loading';
+
+const ProgressContext = new Context({});
+
+component ProgressProvider({
+  value,
+  max,
+  children
+}){
+  const context = ProgressContext.get();
+  context.value = track(() => value);
+  context.max = track(() => max);
+  ProgressContext.set(context);
+  <@children />
+}
+
+export component Progress({
+  value: valueProp,
+  max: maxProp,
+  getValueLabel = defaultGetValueLabel,
+  ...progressProps
+}){
+
+  const max = isValidMaxNumber(maxProp) ? maxProp : DEFAULT_MAX;
+  checkMax(max)
+  checkValues(valueProp, max);
+
+  const value = isValidValueNumber(valueProp, max) ? valueProp : null;
+  const valueLabel = isNumber(value) ? getValueLabel(value, max) : undefined;
+
+  <ProgressProvider value={value} max={max}>
+    <Primitive.div
+      aria-valuemax={max}
+      aria-valuemin={0}
+      aria-valuenow={isNumber(value) ? value : undefined}
+      aria-valuetext={valueLabel}
+      role="progressbar"
+      data-state={getProgressState(value, max)}
+      data-value={value ?? undefined}
+      data-max={max}
+      {...progressProps}
+    />
+  </ProgressProvider>
+  
+}
+/* -------------------------------------------------------------------------------------------------
+ * ProgressIndicator
+ * -----------------------------------------------------------------------------------------------*/
+
+const INDICATOR_NAME = 'ProgressIndicator';
+
+export component ProgressIndicator(props) {
+  const context = ProgressContext.get();
+  <Primitive.div 
+    {...props}
+    data-state={getProgressState(context.@value, context.@max)}
+    data-value={context.@value ?? undefined}
+    data-max={context.@max} 
+  />
+}
+
+/* ---------------------------------------------------------------------------------------------- */
+
+function checkValues(valueProp, max){
+  if (valueProp !== null && !isValidValueNumber(valueProp, max)) {
+      console.error(getInvalidValueError(`${valueProp}`, 'Progress'));
+  }
+}
+
+
+function checkMax(maxProp){
+  if ((maxProp || maxProp === 0) && !isValidMaxNumber(maxProp)) {
+      console.error(getInvalidMaxError(`${maxProp}`, 'Progress'));
+  }
+}
+
+function defaultGetValueLabel(value: number, max: number) {
+  return `${Math.round((value / max) * 100)}%`;
+}
+
+function getProgressState(value: number | undefined | null, maxValue: number): ProgressState {
+  return value == null ? 'indeterminate' : value === maxValue ? 'complete' : 'loading';
+}
+
+function isNumber(value: any): value is number {
+  return typeof value === 'number';
+}
+
+function isValidMaxNumber(max: any): max is number {
+  // prettier-ignore
+  return (
+    isNumber(max) &&
+    !isNaN(max) &&
+    max > 0
+  );
+}
+
+function isValidValueNumber(value: any, max: number): value is number {
+  // prettier-ignore
+  return (
+    isNumber(value) &&
+    !isNaN(value) &&
+    value <= max &&
+    value >= 0
+  );
+}
+
+// Split this out for clearer readability of the error message.
+function getInvalidMaxError(propValue: string, componentName: string) {
+  return `Invalid prop \`max\` of value \`${propValue}\` supplied to \`${componentName}\`. Only numbers greater than 0 are valid max values. Defaulting to \`${DEFAULT_MAX}\`.`;
+}
+
+function getInvalidValueError(propValue: string, componentName: string) {
+  return `Invalid prop \`value\` of value \`${propValue}\` supplied to \`${componentName}\`. The \`value\` prop must be:
+  - a positive number
+  - less than the value passed to \`max\` (or ${DEFAULT_MAX} if no \`max\` prop is set)
+  - \`null\` or \`undefined\` if the progress is indeterminate.
+
+Defaulting to \`null\`.`;
+}

@@ -33,7 +33,8 @@
         "@ripple-primitives/utils": "workspace:*",
         "@ripple-primitives/visually-hidden": "workspace:*",
         "ripple": "catalog:",
-        "@ripple-primitives/use-controllable-state": "workspace:*"
+        "@ripple-primitives/use-controllable-state": "workspace:*",
+        "@ripple-primitives/progress": "workspace:*"
     },
     "packageManager": "pnpm@10.18.2"
 }

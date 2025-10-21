@@ -1,0 +1,28 @@
+import { trackSplit, effect, track } from 'ripple'
+const NAME = 'Presence';
+
+export component Presence(props){
+  const [rest] = trackSplit(props, [])
+  const { children, present = true } = rest;
+  const presence = usePresence(present);
+  effect(() => {
+    console.log(presence)
+  })
+  <@children presence={presence.@isPresent} />
+}
+
+export function usePresence(present){
+  const initialState = present ? 'mounted' : 'unmounted';
+  const state = track(() => initialState);
+
+  effect(() => {
+
+    return () => {
+
+    }
+  })
+
+  return {
+    isPresent: track(() => ['mounted', 'unmountSuspended'].includes(state))
+  }
+}

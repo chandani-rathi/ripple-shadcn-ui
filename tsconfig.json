@@ -63,6 +63,15 @@
             ],
             "@ripple-primitives/progress": [
                 "primitives/ripple/progress/src"
+            ],
+            "@ripple-primitives/use-escape-keydown": [
+                "primitives/ripple/use-escape-keydown/src"
+            ],
+            "@ripple-primitives/collapsible": [
+                "primitives/ripple/collapsible/src"
+            ],
+            "@ripple-primitives/presence": [
+                "primitives/ripple/presence/src"
             ]
         }
     }

@@ -1,0 +1,22 @@
+import { axe } from 'vitest-axe';
+import userEvent from '@testing-library/user-event';
+import { UseEscapeKeydown }  from "../src/use-escape-keydown.ripple";
+
+const TEXT_CHILD = "TEST"
+
+describe("use-escape-keydown", () => {
+    beforeEach(() => {
+		component Test(){
+			<UseEscapeKeydown>{TEXT_CHILD}</UseEscapeKeydown>
+		}
+		render(Test);
+	});
+
+    it('should have no accessibility violations', async () => {
+		expect(await axe(container)).toHaveNoViolations();
+	});
+    
+    it("should work", () => {
+         expect(container).toMatchSnapshot()
+    })
+})

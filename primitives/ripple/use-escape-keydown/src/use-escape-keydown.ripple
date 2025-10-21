@@ -1,0 +1,35 @@
+import { effect } from "ripple";
+const NAME = 'UseEscapeKeydown';
+
+
+export function UseEscapeKeydown(
+   onEscapeKeyDown?: (event: KeyboardEvent) => void,
+   ownerDocument: Document = globalThis?.document
+){
+  effect(() => {
+    untrack(() => {
+      const handleKeyDown = (event: KeyboardEvent) => {
+        if (event.key === 'Escape') {
+          onEscapeKeyDown(event);
+        }
+        ownerDocument.addEventListener('keydown', handleKeyDown, { capture: true });
+        return () => ownerDocument.removeEventListener('keydown', handleKeyDown, { capture: true });
+      };
+    })
+  })
+}
+
+export component EscapeKeydown({children, onEscapeKeyDown, ...escapeProps}){
+  effect(() => {
+    untrack(() => {
+      const handleKeyDown = (event: KeyboardEvent) => {
+        if (event.key === 'Escape') {
+          onEscapeKeyDown(event);
+        }
+        document.addEventListener('keydown', handleKeyDown, { capture: true });
+        return () => document.removeEventListener('keydown', handleKeyDown, { capture: true });
+      };
+    })
+  })
+  <props.@children {...escapeProps} />
+}

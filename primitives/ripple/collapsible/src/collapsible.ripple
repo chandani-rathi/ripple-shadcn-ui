@@ -1,0 +1,141 @@
+import { Context, track, effect, untrack } from "ripple";
+import { Primitive } from "@ripple-primitives/primitive-ui";
+import { ControllableState } from "@ripple-primitives/use-controllable-state";
+import { composeEventHandlers } from "@ripple-primitives/primitive";
+import { Presence } from "@ripple-primitives/presence"
+const NAME = 'Collapsible';
+
+const CollapsibleContext = new Context({});
+
+component CollapsibleProvider({
+  disabled,
+  contentId = Date.now(),
+  open,
+  onOpenToggle = () => {},
+  children,
+  ...restProps
+}){
+  const context = {...CollapsibleContext.get()}
+  context.disabled = track(() => disabled)
+  context.contentId = track(() => contentId)
+  context.open = track(() => open)
+  context.onOpenToggle = onOpenToggle;
+  CollapsibleContext.set(context);
+  <@children {...restProps} />
+}
+
+export component Collapsible({ 
+  open, 
+  defaultOpen, 
+  disabled, 
+  onOpenChange, 
+  children, 
+  ...collapsibleProps
+ }){
+  const Children = track(() => @children);
+  <ControllableState prop={open} defaultProp={defaultOpen} onChange={onOpenChange} caller={NAME} {disabled} {...collapsibleProps}>
+    component children({state, ...childProps}){
+      const onOpenToggle = () => {
+        @state = !@state;
+      }
+      
+      <CollapsibleProvider disabled={disabled} open={@state} onOpenToggle={onOpenToggle} >
+        <Primitive.div 
+          data-state={getState(@state)}
+          data-disabled={disabled ? '' : undefined}
+          {...childProps}
+        >
+        component children(childProps2){
+          <@Children {...childProps2} />
+        }
+        </Primitive.div>
+      </CollapsibleProvider>
+    }
+  </ControllableState>
+}
+
+
+/* -------------------------------------------------------------------------------------------------
+ * CollapsibleTrigger
+ * -----------------------------------------------------------------------------------------------*/
+
+const TRIGGER_NAME = 'CollapsibleTrigger';
+export component CollapsibleTrigger(triggerProps){
+  const context = CollapsibleContext.get();
+
+  <Primitive.button
+    type="button"
+    aria-controls={context.@contentId}
+    aria-expanded={context.@open || false}
+    data-state={getState(context.@open)}
+    data-disabled={context.@disabled ? '' : undefined}
+    disabled={context.@disabled}
+    {...triggerProps}
+    onClick={composeEventHandlers(triggerProps.onClick, context.onOpenToggle)}
+      />
+}
+
+
+/* -------------------------------------------------------------------------------------------------
+ * CollapsibleContent
+ * -----------------------------------------------------------------------------------------------*/
+
+const CONTENT_NAME = 'CollapsibleContent';
+export component CollapsibleContent({...contentProps}){
+  const context = CollapsibleContext.get();
+  <CollapsibleContentImpl {...contentProps} />
+}
+
+component CollapsibleContentImpl({ present, children, style, ...contentProps }){
+  const Children = track(() => @children)
+  const context = CollapsibleContext.get();
+  const isPresent = track(() => @present)
+  // when opening we want it to immediately open to retrieve dimensions
+  // when closing we delay `present` to retrieve dimensions before closing
+  const isOpen = track(() => context.@open || @isPresent);
+  const height = track(() => 0);
+  const width = track(() => 0);
+  let node = track(() => null);
+
+  effect(() => {
+    if(context.@open && @node) {
+      setTimeout(() => {
+        const rect = @node.getBoundingClientRect();
+        const originalTransitionDuration = @node.style.transitionDuration;
+        const originalAnimationName = @node.style.animationName;
+        @node.style.transitionDuration = '0s';
+        @node.style.animationName = 'none';
+        @height = rect.height;
+        @width = rect.width;
+        @node.style.transitionDuration = originalTransitionDuration;
+        @node.style.animationName = originalAnimationName;
+      })
+    }
+  });
+
+  <Primitive.div 
+    {ref n => node = n}
+    data-state={getState(context.@open)}
+    data-disabled={context.@disabled ? '' : undefined}
+    id={context.@contentId}
+    hidden={!@isOpen}
+    {...contentProps}
+    style={{
+      [`--radix-collapsible-content-height` as any]: @height ? `${@height}px` : undefined,
+      [`--radix-collapsible-content-width` as any]: @width ? `${@width}px` : undefined,
+      ...style,
+    }}
+  >
+    component children(childProps){
+      if(@isOpen) {
+        <@Children {...childProps} />
+      }
+    }
+  </Primitive.div>
+}
+
+/* -----------------------------------------------------------------------------------------------*/
+
+function getState(open?: boolean) {
+  return open ? 'open' : 'closed';
+}

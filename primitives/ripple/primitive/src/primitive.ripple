@@ -99,13 +99,13 @@ type PrimitiveProps<T extends object = {}> = PropsWithChildren<{ asChild?: boole
 */
 export const Primitive = NODES.reduce(
     (primitive, node) => {
-        component Node({children, asChild, style, ...props} : PrimitiveProps){
+        component Node({children, asChild, style, ...nodeProps} : PrimitiveProps){
             let tag = track(node);
             if(asChild) {
-                <@children style={normalizeStyleObject(style)} {...@props} />
+                <@children style={normalizeStyleObject(style)} {...@nodeProps} />
             }
             else {
-                <@tag style={normalizeStyleObject(style)} {...@props}>
+                <@tag style={normalizeStyleObject(style)} {...@nodeProps}>
                     <@children />
                 </@tag> 
             }
@@ -115,3 +115,15 @@ export const Primitive = NODES.reduce(
         }
     }, {} as Primitives
 )
+
+
+const CreateProvider = (providerContext) => {
+  component Provider({ children, ...props }) {
+    let context = providerContext.get();
+    context = {...context, ...props }
+    providerContext.set(context);
+    <@children />
+  }
+
+  return Provider;
+}

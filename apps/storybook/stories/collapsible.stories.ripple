@@ -1,0 +1,122 @@
+import { Collapsible, CollapsibleTrigger, CollapsibleContent, Primitive } from "ripple-primitives";
+import styles from './collapsible.stories.module.css';
+import { track } from "ripple";
+export default { title: 'Components/Collapsible' };
+
+export component Styled(){
+    <Collapsible class={styles.root}>
+        <CollapsibleTrigger class={styles.trigger}>{"Trigger"}</CollapsibleTrigger>
+        <CollapsibleContent class={styles.content}>{"Content 1"}</CollapsibleContent>
+    </Collapsible>
+}
+
+export component Controlled(){
+    const open = track(true);
+
+    <Collapsible class={styles.root} open={@open} onOpenChange={o => @open = o} >
+        <CollapsibleTrigger class={styles.trigger}>
+            {@open ? 'close' : 'open'}
+        </CollapsibleTrigger>
+        <CollapsibleContent class={styles.content} asChild>
+            component children(childProps) {
+                <article {...childProps}>{"Content 1"}</article>
+            }
+        </CollapsibleContent>
+    </Collapsible>
+}
+
+export component Animated() {
+    <h1>{"Closed by default"}</h1>
+    <Collapsible class={styles.root}>
+        <CollapsibleTrigger class={styles.trigger}>{"Trigger"}</CollapsibleTrigger>
+        <CollapsibleContent class={styles.animatedContent}>
+            <Primitive.div style={{ paddingTop: 10, paddingBottom: 10 }}>{"Content 1"}</Primitive.div>
+        </CollapsibleContent>
+    </Collapsible>
+
+    <h1>{"Open by default"}</h1>
+    <Collapsible class={styles.root} defaultOpen>
+        <CollapsibleTrigger class={styles.trigger}>{"Trigger"}</CollapsibleTrigger>
+        <CollapsibleContent class={styles.animatedContent}>
+            <Primitive.div style={{ paddingTop: 10, paddingBottom: 10 }}>{"Content 1"}</Primitive.div>
+        </CollapsibleContent>
+    </Collapsible>
+}
+
+export component AnimatedHorizontal(){
+    <Collapsible class={styles.root}>
+        <CollapsibleTrigger class={styles.trigger}>{"Trigger"}</CollapsibleTrigger>
+        <CollapsibleContent class={styles.animatedWidthContent}>
+            <Primitive.div style={{ paddingTop: 10, paddingBottom: 10 }}>{"Content"}</Primitive.div>
+        </CollapsibleContent>
+    </Collapsible>
+}
+
+export component Chromatic(){
+    <h1>{"Uncontrolled"}</h1>
+    <h2>{"Closed"}</h2>
+    <Collapsible class={styles.root}>
+        <CollapsibleTrigger class={styles.trigger}>{"Trigger"}</CollapsibleTrigger>
+        <CollapsibleContent class={styles.content}>
+            <Primitive.div style={{ paddingTop: 10, paddingBottom: 10 }}>{"Content"}</Primitive.div>
+        </CollapsibleContent>
+    </Collapsible>
+
+    <h2>{"Open"}</h2>
+    <Collapsible class={styles.root} defaultOpen>
+        <CollapsibleTrigger class={styles.trigger}>{"Trigger"}</CollapsibleTrigger>
+        <CollapsibleContent class={styles.content}>
+            <Primitive.div style={{ paddingTop: 10, paddingBottom: 10 }}>{"Content"}</Primitive.div>
+        </CollapsibleContent>
+    </Collapsible>
+
+    <h1>{"Controlled"}</h1>
+    <h2>{"Closed"}</h2>
+    <Collapsible class={styles.root} open={false}>
+        <CollapsibleTrigger class={styles.trigger}>{"Trigger"}</CollapsibleTrigger>
+        <CollapsibleContent class={styles.content}>
+            <Primitive.div style={{ paddingTop: 10, paddingBottom: 10 }}>{"Content"}</Primitive.div>
+        </CollapsibleContent>
+    </Collapsible>
+
+    <h2>{"Open"}</h2>
+    <Collapsible class={styles.root} open={true}>
+        <CollapsibleTrigger class={styles.trigger}>{"Trigger"}</CollapsibleTrigger>
+        <CollapsibleContent class={styles.content}>
+            <Primitive.div style={{ paddingTop: 10, paddingBottom: 10 }}>{"Content"}</Primitive.div>
+        </CollapsibleContent>
+    </Collapsible>
+
+    <h2>{"Disabled"}</h2>
+    <Collapsible class={styles.root} disabled>
+        <CollapsibleTrigger class={styles.trigger}>{"Trigger"}</CollapsibleTrigger>
+        <CollapsibleContent class={styles.content}>
+            <Primitive.div style={{ paddingTop: 10, paddingBottom: 10 }}>{"Content"}</Primitive.div>
+        </CollapsibleContent>
+    </Collapsible>
+
+    <h1>{"State attributes"}</h1>
+    <h2>{"Closed"}</h2>
+    <Collapsible class={styles.rootAttr}>
+        <CollapsibleTrigger class={styles.triggerAttr}>{"Trigger"}</CollapsibleTrigger>
+        <CollapsibleContent class={styles.contentAttr}>
+            <Primitive.div style={{ paddingTop: 10, paddingBottom: 10 }}>{"Content"}</Primitive.div>
+        </CollapsibleContent>
+    </Collapsible>
+
+    <h2>{"Open"}</h2>
+    <Collapsible class={styles.rootAttr} defaultOpen>
+        <CollapsibleTrigger class={styles.triggerAttr}>{"Trigger"}</CollapsibleTrigger>
+        <CollapsibleContent class={styles.contentAttr}>
+            <Primitive.div style={{ paddingTop: 10, paddingBottom: 10 }}>{"Content"}</Primitive.div>
+        </CollapsibleContent>
+    </Collapsible>
+
+    <h2>{"Disabled"}</h2>
+    <Collapsible class={styles.rootAttr} disabled>
+        <CollapsibleTrigger class={styles.triggerAttr}>{"Trigger"}</CollapsibleTrigger>
+        <CollapsibleContent class={styles.contentAttr}>
+            <Primitive.div style={{ paddingTop: 10, paddingBottom: 10 }}>{"Content"}</Primitive.div>
+        </CollapsibleContent>
+    </Collapsible>
+}

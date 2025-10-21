@@ -71,7 +71,7 @@ component ToggleGroupValueProvider({
   children
 }) {
 
-  const context = ToggleGroupContext.get();
+  const context = {...ToggleGroupContext.get()};
   context.type = type;
   context.value = track(() => value);
   context.onItemActivate = onItemActivate;

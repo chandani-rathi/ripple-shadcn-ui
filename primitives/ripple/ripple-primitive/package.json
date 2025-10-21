@@ -34,7 +34,10 @@
         "@ripple-primitives/visually-hidden": "workspace:*",
         "ripple": "catalog:",
         "@ripple-primitives/use-controllable-state": "workspace:*",
-        "@ripple-primitives/progress": "workspace:*"
+        "@ripple-primitives/progress": "workspace:*",
+        "@ripple-primitives/use-escape-keydown": "workspace:*",
+        "@ripple-primitives/collapsible": "workspace:*",
+        "@ripple-primitives/presence": "workspace:*"
     },
     "packageManager": "pnpm@10.18.2"
 }

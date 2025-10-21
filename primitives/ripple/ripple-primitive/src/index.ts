@@ -19,3 +19,9 @@ export * from "@ripple-primitives/roving-focus-group";
 export * from "@ripple-primitives/use-controllable-state";
 
 export * from "@ripple-primitives/progress";
+
+export * from "@ripple-primitives/use-escape-keydown";
+
+export * from "@ripple-primitives/collapsible";
+
+export * from "@ripple-primitives/presence";

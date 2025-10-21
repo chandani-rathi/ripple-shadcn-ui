@@ -32,7 +32,7 @@ component RovingFocusGroupImpl({
   const focusableItemsCount = #[];
   const isClickFocus = track(false);
   const tabIndex = track(() => @isTabbingBackOut || focusableItemsCount.length === 0 ? -1 : 0) 
-  const context = RovingFocusContext.get();
+  const context = {...RovingFocusContext.get()};
   context.getItems = () => focusableItemsCount;
   context.currentTabStopId = track(() => currentTabStopId)
   context.onFocusableItemAdd = (item) => {

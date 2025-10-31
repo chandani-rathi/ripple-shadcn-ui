@@ -25,10 +25,10 @@ export const Controlled = {
        {props.pressed ? 'On' : 'Off'}
       </Toggle>
 
-      <h1>{"Tracked Controlled"}</h1>
+      <h1>{"Tracked Controlled with asChild"}</h1>
       const pressed = track(() => props.pressed);
-      const onPressedChange = (v) => @pressed = v
-      <Toggle asChild class={styles.root} pressed={@pressed} {onPressedChange}>
+      const onPressedChange = (v) => props.onPressedChange(v)
+      <Toggle asChild class={styles.root} {pressed} {onPressedChange} >
         component children(props) {
           <a {...props}>
             {@pressed ? 'On' : 'Off'}

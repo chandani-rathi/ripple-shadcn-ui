@@ -1,38 +1,41 @@
-import { track, trackSplit, effect } from "ripple";
+import { track } from 'ripple';
 import { composeEventHandlers } from '@ripple-primitives/primitive';
-import { Primitive } from "@ripple-primitives/primitive-ui";
-import { UseControllableState, ControllableState } from '@ripple-primitives/use-controllable-state';
+import { Primitive, trackProps } from '@ripple-primitives/primitive-ui';
+import { UseControllableState } from '@ripple-primitives/use-controllable-state';
 
 const NAME = 'Toggle';
 
-export component Toggle({ pressed, defaultPressed, onPressedChange, children, ...buttonProps}){
-    const Children = track(() => @children);
-    <ControllableState 
-      prop={pressed} 
-      defaultProp={defaultPressed ?? false} 
-      caller={NAME} 
-      onChange={onPressedChange} 
-      {...buttonProps}
-    >
-      component children({ state, ...childProps }) {
-        <Primitive.button 
-          {...childProps}
-          type="button"
-          aria-pressed={!!@state}
-          data-state={@state ? 'on' : 'off'}
-          data-disabled={childProps.disabled ? '' : undefined}
-          onClick={composeEventHandlers(childProps.onClick || (() => {}), () => {
-            if (!childProps.disabled) {
-              @state = !@state
-            }
-          })}
-        >
-          component children(childProps2) {
-            <@Children {...childProps2} />
-          }
-        </Primitive.button>
-      }
-    </ControllableState>
+export component Toggle(props) {
+	const {
+		pressed: pressedProp,
+		defaultPressed,
+		onPressedChange,
+		children: ToggleChildren,
+		...buttonProps
+	} = trackProps(props);
+	const pressed = UseControllableState(
+		{
+			prop: pressedProp,
+			defaultProp: defaultPressed ?? false,
+			onChange: onPressedChange,
+			caller: NAME,
+		},
+	);
 
-    
+	<Primitive.button
+		{...buttonProps}
+		type="button"
+		aria-pressed={!!@pressed}
+		data-state={@pressed ? 'on' : 'off'}
+		data-disabled={buttonProps.@disabled ? '' : undefined}
+		onClick={composeEventHandlers(buttonProps.@onClick || (() => {}), () => {
+			if (!buttonProps.@disabled) {
+				@pressed = !@pressed;
+			}
+		})}
+	>
+		component children(childProps) {
+			<@ToggleChildren {...childProps} />
+		}
+	</Primitive.button>
 }

@@ -25,3 +25,7 @@ export * from "@ripple-primitives/use-escape-keydown";
 export * from "@ripple-primitives/collapsible";
 
 export * from "@ripple-primitives/presence";
+
+export * from "@ripple-primitives/accordion";
+
+export * from "@ripple-primitives/collection";

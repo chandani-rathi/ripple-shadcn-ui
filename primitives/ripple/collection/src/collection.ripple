@@ -1,0 +1,25 @@
+import { Context } from "ripple";
+import { trackProps,  } from "@ripple-primitives/primitive-ui"
+const NAME = 'Collection';
+
+export component Collection(props){
+  <props.@children />
+}
+
+export function createCollection(){
+  const CollectionContext = new Context({});
+
+  component CollectionProvider(props){
+    props = trackProps(props);
+    const { children, ...rest} = props
+    let context = CollectionContext.get();
+    context = {...context, ...rest }
+    CollectionContext.set(context);
+    <@children />
+  }
+
+  return [
+    CollectionContext,
+    CollectionProvider
+  ]
+}

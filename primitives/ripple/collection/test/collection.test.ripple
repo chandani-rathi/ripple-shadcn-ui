@@ -1,0 +1,22 @@
+import { axe } from 'vitest-axe';
+import userEvent from '@testing-library/user-event';
+import { Collection }  from "../src/collection.ripple";
+
+const TEXT_CHILD = "TEST"
+
+describe("collection", () => {
+    beforeEach(() => {
+		component Test(){
+			<Collection>{TEXT_CHILD}</Collection>
+		}
+		render(Test);
+	});
+
+    it('should have no accessibility violations', async () => {
+		expect(await axe(container)).toHaveNoViolations();
+	});
+    
+    it("should work", () => {
+         expect(container).toMatchSnapshot()
+    })
+})

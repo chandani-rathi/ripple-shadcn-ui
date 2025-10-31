@@ -1,0 +1,21 @@
+import { Accordion, AccordionItem, AccordionHeader, AccordionTrigger, AccordionContent } from "ripple-primitives";
+import styles from './accordion.stories.module.css';
+
+export default { title: 'Components/Accordion' };
+
+
+export component Single() {
+    <h1>{"Uncontrolled"}</h1>
+    <Accordion type="single" class={styles.root}>
+        <AccordionItem class={styles.item} value="one">
+            <AccordionHeader class={styles.header}>
+                <AccordionTrigger class={styles.trigger}>{"One"}</AccordionTrigger>
+            </AccordionHeader>
+            <AccordionContent class={styles.content}>
+                {`Per erat orci nostra luctus sociosqu mus risus penatibus, duis elit vulputate viverra integer ullamcorper congue curabitur sociis, nisi malesuada scelerisque quam suscipit habitant sed.`}
+            </AccordionContent>
+        </AccordionItem>
+    </Accordion>
+
+    <h1>{"Controlled"}</h1>
+}

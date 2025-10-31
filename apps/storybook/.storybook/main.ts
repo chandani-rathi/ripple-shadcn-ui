@@ -2,7 +2,6 @@ import type { IndexInput, StorybookConfig } from 'storybook/internal/types';
 import { compile } from 'ripple/compiler';
 import fsPromise from "node:fs/promises"
 import fs from 'node:fs';
-import { dirname } from 'node:path';
 import { loadCsf } from "storybook/internal/csf-tools";
 const VITE_FS_PREFIX = '/@fs/';
 const IS_WINDOWS = process.platform === 'win32';
@@ -33,8 +32,6 @@ async function createVirtualImportId(filename: string, root: string, type: strin
 const getAbsolutePath = (packageName: string) => {
   return "/.storybook/"
 }
-  dirname("/preset"); //require.resolve(packageName + "/preset")
-
 
 const config: StorybookConfig = {
   "stories": [

@@ -1,0 +1,201 @@
+import { createCollection,  } from "@ripple-primitives/collection";
+import { trackProps, Primitive } from "@ripple-primitives/primitive-ui";
+import { ControllableState } from "@ripple-primitives/use-controllable-state";
+import { Collapsible } from "@ripple-primitives/collapsible";
+import { useDirection } from "@ripple-primitives/direction";
+import { Context, track } from "ripple";
+
+type Direction = 'ltr' | 'rtl';
+/* -------------------------------------------------------------------------------------------------
+ * Accordion
+ * -----------------------------------------------------------------------------------------------*/
+const [CollectionContext, CollectionProvider] = createCollection();
+const ACCORDION_NAME = 'Accordion';
+const ACCORDION_KEYS = ['Home', 'End', 'ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight'];
+
+const AccordionContext = new Context({});
+
+component AccordionProvider(_props){
+  const props = trackProps(_props);
+  const { value, onItemOpen, onItemClose, children} = props;
+
+  const context = AccordionContext.get();
+  context.value = track(() => @value);
+  context.onItemOpen = onItemOpen;
+  context.onItemClose = onItemClose;
+  AccordionContext.set({...context});
+
+  <@children />
+}
+
+component AccordionCollapsibleProvider(_props){
+  const props = trackProps(_props);
+  const { collapsible = false, children} = props;
+  const context = AccordionContext.get();
+  context.collapsible = track(() => @collapsible);
+  AccordionContext.set({...context});
+  <@children />
+}
+
+export component Accordion(_props){
+  const props = trackProps(_props);
+  const { type, ...accordionProps } = props;
+  const singleProps = accordionProps ;
+  const multipleProps = accordionProps;
+  <CollectionProvider>
+    if(@type === 'multiple') {
+      <AccordionImplMultiple {...multipleProps}/>
+    }
+    else {
+      <AccordionImplSingle {...singleProps} />
+    }
+  </CollectionProvider>
+}
+
+component AccordionImplMultiple(_props) {
+  const props = trackProps(_props)
+}
+
+component AccordionImplSingle(_props){
+  const props = trackProps(_props);
+  const {
+      value: valueProp,
+      defaultValue,
+      onValueChange = () => {},
+      collapsible = false,
+      ...accordionSingleProps
+  } = props;
+  <ControllableState 
+    prop={@valueProp} 
+    defaultProp={@defaultValue}
+    onChange={onValueChange}
+    caller={ACCORDION_NAME}
+  >
+    component children(state){
+      const value = track(() => #[@state])
+      const onItemOpen = (v) => @state = v
+      const onItemClose = (v) => {
+        if(@collapsible) {
+          @state = '';
+        }
+      }
+      <AccordionProvider value={@value} onItemOpen={onItemOpen} onItemClose={onItemClose}>
+        <AccordionCollapsibleProvider collapsible={@collapsible}>
+          <AccordionImpl {...accordionSingleProps} />
+        </AccordionCollapsibleProvider>
+      </AccordionProvider>
+    }
+  </ControllableState>
+}
+
+component AccordionImplProvider(_props){
+  const props = trackProps(_props);
+  const { disabled, dir, orientation, children} = props;
+
+  const context = AccordionContext.get();
+  context.disabled = track(() => @disabled);
+  context.dir = track(() => @dir);
+  context.orientation = track(() => @orientation);
+  AccordionContext.set({...context});
+
+  <@children />
+}
+
+component AccordionImpl(_props){
+  const props = trackProps(_props);
+  const { disabled, dir, orientation = 'vertical', ...accordionProps } = props;
+  const direction = track(() => useDirection(@dir))
+
+  const handleKeyDown = () => {
+
+  }
+
+  console.log(orientation)
+  
+  <AccordionImplProvider
+    disabled={@disabled}
+    direction={@direction}
+    orientation={@orientation}
+  >
+    <Primitive.div
+      {...accordionProps}
+      data-orientation={@orientation}
+      onKeyDown={@disabled ? undefined : handleKeyDown}
+    />
+  </AccordionImplProvider>
+}
+
+
+/* -------------------------------------------------------------------------------------------------
+ * AccordionItem
+ * -----------------------------------------------------------------------------------------------*/
+
+component AccordionItemProvider(_props){
+  const props = trackProps(_props);
+  const { children, open, disabled, triggerId } = props;
+  const context = AccordionContext.get();
+  context.disabled = track(() => @disabled);
+  context.open = track(() => @open);
+  context.triggerId = track(() => @triggerId);
+  AccordionContext.set({...context});
+
+  <@children />
+}
+
+const ITEM_NAME = 'AccordionItem';
+export component AccordionItem(_props){
+  const props = trackProps(_props);
+  const { value, ...accordionItemProps } = props;
+  const accordionContext = AccordionContext.get();
+
+  console.log(accordionContext.@value)
+  const triggerId = track(() => Date.now());
+  const open = track(() => {
+    return (@value && accordionContext.@value.includes(@value)) || false;
+  });
+  const disabled = track(() => accordionContext.@disabled || props.@disabled);
+
+  
+  <AccordionItemProvider
+    open={@open}
+    disabled={@disabled}
+    triggerId={@triggerId}
+  >
+    <Collapsible 
+      data-orientation={accordionContext.@orientation}
+      data-state={getState(@open)}
+      {...accordionItemProps}
+      disabled={@disabled}
+      open={@open}
+      onOpenChange={(open) => {
+        if (open) {
+          accordionContext.onItemOpen(@value);
+        } else {
+          accordionContext.onItemClose(@value);
+        }
+      }}
+           />
+  </AccordionItemProvider>
+}
+
+export component AccordionHeader(_props){
+  const props = trackProps(_props)
+  <props.@children />
+}
+
+export component AccordionTrigger(_props){
+  const props = trackProps(_props)
+  <props.@children />
+}
+
+export component AccordionContent(_props){
+  const props = trackProps(_props)
+  <props.@children />
+}
+
+
+/* -----------------------------------------------------------------------------------------------*/
+
+function getState(open?: boolean) {
+  return open ? 'open' : 'closed';
+}

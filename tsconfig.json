@@ -72,6 +72,12 @@
             ],
             "@ripple-primitives/presence": [
                 "primitives/ripple/presence/src"
+            ],
+            "@ripple-primitives/accordion": [
+                "primitives/ripple/accordion/src"
+            ],
+            "@ripple-primitives/collection": [
+                "primitives/ripple/collection/src"
             ]
         }
     }

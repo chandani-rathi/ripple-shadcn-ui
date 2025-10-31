@@ -18,6 +18,7 @@
         "test:watch": "vitest"
     },
     "dependencies": {
+        "ripple": "catalog:",
         "@ripple-primitives/accessible-icon": "workspace:*",
         "@ripple-primitives/arrow": "workspace:*",
         "@ripple-primitives/aspect-ratio": "workspace:*",
@@ -32,7 +33,6 @@
         "@ripple-primitives/use-size": "workspace:*",
         "@ripple-primitives/utils": "workspace:*",
         "@ripple-primitives/visually-hidden": "workspace:*",
-        "ripple": "catalog:",
         "@ripple-primitives/use-controllable-state": "workspace:*",
         "@ripple-primitives/progress": "workspace:*",
         "@ripple-primitives/use-escape-keydown": "workspace:*",

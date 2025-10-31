@@ -32,7 +32,7 @@
 		"@testing-library/jest-dom": "^6.9.1",
 		"eslint": "^9.38.0",
 		"eslint-plugin-ripple": "catalog:",
-		"jsdom": "^27.0.1",
+		"jsdom": "^27.1.0",
 		"plop": "^4.0.4",
 		"prettier": "^3.6.2",
 		"prettier-plugin-ripple": "catalog:",
@@ -41,6 +41,6 @@
 		"typescript": "^5.9.3",
 		"vite": "^7.1.12",
 		"vite-plugin-ripple": "catalog:",
-		"vitest": "^4.0.5"
+		"vitest": "^4.0.6"
 	}
 }

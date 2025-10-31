@@ -37,7 +37,9 @@
         "@ripple-primitives/progress": "workspace:*",
         "@ripple-primitives/use-escape-keydown": "workspace:*",
         "@ripple-primitives/collapsible": "workspace:*",
-        "@ripple-primitives/presence": "workspace:*"
+        "@ripple-primitives/presence": "workspace:*",
+        "@ripple-primitives/accordion": "workspace:*",
+        "@ripple-primitives/collection": "workspace:*"
     },
-    "packageManager": "pnpm@10.18.2"
+    "packageManager": "pnpm@10.20.0"
 }

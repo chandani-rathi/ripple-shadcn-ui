@@ -1,5 +1,5 @@
 {
-  "name": "@ripple-primitives/progress",
+  "name": "@ripple-primitives/accordion",
   "version": "1.0.0",
   "type": "module",
   "source": "./src/index.ts",

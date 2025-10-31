@@ -28,19 +28,19 @@
 		"vitest-axe": "^0.1.0"
 	},
 	"devDependencies": {
-		"@tailwindcss/vite": "^4.1.14",
+		"@tailwindcss/vite": "^4.1.16",
 		"@testing-library/jest-dom": "^6.9.1",
-		"eslint": "^9.37.0",
+		"eslint": "^9.38.0",
 		"eslint-plugin-ripple": "catalog:",
-		"jsdom": "^27.0.0",
+		"jsdom": "^27.0.1",
 		"plop": "^4.0.4",
 		"prettier": "^3.6.2",
 		"prettier-plugin-ripple": "catalog:",
-		"shadcn": "^3.4.1",
-		"tailwindcss": "^4.1.14",
+		"shadcn": "^3.5.0",
+		"tailwindcss": "^4.1.16",
 		"typescript": "^5.9.3",
-		"vite": "^7.1.10",
+		"vite": "^7.1.12",
 		"vite-plugin-ripple": "catalog:",
-		"vitest": "^3.2.4"
+		"vitest": "^4.0.5"
 	}
 }

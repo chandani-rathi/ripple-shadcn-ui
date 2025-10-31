@@ -1,9 +1,12 @@
-packages:
-  - primitives/*/*
-  - apps/*
-
-catalog:
-  eslint-plugin-ripple: 0.2.131
-  prettier-plugin-ripple: 0.2.131
-  ripple: 0.2.131
-  vite-plugin-ripple: 0.2.131
+{
+  "packages": [
+    "primitives/*/*",
+    "apps/*"
+  ],
+  "catalog": {
+    "eslint-plugin-ripple": "0.2.148",
+    "prettier-plugin-ripple": "0.2.148",
+    "ripple": "0.2.148",
+    "vite-plugin-ripple": "0.2.148"
+  }
+}

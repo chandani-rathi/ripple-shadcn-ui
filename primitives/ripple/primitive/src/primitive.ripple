@@ -88,6 +88,7 @@ const NODES = [
     'u',
     'ul',
     'video',
+    'svg',
 ] as const;
 
 type Primitives = { [E in (typeof NODES)[number]]: PrimitiveProps<E> };
@@ -102,8 +103,13 @@ export const Primitive = NODES.reduce(
     (primitive, node) => {
         component Node({children, asChild, style, ...nodeProps} : PrimitiveProps){
             let tag = track(node);
-            if(asChild) {
+            if(@asChild) {
                 <@children style={normalizeStyleObject(style)} {...@nodeProps} />
+            }
+            else if(node == "svg") {
+                <svg style={normalizeStyleObject(style)} {...@nodeProps}>
+                    <@children />
+                </svg> 
             }
             else {
                 <@tag style={normalizeStyleObject(style)} {...@nodeProps}>
@@ -152,6 +158,7 @@ export function trackProps(v: Record<string|symbol, any>) {
 			if (exists) {
                 t = track(undefined);
 				t = Object.defineProperty(t, '__v', descriptors[key]);
+                t.isTrackedProxy = !descriptors[key].set;
 			}
 			return t;
 		}

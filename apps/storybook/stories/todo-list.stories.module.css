@@ -1,0 +1,13 @@
+ul {
+    list-style: none;
+    li {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+}
+
+input {
+    width: 16px;
+    height: 16px;
+}

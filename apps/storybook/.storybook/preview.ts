@@ -27,7 +27,7 @@ const preview = {
     layout: 'fullscreen',
     options: {
       storySort: {
-        order: ['Components', 'Utilities'],
+        order: ['Components', 'Utilities', 'Todo'],
       },
     },
     // disables Chromatic on a global level

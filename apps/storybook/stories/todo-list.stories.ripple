@@ -1,0 +1,48 @@
+import "./todo-list.stories.module.css"
+export default { title: 'Todo/Component' };
+
+export component List() {
+    const list = [
+        // Local primitives (implemented in this repo)
+        { name: "accessible-icon", completed: true },
+        { name: "accordion", completed: true },
+        { name: "arrow", completed: true },
+        { name: "aspect-ratio", completed: true },
+        { name: "collapsible", completed: true },
+        { name: "collection", completed: true },
+        { name: "direction", completed: true },
+        { name: "focus-scope", completed: true },
+        { name: "label", completed: true },
+        { name: "presence", completed: true },
+        { name: "primitive", completed: true },
+        { name: "progress", completed: true },
+        { name: "roving-focus-group", completed: true },
+        { name: "separator", completed: true },
+        { name: "toggle", completed: true },
+        { name: "toggle-group", completed: true },
+        { name: "use-controllable-state", completed: true },
+        { name: "use-escape-keydown", completed: true },
+        { name: "use-size", completed: true },
+        { name: "visually-hidden", completed: true },
+
+        // Common Radix primitives that are NOT yet implemented locally
+        { name: "dialog", completed: false },
+        { name: "popover", completed: false },
+        { name: "tooltip", completed: false },
+        { name: "select", completed: false },
+        { name: "switch", completed: false },
+        { name: "tabs", completed: false },
+        { name: "toast", completed: false },
+        { name: "radio-group", completed: false },
+        { name: "scroll-area", completed: false },
+    ]
+    <div>
+        <ul>
+            for (let item of list) {
+                <li class={item.completed ? 'completed' : 'todo'}>
+                    <input type="checkbox" checked={item.completed} /> {item.name}
+                </li>
+            }
+        </ul>
+    </div>
+}

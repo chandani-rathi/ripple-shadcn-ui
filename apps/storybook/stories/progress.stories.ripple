@@ -17,12 +17,13 @@ export component Styled(){
         <Progress class={styles.root} value={@value} max={max}>
             <ProgressIndicator
                 class={styles.indicator}
+                percentage={@percentage}
                 style={{ width: @percentage != null ? `${@percentage}%` : undefined }}
             />
         </Progress>
         <hr />
         <button onClick={toggleIndeterminate}>{"Toggle Indeterminate"}</button>
-        <ProgressRange value={@value} setValue={(v) => @value = v} max={max} />
+        <ProgressRange {value} max={max} />
     </div>
 }
 
@@ -109,24 +110,31 @@ function useProgressValueState(initialState: ProgressValue | (() => ProgressValu
 }
 
 function useIndeterminateToggle(value){
- return () => {
-
- }
+    let preValue = @value;
+    return () => {
+        if(@value != undefined) {
+            preValue = @value;
+            @value = undefined
+        }
+        else {
+            @value = preValue;
+        }
+    }
 }
 
 component ProgressRange({
-    value, setValue, max = 100
+    value, max = 100
 }){
     <input
       type="range"
       disabled={value == null}
-      value={value}
+      value={@value}
       max={max}
       min={0}
       onChange={(e) => {
         const val = Number(e.target.value);
         if (!isNaN(val)) {
-          setValue(val);
+          @value = val;
         }
       }}
     />

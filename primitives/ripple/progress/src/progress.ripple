@@ -1,5 +1,5 @@
 import { Context, track  } from "ripple";
-import { Primitive } from "@ripple-primitives/primitive-ui"
+import { Primitive, trackProps } from "@ripple-primitives/primitive-ui"
 
 const NAME = 'Progress';
 const DEFAULT_MAX = 100;
@@ -8,45 +8,34 @@ type ProgressState = 'indeterminate' | 'complete' | 'loading';
 
 const ProgressContext = new Context({});
 
-component ProgressProvider({
-  value,
-  max,
-  children
-}){
-  const context = ProgressContext.get();
-  context.value = track(() => value);
-  context.max = track(() => max);
-  ProgressContext.set(context);
-  <@children />
-}
+export component Progress(props){
+  const {
+    value: valueProp,
+    max: maxProp,
+    getValueLabel = defaultGetValueLabel,
+    ...progressProps
+  } = trackProps(props);
 
-export component Progress({
-  value: valueProp,
-  max: maxProp,
-  getValueLabel = defaultGetValueLabel,
-  ...progressProps
-}){
+  const max = track(() => isValidMaxNumber(@maxProp) ? @maxProp : DEFAULT_MAX);
+  checkMax(@max)
+  checkValues(@valueProp, @max);
 
-  const max = isValidMaxNumber(maxProp) ? maxProp : DEFAULT_MAX;
-  checkMax(max)
-  checkValues(valueProp, max);
+  const value = track(() => isValidValueNumber(@valueProp, @max) ? @valueProp : null);
+  const valueLabel = track(() => isNumber(value) ? getValueLabel(@value, @max) : undefined);
 
-  const value = isValidValueNumber(valueProp, max) ? valueProp : null;
-  const valueLabel = isNumber(value) ? getValueLabel(value, max) : undefined;
-
-  <ProgressProvider value={value} max={max}>
-    <Primitive.div
-      aria-valuemax={max}
+  ProgressContext.set({ value, max });
+ 
+  <Primitive.div
+      aria-valuemax={@max}
       aria-valuemin={0}
-      aria-valuenow={isNumber(value) ? value : undefined}
-      aria-valuetext={valueLabel}
+      aria-valuenow={isNumber(@value) ? value : undefined}
+      aria-valuetext={@valueLabel}
       role="progressbar"
-      data-state={getProgressState(value, max)}
-      data-value={value ?? undefined}
-      data-max={max}
+      data-state={getProgressState(@value, @max)}
+      data-value={@value ?? undefined}
+      data-max={@max}
       {...progressProps}
     />
-  </ProgressProvider>
   
 }
 /* -------------------------------------------------------------------------------------------------
@@ -56,9 +45,10 @@ export component Progress({
 const INDICATOR_NAME = 'ProgressIndicator';
 
 export component ProgressIndicator(props) {
+  const {...trackedProps} = trackProps(props)
   const context = ProgressContext.get();
   <Primitive.div 
-    {...props}
+    {...trackedProps}
     data-state={getProgressState(context.@value, context.@max)}
     data-value={context.@value ?? undefined}
     data-max={context.@max} 

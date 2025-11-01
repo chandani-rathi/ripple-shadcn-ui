@@ -1,9 +1,10 @@
 .root {
   width: 400px;
-  height: 20px;
+  height: 30px;
   max-width: 100%;
   border: 5px solid var(--gray-12);
   background-color: var(--gray-3);
+  position: relative;
 }
 
 .indicator,
@@ -20,17 +21,24 @@
   }
   &::before {
     content: attr(data-value);
+    position: absolute;
+    left: 0px;
+    margin-left: 2px;
   }
   &::after {
-    content: attr(data-max);
+    content: attr(data-max);      
+    position: absolute;
+    right: 0px;
+    margin-right: 2px;
   }
 }
 
-.rootAttr,
-.indicatorAttr {
+.rootAttr, indicatorAttr {
   background-color: var(--blue-12);
   border: 2px solid var(--blue-9);
   padding: 10px;
+  height: 50px;
+  color: white;
 
   &[data-state='loading'] {
     border-color: var(--red-9);
@@ -46,8 +54,14 @@
 .indicatorAttr {
   &::before {
     content: attr(data-value);
+    position: absolute;
+    left: 0px;
+    margin-left: 12px;
   }
   &::after {
-    content: attr(data-max);
+    content: attr(data-max);        
+    position: absolute;
+    right: 0px;
+    margin-right: 12px;
   }
 }

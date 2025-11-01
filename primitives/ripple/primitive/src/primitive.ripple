@@ -1,4 +1,4 @@
-import { track } from "ripple"
+import { track, effect } from "ripple"
 import type { PropsWithChildren } from "ripple";
 import { normalizeStyleObject } from "@ripple-primitives/utils";
 import type { Tracked } from "ripple";
@@ -145,9 +145,7 @@ export function trackProps(v: Record<string|symbol, any>) {
 	if (isTracked || typeof v !== 'object' || v === null || Array.isArray(v)) {
 		throw new TypeError('Invalid value: expected a non-tracked object');
 	}
-
-	var descriptors = Object.getOwnPropertyDescriptors(v);
-
+    
 	return new Proxy(v, {
 		get(target, key) {
 			if (isTrackedObject(target[key]) || isFunction(target[key])) {
@@ -155,11 +153,11 @@ export function trackProps(v: Record<string|symbol, any>) {
 			}
             
 			let t = undefined;
-			const exists = !!descriptors[key];
-			if (exists) {
+			const prop = Object.getOwnPropertyDescriptor(v, key);
+			if (prop) {
                 t = track(undefined);
-				t = Object.defineProperty(t, '__v', descriptors[key]);
-                t.isTrackedProxy = !descriptors[key].set;
+				t = Object.defineProperty(t, '__v', prop);
+                t.isTrackedProxy = !prop.set;
 			}
 			return t;
 		}

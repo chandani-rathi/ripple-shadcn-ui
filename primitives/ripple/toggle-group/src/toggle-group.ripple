@@ -109,7 +109,7 @@ export component ToggleGroupImplMultiple(props){
 
 component ToggleGroupImpl({ 
   disabled = false, 
-  rovingFocus = false, 
+  rovingFocus = true, 
   orientation, 
   dir, 
   loop = true,
@@ -122,10 +122,10 @@ component ToggleGroupImpl({
   context.disabled = track(() => @disabled);
   context.rovingFocus = track(() => @rovingFocus);
   ToggleGroupContext.set(context);
-  if(rovingFocus) {
-    <RovingFocusGroup asChild {orientation} dir={direction} {loop} {...toggleGroupProps}>
+  if(@rovingFocus) {
+    <RovingFocusGroup asChild {orientation} dir={@direction} {@loop} >
       component children(childProps) {
-        <Primitive.div {...childProps} {...commonProps} >
+        <Primitive.div {...childProps} {...commonProps} {...toggleGroupProps} >
           component children(childProps2){
             <@Children {...childProps2}/>
           }
@@ -154,9 +154,9 @@ export component ToggleGroupItem(props){
   const disabled = track(() => context.@disabled || @disabledItem);
   const rovingFocusGroupContext = RovingFocusContext.get();
   if(context.@rovingFocus) {
-    <RovingFocusGroupItem asChild {...itemProps}>
+    <RovingFocusGroupItem asChild focusable={!@disabled} active={@pressed} >
       component children(childProps){
-        <ToggleGroupItemImpl asChild={parentAsChild} {value}  disabled={@disabled} pressed={@pressed} {...childProps}>
+        <ToggleGroupItemImpl asChild={parentAsChild} {@value} {disabled} {@pressed} {...childProps} {...itemProps}>
           component children(childProps2) {
             <@Children {...childProps2} />
           }

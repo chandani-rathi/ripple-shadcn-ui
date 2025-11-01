@@ -1,4 +1,3 @@
-import type { Preview } from '@storybook/web-components-vite'
 import { mount } from 'ripple';
 import './preview.css';
 
@@ -23,7 +22,7 @@ export function isRippleComponent(fn) {
   );
 }
 
-const preview: Preview = {
+const preview = {
   parameters: {
     layout: 'fullscreen',
     options: {

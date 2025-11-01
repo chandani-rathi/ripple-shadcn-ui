@@ -101,18 +101,14 @@ type PrimitiveProps<T extends object = {}> = PropsWithChildren<{ asChild?: boole
 */
 export const Primitive = NODES.reduce(
     (primitive, node) => {
-        component Node({children, asChild, style, ...nodeProps} : PrimitiveProps){
+        component Node(props : PrimitiveProps){
+            const {children, asChild, style, ...nodeProps} = trackProps(props);
             let tag = track(node);
             if(@asChild) {
-                <@children style={normalizeStyleObject(style)} {...@nodeProps} />
-            }
-            else if(node == "svg") {
-                <svg style={normalizeStyleObject(style)} {...@nodeProps}>
-                    <@children />
-                </svg> 
+                <@children style={normalizeStyleObject(@style)} {...nodeProps} />
             }
             else {
-                <@tag style={normalizeStyleObject(style)} {...@nodeProps}>
+                <@tag style={normalizeStyleObject(@style)} {...nodeProps}>
                     <@children />
                 </@tag> 
             }
@@ -139,6 +135,10 @@ export function isTrackedObject(v: Tracked) {
     return typeof v === 'object' && v !== null && typeof (v.f) === 'number';
 }
 
+export function isFunction(v: Tracked) {
+    return typeof v === 'function';
+}
+
 export function trackProps(v: Record<string|symbol, any>) {
 	var isTracked = isTrackedObject(v);
 
@@ -150,9 +150,10 @@ export function trackProps(v: Record<string|symbol, any>) {
 
 	return new Proxy(v, {
 		get(target, key) {
-			if (isTrackedObject(target[key])) {
+			if (isTrackedObject(target[key]) || isFunction(target[key])) {
 				return target[key];
 			}
+            
 			let t = undefined;
 			const exists = !!descriptors[key];
 			if (exists) {

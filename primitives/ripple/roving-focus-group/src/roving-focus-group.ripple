@@ -1,5 +1,7 @@
-import { Primitive } from "@ripple-primitives/primitive-ui"
+import { Primitive, trackProps } from "@ripple-primitives/primitive-ui"
 import { composeEventHandlers } from '@ripple-primitives/primitive';
+import { UseControllableState } from "@ripple-primitives/use-controllable-state";
+import { useDirection } from "@ripple-primitives/direction"
 import { track, Context, untrack, effect } from 'ripple';
 const NAME = 'RovingFocusGroup';
 
@@ -16,48 +18,65 @@ export component RovingFocusGroup(props){
   <RovingFocusGroupImpl {...props} />
 }
 
-component RovingFocusGroupImpl({
-  orientation,
-  loop = false,
-  dir,
-  currentTabStopId,
+component RovingFocusGroupImpl(props){
+  const { orientation, loop = false, dir,
+  currentTabStopId: currentTabStopIdProp,
   defaultCurrentTabStopId,
   onCurrentTabStopIdChange,
   onEntryFocus,
-  preventScrollOnEntryFocus,
-  style,
-  ...groupProps
-}){
+  preventScrollOnEntryFocus, style, ...groupProps } = trackProps(props);
+
   const isTabbingBackOut = track(false);
   const focusableItemsCount = #[];
   const isClickFocus = track(false);
   const tabIndex = track(() => @isTabbingBackOut || focusableItemsCount.length === 0 ? -1 : 0) 
+  const direction = useDirection(dir);
+  const currentTabStopId = UseControllableState(
+		{
+			prop: currentTabStopIdProp,
+			defaultProp: defaultCurrentTabStopId ?? null,
+			onChange: onCurrentTabStopIdChange,
+			caller: GROUP_NAME,
+		},
+	);
+
+
   const context = {...RovingFocusContext.get()};
   context.getItems = () => focusableItemsCount;
-  context.currentTabStopId = track(() => currentTabStopId)
+  context.orientation = track(() => @orientation);
+  context.loop = track(() => @loop);
+  context.dir = track(() => @direction);
+  context.currentTabStopId = track(() => @currentTabStopId);
+
   context.onFocusableItemAdd = (item) => {
-    focusableItemsCount.push(item)
+    focusableItemsCount.push(item);
   }
+
   context.onFocusableItemRemove = (id) => {
     const index = focusableItemsCount.indexOf(i => i.id == id);
-    focusableItemsCount.splice(index, 1)
+    focusableItemsCount.splice(index, 1);
   }
+
   context.onItemShiftTab = () => {
-    @isTabbingBackOut = true;
+    setTimeout(() => {
+      @isTabbingBackOut = true;
+    })
   }
   context.onItemFocus = (id) => {
-    context.currentTabStopId = id;
+    setTimeout(() => @currentTabStopId = id);
   }
-  RovingFocusContext.set(context);
+  RovingFocusContext.set({...context});
+
   <Primitive.div 
     {...groupProps}
-    data-orientation={orientation}
-    tabIndex={tabIndex}
-    style={{ ...style, outline: 'none',  }} 
+    data-orientation={@orientation}
+    tabIndex={@tabIndex}
+    style={{ ...@style, outline: 'none',  }} 
     onMouseDown={composeEventHandlers(groupProps.onMouseDown, () => {
           @isClickFocus = true;
     })}
      onFocus={composeEventHandlers(groupProps.onFocus, (event) => {
+        
           // We normally wouldn't need this check, because we already check
           // that the focus is on the current target and not bubbling to it.
           // We do this because Safari doesn't focus buttons when clicked, and
@@ -67,51 +86,53 @@ component RovingFocusGroupImpl({
             const entryFocusEvent = new CustomEvent(ENTRY_FOCUS, EVENT_OPTIONS);
             event.currentTarget.dispatchEvent(entryFocusEvent);
             if (!entryFocusEvent.defaultPrevented) {
-              const items = context.getItems().filter((item) => item.focusable);
-                const activeItem = items.find((item) => item.active);
-                const currentItem = items.find((item) => item.id === @currentTabStopId);
-                const candidateItems = [activeItem, currentItem, ...items].filter(
-                  Boolean
-                ) as typeof items;
-                const candidateNodes = candidateItems.map((item) => item.node);
-                focusFirst(candidateNodes, preventScrollOnEntryFocus);
+              
+              const items = focusableItemsCount.filter((item) => item.focusable);
+              const activeItem = items.find((item) => item.active);
+              const currentItem = items.find((item) => item.id === @currentTabStopId);
+              const candidateItems = [activeItem, currentItem, ...items].filter(
+                Boolean
+              ) as typeof items;
+              const candidateNodes = candidateItems.map((item) => item.node);
+              focusFirst(candidateNodes, preventScrollOnEntryFocus);
             }
           }
      })}
-     onBlur={composeEventHandlers(groupProps.onBlur, () => @isTabbingBackOut = false)}
-  ></Primitive.div>
+     onBlur={composeEventHandlers(groupProps.onBlur, () => {
+      @isTabbingBackOut = false
+     })}
+     />
 }
 
 
 /* -------------------------------------------------------------------------------------------------
  * RovingFocusGroupItem
  * -----------------------------------------------------------------------------------------------*/
-export component RovingFocusGroupItem({
-  focusable = true,
-  active = false,
-  tabStopId,
-  children,
-  ...itemProps
-}){
-  const Children = track (() => @children)
+export component RovingFocusGroupItem(props){
+  const {
+    focusable = true,
+    active = false,
+    tabStopId,
+    children: Children,
+    ...itemProps } = trackProps(props)
+
   const context = RovingFocusContext.get();
   const id = track(() => Date.now())
   const isCurrentTabStop = track(() => context.@currentTabStopId === @id)
   const itemRef = (node) => {
-    untrack(() => {
-      if (focusable) {
-        setTimeout(() => {
-          context.onFocusableItemAdd({id: @id, focusable, active, node});
-        })
+    if (@focusable) {
+      context.onFocusableItemAdd({ @id, @focusable, @active, @node});
+    }
+    return untrack(() => {
+      () => {
+        context.onFocusableItemRemove(@id)
       }
-    })
-      return () => setTimeout(() => context.onFocusableItemRemove(@id));
+    });
   }
-  
   <Primitive.span
-    {ref itemRef}
+    {ref n => untrack(() => itemRef(n))}
     tabIndex={@isCurrentTabStop ? 0 : -1}
-    data-orientation={context.orientation}
+    data-orientation={context.@orientation}
     {...itemProps}
     onMouseDown={composeEventHandlers(itemProps.onMouseDown, (event) => {
       // We prevent focusing non-focusable items on `mousedown`.
@@ -126,7 +147,7 @@ export component RovingFocusGroupItem({
         return;
       }
       if (event.target !== event.currentTarget) return;
-      const focusIntent = getFocusIntent(event, context.orientation, context.dir);
+      const focusIntent = getFocusIntent(event, context.@orientation, context.@dir);
       if (focusIntent !== undefined) {
         if (event.metaKey || event.ctrlKey || event.altKey || event.shiftKey) return;
         event.preventDefault();
@@ -136,7 +157,7 @@ export component RovingFocusGroupItem({
         else if (focusIntent === 'prev' || focusIntent === 'next') {
           if (focusIntent === 'prev') candidateNodes.reverse();
           const currentIndex = candidateNodes.indexOf(event.currentTarget);
-          candidateNodes = context.loop
+          candidateNodes = context.@loop
             ? wrapArray(candidateNodes, currentIndex + 1)
             : candidateNodes.slice(currentIndex + 1);
         }
@@ -149,7 +170,7 @@ export component RovingFocusGroupItem({
     })}
   >
     component children(childProps){
-      <@Children {...childProps} isCurrentTabStop={@isCurrentTabStop} hasTabStop={context.@currentTabStopId != null} />
+      <@Children {...childProps} />
     }
   </Primitive.span>
 }

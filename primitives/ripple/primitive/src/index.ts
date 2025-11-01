@@ -1,1 +1,15 @@
-export * from "./primitive.ripple"
+export * from "./primitive.ripple";
+
+export function composeEventHandlers<E extends { defaultPrevented: boolean }>(
+  originalEventHandler?: (event: E) => void,
+  ourEventHandler?: (event: E) => void,
+  { checkForDefaultPrevented = true } = {}
+) {
+  return function handleEvent(event: E) {
+    originalEventHandler?.(event);
+
+    if (checkForDefaultPrevented === false || !event.defaultPrevented) {
+      return ourEventHandler?.(event);
+    }
+  };
+}

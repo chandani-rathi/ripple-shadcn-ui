@@ -62,7 +62,7 @@ export component CollapsibleTrigger(props){
     onClick={composeEventHandlers(triggerProps.onClick, context.onOpenToggle)}
       />
 }
-
+CollapsibleTrigger.displayName = TRIGGER_NAME
 
 /* -------------------------------------------------------------------------------------------------
  * CollapsibleContent
@@ -112,7 +112,7 @@ component CollapsibleContentImpl(props){
     style={{
       [`--radix-collapsible-content-height` as any]: @height ? `${@height}px` : undefined,
       [`--radix-collapsible-content-width` as any]: @width ? `${@width}px` : undefined,
-      ...style,
+      ...@style,
     }}
   >
     component children(childProps){

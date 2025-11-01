@@ -13,7 +13,20 @@ export component Styled(){
 export component Controlled(){
     const open = track(true);
 
+    <h1>{"untracked"}</h1>
     <Collapsible class={styles.root} open={@open} onOpenChange={o => @open = o} >
+        <CollapsibleTrigger class={styles.trigger}>
+            {@open ? 'close' : 'open'}
+        </CollapsibleTrigger>
+        <CollapsibleContent class={styles.content} asChild>
+            component children(childProps) {
+                <article {...childProps}>{"Content 1"}</article>
+            }
+        </CollapsibleContent>
+    </Collapsible>
+
+    <h1>{"tracked"}</h1>
+    <Collapsible class={styles.root} {open} >
         <CollapsibleTrigger class={styles.trigger}>
             {@open ? 'close' : 'open'}
         </CollapsibleTrigger>

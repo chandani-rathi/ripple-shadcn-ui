@@ -3,6 +3,7 @@ import { compile } from 'ripple/compiler';
 import fsPromise from "node:fs/promises"
 import fs from 'node:fs';
 import { loadCsf } from "storybook/internal/csf-tools";
+import { dirname } from 'node:path';
 const VITE_FS_PREFIX = '/@fs/';
 const IS_WINDOWS = process.platform === 'win32';
 
@@ -30,7 +31,7 @@ async function createVirtualImportId(filename: string, root: string, type: strin
 }
 
 const getAbsolutePath = (packageName: string) => {
-  return "/.storybook/"
+  return packageName//dirname("./../node_modules/" + packageName)
 }
 
 const config: StorybookConfig = {

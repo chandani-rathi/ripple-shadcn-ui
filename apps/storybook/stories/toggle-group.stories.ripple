@@ -1,5 +1,6 @@
-import { track } from 'ripple';
+import { effect, track } from 'ripple';
 import styles from './toggle-group.stories.module.css';
+import { fn } from 'storybook/test';
 import { ToggleGroup, ToggleGroupItem, DirectionProvider } from "ripple-primitives"
 
 export default {
@@ -39,10 +40,36 @@ export component Single(){
           {"Option 3"}
         </ToggleGroupItem>
       </ToggleGroup>
+
+
+    <h1>{"Controlled Tracked"}</h1>
+      effect(() => {
+        console.log("Controlled", @value)
+      })
+      <ToggleGroup
+        type="single"
+        class={styles.root}
+        aria-label="Options"
+        {value}
+      >
+        <ToggleGroupItem value="1" class={styles.item}>
+          {"Option 1"}
+        </ToggleGroupItem>
+        <ToggleGroupItem value="2" class={styles.item}>
+          {"Option 2"}
+        </ToggleGroupItem>
+        <ToggleGroupItem value="3" class={styles.item}>
+          {"Option 3"}
+        </ToggleGroupItem>
+      </ToggleGroup>
 }
 
-export component Vertical(){
-    <ToggleGroup
+export const Vertical = {
+    args: {
+      onValueChange: fn()
+    },
+    render: component VerticalToggleGroup(props) {
+      <ToggleGroup
         type="single"
         orientation="vertical"
         class={styles.root}
@@ -59,11 +86,22 @@ export component Vertical(){
           {"Option 3"}
         </ToggleGroupItem>
       </ToggleGroup>
+    }
 }
 
-export component Multiple(){
+export const Multiple = {
+  args: {
+    onValueChange: fn()
+  },
+  render: component MultipleStory(props){
     <h1>{"Uncontrolled"}</h1>
-      <ToggleGroup type="multiple" class={styles.root} aria-label="Options" defaultValue={['1']}>
+      <ToggleGroup 
+        type="multiple" 
+        class={styles.root} 
+        aria-label="Options" 
+        defaultValue={['1']}
+        onValueChange={(v) => props.onValueChange(v)}
+      >
         <ToggleGroupItem value="1" class={styles.item}>
           {"Option 1"}
         </ToggleGroupItem>
@@ -75,8 +113,10 @@ export component Multiple(){
         </ToggleGroupItem>
       </ToggleGroup>
 
-      
     const value = track([]);
+    effect(() => {
+      props.onValueChange(@value)
+    })
     <h1>{"Controlled"}</h1>
       <ToggleGroup
         type="multiple"
@@ -95,7 +135,9 @@ export component Multiple(){
           {"Option 3"}
         </ToggleGroupItem>
       </ToggleGroup>
+  }
 }
+
 
 export component Chromatic(){
     <h1>{"Single"}</h1>

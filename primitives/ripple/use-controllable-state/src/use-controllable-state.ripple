@@ -14,12 +14,19 @@ function useUncontrolledState({
 }
 
 export function UseControllableState({ prop, defaultProp, onChange = () => {}, caller  }){
-  
+
   const isControlled = @prop !== undefined;
+  const doChange = next => setTimeout(() => {
+    @onChange(next);
+    if(prop && !prop.isTrackedProxy) {
+      @prop = next;
+    }
+  });
+  
   if(!isControlled){
     const uncontrolledProp = useUncontrolledState({
       defaultProp,
-      onChange,
+      onChange: doChange,
     });
     return uncontrolledProp;
   }
@@ -36,9 +43,7 @@ export function UseControllableState({ prop, defaultProp, onChange = () => {}, c
   });
 
   return track(() => @prop, undefined, (next, prev) => {
-      @onChange(next);
-      if(!prop.isTrackedProxy)
-        @prop = next;
+      doChange(next);
       return prev;
   });
 }

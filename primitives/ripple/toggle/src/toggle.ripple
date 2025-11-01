@@ -13,6 +13,7 @@ export component Toggle(props) {
 		children: ToggleChildren,
 		...buttonProps
 	} = trackProps(props);
+	
 	const pressed = UseControllableState(
 		{
 			prop: pressedProp,

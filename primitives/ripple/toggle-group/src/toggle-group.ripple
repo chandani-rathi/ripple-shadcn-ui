@@ -1,66 +1,58 @@
-import { Primitive } from "@ripple-primitives/primitive-ui";
+import { Primitive, trackProps } from "@ripple-primitives/primitive-ui";
 import { Toggle } from "@ripple-primitives/toggle";
 import { useDirection } from "@ripple-primitives/direction"
-import { ControllableState } from '@ripple-primitives/use-controllable-state';
+import { UseControllableState, ControllableState } from '@ripple-primitives/use-controllable-state';
 import { track, effect, Context } from "ripple";
 import { RovingFocusGroup, RovingFocusGroupItem, RovingFocusContext } from "@ripple-primitives/roving-focus-group";
-
 
 const TOGGLE_GROUP_NAME = 'ToggleGroup';
 const ToggleGroupContext = new Context({});
 
-export component ToggleGroup({ type, ...toggleGroupProps }){
-  const context = ToggleGroupContext.get();
+export component ToggleGroup(props){
+  const { type, ...toggleGroupProps } = trackProps(props);
   const toggleGroupId = Date.now();
-  ToggleGroupContext.set({toggleGroupId, type});
+  ToggleGroupContext.set({ toggleGroupId, type });
 
-  if (type === 'single') {
-    <ToggleGroupImplSingle {toggleGroupId} {...toggleGroupProps} />;
+  if (@type === 'single') {
+    <ToggleGroupImplSingle {...toggleGroupProps} />;
   }
-  else if( type === 'multiple') {
-     <ToggleGroupImplMultiple {toggleGroupId} {...toggleGroupProps} />;
+  else if(@type === 'multiple') {
+     <ToggleGroupImplMultiple {...toggleGroupProps} />;
   }
   else {
-    <div></div>
-    throw new Error(`Missing prop \`type\` expected on \`${TOGGLE_GROUP_NAME}\``);
+    <div>
+      throw new Error(`Missing prop \`type\` expected on \`${TOGGLE_GROUP_NAME}\``);
+    </div>
   }
-
-  
 }
 
-export component ToggleGroupImplSingle({ 
-  value: valueProp, 
-  defaultValue, 
-  onValueChange, 
-  children,
-  ...toggleGroupSingleProps
- }){
-  const Children = track(() => @children);
+export component ToggleGroupImplSingle(props){
+  const {  value: valueProp, defaultValue, onValueChange, children: Children,...toggleGroupSingleProps } = props
 
-  <ControllableState 
-    prop={valueProp}
-    defaultProp={defaultValue ?? ''}
-    onChange={onValueChange}
-    caller={TOGGLE_GROUP_NAME}
-    {...toggleGroupSingleProps}
-  >
-    component children({state, ...childProps}){
-      const context = ToggleGroupContext.get();
-      context.value = track(() => #[@state]);
-      context.onItemActivate = (v) => {
-        @state = v;
-      }
-      context.onItemDeactivate = (v) => {
-        @state = ''
-      }
-      ToggleGroupContext.set(context);
-      <ToggleGroupImpl {...childProps}>
-          component children(childProps1){
-            <@Children {...childProps1} />
-          }
-      </ToggleGroupImpl>
+  const value = UseControllableState(
+		{
+			prop: valueProp,
+			defaultProp: defaultValue ?? '',
+			onChange: @onValueChange,
+			caller: TOGGLE_GROUP_NAME,
+		},
+	);
+
+  const context = ToggleGroupContext.get();
+  context.value = track(() => @value ? #[@value]: #[]);
+  context.onItemActivate = (v) => {
+    @value = v;
+  }
+  context.onItemDeactivate = (v) => {
+    @value = ''
+  }
+  ToggleGroupContext.set({...context});
+
+  <ToggleGroupImpl {...toggleGroupSingleProps}>
+    component children(childProps){
+      <@Children {...childProps} />
     }
-  </ControllableState>
+  </ToggleGroupImpl>
 }
 
 component ToggleGroupValueProvider({
@@ -81,65 +73,54 @@ component ToggleGroupValueProvider({
   <@children />
 }
 
-export component ToggleGroupImplMultiple({ 
-  value: valueProp, 
-  defaultValue, 
-  onValueChange = () => {}, 
-  children,
-  ...toggleGroupMultipleProps
-}){
-  const Children = track(() => @children);
+export component ToggleGroupImplMultiple(props){
+  const {  value: valueProp, defaultValue, onValueChange, children: Children, ...toggleGroupMultipleProps } = props
 
-  <ControllableState
-    prop={valueProp}
-    defaultProp={defaultValue ?? []}
-    onChange={onValueChange}
-    caller={TOGGLE_GROUP_NAME}
-    {...toggleGroupMultipleProps}
+  const value = UseControllableState(
+		{
+			prop: valueProp,
+			defaultProp: defaultValue ?? [],
+			onChange: @onValueChange,
+			caller: TOGGLE_GROUP_NAME,
+		},
+	);
+
+  const handleButtonActivate = (itemValue: string) => {
+    @value = [...@value, itemValue];
+  }
+
+  const handleButtonDeactivate = (itemValue: string) => {
+    @value = @value.filter(value => value !== itemValue)
+  }
+
+  <ToggleGroupValueProvider
+    type="multiple"
+    value={@value}
+    onItemActivate={handleButtonActivate}
+    onItemDeactivate={handleButtonDeactivate}
   >
-    component children({state, ...childProps}) {
-
-      const handleButtonActivate = (itemValue: string) => {
-        @state = [...@state, itemValue];
+    <ToggleGroupImpl {...toggleGroupMultipleProps}>
+      component children(childProps){
+        <@Children {...childProps} />
       }
-
-      const handleButtonDeactivate = (itemValue: string) => {
-        @state = @state.filter(value => value !== itemValue)
-      }
-
-      <ToggleGroupValueProvider
-        type="multiple"
-        value={@state}
-        onItemActivate={handleButtonActivate}
-        onItemDeactivate={handleButtonDeactivate}
-      >
-          <ToggleGroupImpl {...childProps}>
-            component children(childProps1){
-              <@Children {...childProps1} />
-            }
-        </ToggleGroupImpl>
-      </ToggleGroupValueProvider>
-      
-    }
-  </ControllableState>
+    </ToggleGroupImpl>
+  </ToggleGroupValueProvider>
 }
-
 
 component ToggleGroupImpl({ 
   disabled = false, 
-  rovingFocus = true, 
+  rovingFocus = false, 
   orientation, 
   dir, 
   loop = true,
-  children,
+  children: Children,
   ...toggleGroupProps
 }){
-  const Children = track(() => @children);
   const direction = useDirection(dir)
   const commonProps = { role: 'group', dir: direction };
   const context = ToggleGroupContext.get();
-  context.disabled = track(() => disabled);
-  context.rovingFocus = track(() => rovingFocus);
+  context.disabled = track(() => @disabled);
+  context.rovingFocus = track(() => @rovingFocus);
   ToggleGroupContext.set(context);
   if(rovingFocus) {
     <RovingFocusGroup asChild {orientation} dir={direction} {loop} {...toggleGroupProps}>
@@ -166,11 +147,11 @@ component ToggleGroupImpl({
  * -----------------------------------------------------------------------------------------------*/
 
 const ITEM_NAME = 'ToggleGroupItem';
-export component ToggleGroupItem({ value, disabled: disabledItem, children, asChild:parentAsChild,  ...itemProps}){
-  const Children = track(() => @children);
+export component ToggleGroupItem(props){
+  const { value, disabled: disabledItem, children: Children, asChild:parentAsChild,  ...itemProps} = trackProps(props);
   const context = ToggleGroupContext.get();
-  const pressed = track(() => context.@value.includes(value));
-  const disabled = track(() => context.@disabled || disabledItem);
+  const pressed = track(() => context.@value.includes(@value));
+  const disabled = track(() => context.@disabled || @disabledItem);
   const rovingFocusGroupContext = RovingFocusContext.get();
   if(context.@rovingFocus) {
     <RovingFocusGroupItem asChild {...itemProps}>
@@ -184,7 +165,7 @@ export component ToggleGroupItem({ value, disabled: disabledItem, children, asCh
     </RovingFocusGroupItem>
   }
   else {
-    <ToggleGroupItemImpl {value} {...itemProps}  {disabled} pressed={@pressed}>
+    <ToggleGroupItemImpl {@value} {...itemProps}  {disabled} {@pressed}>
         component children(childProps) {
           <@Children {...childProps} />
         }
@@ -193,11 +174,11 @@ export component ToggleGroupItem({ value, disabled: disabledItem, children, asCh
   
 }
 
-component ToggleGroupItemImpl({ value, ...itemProps }){
+component ToggleGroupItemImpl({ value, pressed, ...itemProps }){
   const context = ToggleGroupContext.get();
-  const singleProps = { role: 'radio', 'aria-checked': itemProps.pressed, 'aria-pressed': undefined };
-  const typeProps = @context.type === 'single' ? singleProps : undefined;
-  <Toggle {...itemProps} {...singleProps} 
+  const singleProps = { role: 'radio', 'aria-checked': @pressed, 'aria-pressed': undefined };
+  const typeProps = @context.type === 'single' ? singleProps : {};
+  <Toggle {@pressed} {...itemProps} {...typeProps} 
     onPressedChange={(pressed) => {
       if (pressed) {
         context.onItemActivate(value);

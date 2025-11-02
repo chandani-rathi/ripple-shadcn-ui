@@ -29,3 +29,5 @@ export * from "@ripple-primitives/presence";
 export * from "@ripple-primitives/accordion";
 
 export * from "@ripple-primitives/collection";
+
+export * from "@ripple-primitives/switch";

@@ -78,6 +78,9 @@
             ],
             "@ripple-primitives/collection": [
                 "primitives/ripple/collection/src"
+            ],
+            "@ripple-primitives/switch": [
+                "primitives/ripple/switch/src"
             ]
         }
     }

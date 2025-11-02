@@ -102,11 +102,11 @@ export default function (plop) {
       },
       {
         type: 'updateRipplePrimitivesPackageJson',
-        path: "primitives/ripple/ripple-primitive/package.json"
+        path: "primitives/ripple/ripple-primitives/package.json"
       },
       {
         type: "updateRipplePrimitivesIndexTs",
-        path: "primitives/ripple/ripple-primitive/src/index.ts"
+        path: "primitives/ripple/ripple-primitives/src/index.ts"
       }
 		],
 	});

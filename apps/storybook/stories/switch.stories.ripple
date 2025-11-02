@@ -1,0 +1,128 @@
+import styles from './switch.stories.module.css';
+import { Label, Switch, SwitchThumb } from "ripple-primitives";
+import { track, effect } from "ripple";
+
+export default { title: 'Components/Switch' };
+
+export component Styled(){
+    <p>{"This switch is nested inside a label. The state is uncontrolled."}</p>
+    <Label class={styles.label}>
+        {`This is the label  `}
+        <Switch class={styles.root}>
+            <SwitchThumb class={styles.thumb} />
+        </Switch>
+    </Label>
+}
+
+export component Controlled(){
+    const checked = track(true);
+
+    <p>{"This switch is placed adjacent to its label. The state is controlled."}</p>
+    <Label class={styles.label} htmlFor="randBox">{`This is the label  `}</Label>
+    <Switch class={styles.root} {checked} id="randBox">
+        <SwitchThumb class={styles.thumb} />
+    </Switch>
+}
+
+export component WithinForm() {
+    const data = #{ optional: false, required: false, stopProp: false };
+    effect(() => {
+        console.log("optional", data.optional)
+    })
+    <form
+        onSubmit={(event) => {
+            console.log(event)
+            event.preventDefault()
+        }}
+        onChange={(event) => {
+            const input = event.target as HTMLInputElement;
+            data[input.name] = input.checked;
+            console.log("onChange", input.name, input.checked)
+        }}
+    >
+        <fieldset optional={data.optional}>
+           
+            <legend>{`optional checked: ${data.optional ? "true" : "false"}`}</legend>
+            <label>
+                const checked = track(false);
+                <Switch class={styles.root} name="optional" {checked}>
+                    <SwitchThumb class={styles.thumb} />
+                </Switch>
+                {" with label"}
+            </label>
+        </fieldset>
+
+        <br />
+        <br />
+        <fieldset>
+            <legend>{`required checked: ${data.required}`}</legend>
+            <Switch class={styles.root} name="required" required>
+                <SwitchThumb class={styles.thumb} />
+            </Switch>
+        </fieldset>
+
+        <br />
+        <br />
+        <fieldset>
+            <legend>{`stop propagation checked: ${String(data.stopProp)}`}</legend>
+            <Switch class={styles.root} name="stopProp"
+                onClick={(event) => {
+                    event.stopPropagation();
+                }}
+            >
+                <SwitchThumb class={styles.thumb} />
+            </Switch>
+        </fieldset>
+
+        <br />
+        <br />
+
+        <button>{"Submit"}</button>
+    </form>
+}
+
+export component Chromatic() {
+    <h1>{"Uncontrolled"}</h1>
+    <h2>{"Off"}</h2>
+    <Switch class={styles.root}>
+        <SwitchThumb class={styles.thumb} />
+    </Switch>
+
+    <h2>{"On"}</h2>
+    <Switch class={styles.root} defaultChecked>
+        <SwitchThumb class={styles.thumb} />
+    </Switch>
+
+    <h1>{"Controlled"}</h1>
+    <h2>{"Off"}</h2>
+    <Switch class={styles.root} checked={false}>
+        <SwitchThumb class={styles.thumb} />
+    </Switch>
+
+    <h2>{"On"}</h2>
+    <Switch class={styles.root} checked>
+        <SwitchThumb class={styles.thumb} />
+    </Switch>
+
+    <h1>{"Disabled"}</h1>
+    <Switch class={styles.root} disabled>
+        <SwitchThumb class={styles.thumb} />
+    </Switch>
+
+    <h1>{"State attributes"}</h1>
+    <h2>{"Unchecked"}</h2>
+    <Switch class={styles.rootAttr}>
+        <SwitchThumb class={styles.thumbAttr} />
+    </Switch>
+
+    <h2>{"Checked"}</h2>
+    <Switch class={styles.rootAttr} defaultChecked>
+        <SwitchThumb class={styles.thumbAttr} />
+    </Switch>
+
+    <h1>{"Disabled"}</h1>
+    <Switch class={styles.rootAttr} defaultChecked disabled>
+        <SwitchThumb class={styles.thumbAttr} />
+    </Switch>
+}
+Chromatic.parameters = { chromatic: { disable: false } };

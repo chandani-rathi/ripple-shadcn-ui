@@ -39,7 +39,8 @@
         "@ripple-primitives/collapsible": "workspace:*",
         "@ripple-primitives/presence": "workspace:*",
         "@ripple-primitives/accordion": "workspace:*",
-        "@ripple-primitives/collection": "workspace:*"
+        "@ripple-primitives/collection": "workspace:*",
+        "@ripple-primitives/switch": "workspace:*"
     },
     "packageManager": "pnpm@10.20.0"
 }

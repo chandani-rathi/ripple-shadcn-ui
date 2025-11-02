@@ -1,0 +1,22 @@
+import { axe } from 'vitest-axe';
+import userEvent from '@testing-library/user-event';
+import { Switch }  from "../src/switch.ripple";
+
+const TEXT_CHILD = "TEST"
+
+describe("switch", () => {
+    beforeEach(() => {
+		component Test(){
+			<Switch>{TEXT_CHILD}</Switch>
+		}
+		render(Test);
+	});
+
+    it('should have no accessibility violations', async () => {
+		expect(await axe(container)).toHaveNoViolations();
+	});
+    
+    it("should work", () => {
+         expect(container).toMatchSnapshot()
+    })
+})

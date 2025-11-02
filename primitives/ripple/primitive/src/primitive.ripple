@@ -107,10 +107,13 @@ export const Primitive = NODES.reduce(
             if(@asChild) {
                 <@children style={normalizeStyleObject(@style)} {...nodeProps} />
             }
-            else {
+            else if(@children){
                 <@tag style={normalizeStyleObject(@style)} {...nodeProps}>
-                    <@children />
+                    <@children />    
                 </@tag> 
+            }
+            else {
+                <@tag style={normalizeStyleObject(@style)} {...nodeProps} />
             }
         }
         return {

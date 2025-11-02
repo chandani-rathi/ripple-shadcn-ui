@@ -1,9 +1,11 @@
-import { track, effect } from "ripple"
+import { track, effect } from "ripple";
+import type { Tracked } from "ripple";
 const NAME = 'UseSize';
 
-export function UseSize(element: HTMLElement | null){
+export function UseSize(node: Tracked<HTMLElement | null>){
   const size = track<{ width: number; height: number } | undefined>(undefined);
   effect(() => {
+    const element = @node;
     if (element) {
       @size = { width: element.offsetWidth, height: element.offsetHeight }
       const resizeObserver = new ResizeObserver((entries) => {
@@ -32,6 +34,7 @@ export function UseSize(element: HTMLElement | null){
           height = element.offsetHeight;
         }
 
+        console.log("size...")
         @size = { width, height };
       })
       return () => resizeObserver.unobserve(element);

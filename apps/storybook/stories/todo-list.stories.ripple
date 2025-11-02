@@ -40,7 +40,7 @@ export component List() {
         { name: "separator", completed: true },
         { name: "slider", completed: false },
         { name: "slot", completed: false },
-        { name: "switch", completed: false },
+        { name: "switch", completed: true },
         { name: "tabs", completed: false },
         { name: "toast", completed: false },
         { name: "toggle", completed: true },

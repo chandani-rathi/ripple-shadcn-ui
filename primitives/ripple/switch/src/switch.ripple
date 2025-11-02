@@ -1,0 +1,152 @@
+import { Primitive, trackProps, composeEventHandlers } from "@ripple-primitives/primitive-ui";
+import { UseControllableState } from "@ripple-primitives/use-controllable-state";
+import { track, bindNode, Context, effect, untrack } from "ripple";
+import { UseSize } from "@ripple-primitives/use-size";
+/* -------------------------------------------------------------------------------------------------
+ * Switch
+ * -----------------------------------------------------------------------------------------------*/
+
+const SwitchContext = new Context({});;
+const SWITCH_NAME = 'Switch';
+export component Switch(props){
+  const { 
+    name, 
+    checked: checkedProp,
+    defaultChecked,
+    required,
+    disabled,
+    value = 'on',
+    onCheckedChange,
+    form,
+    ...switchProps
+  } = trackProps(props);
+
+  const checked = UseControllableState({
+    prop: checkedProp,
+    defaultProp: defaultChecked ?? false,
+    onChange: onCheckedChange,
+    caller: SWITCH_NAME,
+  })
+
+  const button = track<HTMLElement>(null);
+  // We set this to true by default so that events bubble to forms without JS (SSR)
+  const isFormControl = track(() => @button ? @form || !!@button.closest('form') : true);
+  const hasConsumerStoppedPropagationRef = track(null)
+
+  SwitchContext.set({ checked, disabled });
+  
+  <Primitive.button
+    {ref bindNode(button)}
+    type="button"
+    role="switch"
+    aria-checked={@checked}
+    aria-required={@required}
+    data-state={getState(@checked)}
+    data-disabled={@disabled ? '' : undefined}
+    disabled={@disabled}
+    value={@value}
+    {...switchProps}
+    onClick={composeEventHandlers(props.onClick, (event) => {
+            @checked = !@checked;
+            if (@isFormControl) {
+              @hasConsumerStoppedPropagationRef = event.isPropagationStopped();
+              console.log("isStopped", @hasConsumerStoppedPropagationRef)
+              // if switch is in a form, stop propagation from the button so that we only propagate
+              // one click event (from the input). We propagate changes from an input so that native
+              // form validation works and form events reflect switch updates.
+              if (!@hasConsumerStoppedPropagationRef) event.stopPropagation();
+            }
+      })}
+  />
+      
+  if(@isFormControl) {
+        <SwitchBubbleInput 
+          control={button}
+          bubbles={!@hasConsumerStoppedPropagationRef}
+          name={name}
+          value={value}
+          checked={checked}
+          required={required}
+          disabled={disabled}
+          form={form}
+          // We transform because the input is absolutely positioned but we have
+          // rendered it **after** the button. This pulls it back to sit on top
+          // of the button.
+          style={{ transform: 'translateX(-100%)' }}
+        />
+      }
+}
+
+Switch.displayName = SWITCH_NAME;
+
+/* -------------------------------------------------------------------------------------------------
+ * SwitchThumb
+ * -----------------------------------------------------------------------------------------------*/
+
+const THUMB_NAME = 'SwitchThumb';
+
+export component SwitchThumb(props){
+  const {...thumbProps} = trackProps(props)
+  const context = SwitchContext.get()
+  <Primitive.span 
+    data-state={getState(context.@checked)}
+    data-disabled={context.@disabled ? '' : undefined}
+    {...thumbProps}
+  />
+}
+SwitchThumb.displayName = THUMB_NAME;
+
+/* -------------------------------------------------------------------------------------------------
+ * SwitchBubbleInput
+ * -----------------------------------------------------------------------------------------------*/
+
+const BUBBLE_INPUT_NAME = 'SwitchBubbleInput';
+component SwitchBubbleInput({
+  control, checked, bubbles = true, style, ...props
+}){
+  const nodeRef = track<HTMLInputElement>(null)
+  const controlSize = UseSize(control);
+  const prevChecked = track(@checked);
+
+  // Bubble checked change to parents (e.g form change event)
+  effect(() => {
+    const input = @nodeRef;
+    const isPrevChecked = @prevChecked;
+    const isChecked = @checked;
+    if (!input) return;
+
+    if (isPrevChecked !== isChecked) {
+      setTimeout(() => {
+        input.checked = isChecked;
+        input.dispatchEvent(new Event('click', { bubbles: @bubbles }));
+        input.dispatchEvent(new Event('change', { bubbles: @bubbles }));
+      });
+      @prevChecked = isChecked;
+    }
+  })
+  
+  <Primitive.input
+    {ref bindNode(nodeRef)}
+    type="checkbox"
+    aria-hidden
+    defaultChecked={@checked}
+    {...props}
+    tabIndex={-1}
+    style={{
+      ...@style,
+      ...@controlSize,
+      position: 'absolute',
+      pointerEvents: 'none',
+      opacity: 0,
+      margin: 0,
+    }}
+   />
+}
+
+SwitchBubbleInput.displayName = BUBBLE_INPUT_NAME;
+
+/* -----------------------------------------------------------------------------------------------*/
+
+function getState(checked: boolean) {
+  return checked ? 'checked' : 'unchecked';
+}

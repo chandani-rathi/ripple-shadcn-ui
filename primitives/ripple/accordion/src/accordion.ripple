@@ -23,18 +23,12 @@ export component Accordion(props){
   const items = #[];
   const getItems = () => items;
   const addItem = (item) => {
-    console.log("add triggers", item);
     items.push(item);
   };
   const removeItem = (triggerId) => {
     const itemIndex = items.findIndex(i => i.triggerId == triggerId);
-    console.log("remove triggers", triggerId, itemIndex);
     items.splice(itemIndex, 1)
   }
-  
-  effect(() => {
-    console.log("total triggers", items.length)
-  })
 
   AccordionContext.set({ getItems, addItem, removeItem })
 
@@ -119,7 +113,6 @@ component AccordionImpl(props){
     const triggerIndex = triggerCollection.findIndex((item) => item.node === target);
     const triggerCount = triggerCollection.length;
     const isDirectionLTR = @direction === 'ltr';
-    console.log("handleKeyDown", target, triggerIndex)
     if (triggerIndex === -1) return;
 
     // Prevents page scroll while user is navigating
@@ -134,7 +127,6 @@ component AccordionImpl(props){
       if (nextIndex > endIndex) {
         nextIndex = homeIndex;
       }
-      console.log("moveNext", nextIndex)
     };
 
     const movePrev = () => {
@@ -152,7 +144,7 @@ component AccordionImpl(props){
           nextIndex = endIndex;
           break;
         case 'ArrowRight':
-          if (orientation === 'horizontal') {
+          if (@orientation === 'horizontal') {
             if (isDirectionLTR) {
               moveNext();
             } else {
@@ -161,12 +153,12 @@ component AccordionImpl(props){
           }
           break;
         case 'ArrowDown':
-          if (orientation === 'vertical') {
+          if (@orientation === 'vertical') {
             moveNext();
           }
           break;
         case 'ArrowLeft':
-          if (orientation === 'horizontal') {
+          if (@orientation === 'horizontal') {
             if (isDirectionLTR) {
               movePrev();
             } else {
@@ -175,7 +167,7 @@ component AccordionImpl(props){
           }
           break;
         case 'ArrowUp':
-          if (orientation === 'vertical') {
+          if (@orientation === 'vertical') {
             movePrev();
           }
           break;
@@ -256,20 +248,20 @@ export component AccordionTrigger(props){
   const accordionContext = AccordionContext.get();
   
   const triggerRef = (n) => {
+    const triggerId = untrack(() => itemContext.@triggerId);
+    const addItem = untrack(() => accordionContext.addItem);
+    const removeItem = untrack(() => accordionContext.removeItem);
     untrack(() => {
-      setTimeout(() => accordionContext.addItem({ triggerId: itemContext.@triggerId, node: n}))
+      setTimeout(() => addItem({ triggerId, node: n}))
     })
     return () => {
       console.log("unmount")
       untrack(() => () => {
-        console.log("")
-        //console.log("unmount", itemContext.@triggerId)
-        //accordionContext.removeItem(itemContext.@triggerId);
+        setTimeout(() => removeItem(triggerId))
+        console.log("unmount", triggerId);
       })
     }
   }
-  
-  console.log("collapsible", accordionContext.@collapsible)
 
   <CollapsibleTrigger 
     {ref triggerRef}

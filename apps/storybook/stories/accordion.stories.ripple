@@ -193,7 +193,7 @@ export component Multiple() {
 
 export component Animated() {
     const values = ['One', 'Two', 'Three', 'Four'];
-    const count = track(2);
+    const count = track(5);
     const hasDynamicContent = track(false);
 
     <label>
@@ -248,3 +248,359 @@ export component Animated() {
     </Accordion>
 
 }
+
+export component Animated2D() {
+    const values = ['One', 'Two', 'Three', 'Four'];
+    <Accordion type="single" class={styles.root} defaultValue="One">
+        for(let value of values) {
+            <AccordionItem class={styles.item} {value}>
+                <AccordionHeader class={styles.header}>
+                    <AccordionTrigger class={styles.trigger}>{value}</AccordionTrigger>
+                </AccordionHeader>
+                <AccordionContent class={styles.animated2DContent}>
+                    <div style={{ paddingTop: '10px', paddingBottom: '10px' }}>
+                        {`Per erat orci nostra luctus sociosqu mus risus penatibus, duis elit vulputate viverra integer ullamcorper congue curabitur sociis, nisi malesuada scelerisque quam suscipit habitant sed.`}
+                    </div>
+                </AccordionContent>
+            </AccordionItem>
+        }
+    </Accordion>
+}
+
+export component AnimatedControlled() {
+    const value = track(['one', 'two', 'three', 'four']);
+    <Accordion type="multiple" {value} class={styles.root}>
+        <AccordionItem class={styles.item} value="one">
+            <AccordionHeader class={styles.header}>
+                <AccordionTrigger class={styles.trigger}>{"One"}</AccordionTrigger>
+            </AccordionHeader>
+            <AccordionContent class={styles.animatedContent}>
+                {`Per erat orci nostra luctus sociosqu mus risus penatibus, duis elit vulputate viverra integer ullamcorper congue curabitur sociis, nisi malesuada scelerisque quam suscipit habitant sed.`}
+            </AccordionContent>
+        </AccordionItem>
+        <AccordionItem class={styles.item} value="two">
+            <AccordionHeader class={styles.header}>
+                <AccordionTrigger class={styles.trigger}>{"Two"}</AccordionTrigger>
+            </AccordionHeader>
+            <AccordionContent class={styles.animatedContent}>
+                {`Cursus sed mattis commodo fermentum conubia ipsum pulvinar sagittis, diam eget bibendum porta nascetur ac dictum, leo tellus dis integer platea ultrices mi.`}
+            </AccordionContent>
+        </AccordionItem>
+        <AccordionItem class={styles.item} value="three">
+            <AccordionHeader class={styles.header}>
+                <AccordionTrigger class={styles.trigger}>{"Three"}</AccordionTrigger>
+            </AccordionHeader>
+            <AccordionContent class={styles.animatedContent}>
+                {`Sociis hac sapien turpis conubia sagittis justo dui, inceptos penatibus feugiat himenaeos euismod magna, nec tempor pulvinar eu etiam mattis.`}
+            </AccordionContent>
+        </AccordionItem>
+        <AccordionItem class={styles.item} value="four">
+            <AccordionHeader class={styles.header}>
+                <AccordionTrigger class={styles.trigger}>{"Four"}</AccordionTrigger>
+            </AccordionHeader>
+            <AccordionContent class={styles.animatedContent}>
+                {`Odio placerat `} <a href="#">{"quisque"}</a>{ `  sapien sagittis non sociis ligula penatibus dignissim vitae, enim vulputate nullam semper potenti etiam volutpat libero.`}
+            </AccordionContent>
+        </AccordionItem>
+    </Accordion>
+}
+
+export component OutsideViewport(){
+    <p>{"Scroll down to see tabs"}</p>
+    <div style={{ height: '150vh' }} />
+    <p>
+      {`When accordion buttons are focused and the user is navigating via keyboard, the page should
+      not scroll unless the next tab is entering the viewport.`}
+    </p>
+    <Accordion type="single" class={styles.root}>
+        <AccordionItem class={styles.item} value="one">
+            <AccordionHeader class={styles.header}>
+                <AccordionTrigger class={styles.trigger}>{"One"}</AccordionTrigger>
+            </AccordionHeader>
+            <AccordionContent class={styles.animatedContent}>
+                {`Per erat orci nostra luctus sociosqu mus risus penatibus, duis elit vulputate viverra integer ullamcorper congue curabitur sociis, nisi malesuada scelerisque quam suscipit habitant sed.`}
+            </AccordionContent>
+        </AccordionItem>
+        <AccordionItem class={styles.item} value="two">
+            <AccordionHeader class={styles.header}>
+                <AccordionTrigger class={styles.trigger}>{"Two"}</AccordionTrigger>
+            </AccordionHeader>
+            <AccordionContent class={styles.animatedContent}>
+                {`Cursus sed mattis commodo fermentum conubia ipsum pulvinar sagittis, diam eget bibendum porta nascetur ac dictum, leo tellus dis integer platea ultrices mi.`}
+            </AccordionContent>
+        </AccordionItem>
+        <AccordionItem class={styles.item} value="three" disabled>
+            <AccordionHeader class={styles.header}>
+                <AccordionTrigger class={styles.trigger}>{"Three (disabled)"}</AccordionTrigger>
+            </AccordionHeader>
+            <AccordionContent class={styles.animatedContent}>
+                {`Sociis hac sapien turpis conubia sagittis justo dui, inceptos penatibus feugiat himenaeos euismod magna, nec tempor pulvinar eu etiam mattis.`}
+            </AccordionContent>
+        </AccordionItem>
+        <AccordionItem class={styles.item} value="four">
+            <AccordionHeader class={styles.header}>
+                <AccordionTrigger class={styles.trigger}>{"Four"}</AccordionTrigger>
+            </AccordionHeader>
+            <AccordionContent class={styles.animatedContent}>
+                {`Odio placerat `} <a href="#">{"quisque"}</a>{ `  sapien sagittis non sociis ligula penatibus dignissim vitae, enim vulputate nullam semper potenti etiam volutpat libero.`}
+            </AccordionContent>
+        </AccordionItem>
+    </Accordion>
+    <div style={{ height: '150vh' }} />
+}
+
+export component Horizontal(){
+    <h1>{"Horizontal Orientation"}</h1>
+    <Accordion type="single" class={styles.root} orientation="horizontal">
+        <AccordionItem class={styles.item} value="one">
+            <AccordionHeader class={styles.header}>
+                <AccordionTrigger class={styles.trigger}>{"One"}</AccordionTrigger>
+            </AccordionHeader>
+            <AccordionContent class={styles.content}>
+                {`Per erat orci nostra luctus sociosqu mus risus penatibus, duis elit vulputate viverra integer ullamcorper congue curabitur sociis, nisi malesuada scelerisque quam suscipit habitant sed.`}
+            </AccordionContent>
+        </AccordionItem>
+        <AccordionItem class={styles.item} value="two">
+            <AccordionHeader class={styles.header}>
+                <AccordionTrigger class={styles.trigger}>{"Two"}</AccordionTrigger>
+            </AccordionHeader>
+            <AccordionContent class={styles.content}>
+                {`Cursus sed mattis commodo fermentum conubia ipsum pulvinar sagittis, diam eget bibendum porta nascetur ac dictum, leo tellus dis integer platea ultrices mi.`}
+            </AccordionContent>
+        </AccordionItem>
+        <AccordionItem class={styles.item} value="three" disabled>
+            <AccordionHeader class={styles.header}>
+                <AccordionTrigger class={styles.trigger}>{"Three (disabled)"}</AccordionTrigger>
+            </AccordionHeader>
+            <AccordionContent class={styles.content}>
+                {`Sociis hac sapien turpis conubia sagittis justo dui, inceptos penatibus feugiat himenaeos euismod magna, nec tempor pulvinar eu etiam mattis.`}
+            </AccordionContent>
+        </AccordionItem>
+        <AccordionItem class={styles.item} value="four">
+            <AccordionHeader class={styles.header}>
+                <AccordionTrigger class={styles.trigger}>{"Four"}</AccordionTrigger>
+            </AccordionHeader>
+            <AccordionContent class={styles.content}>
+                {`Odio placerat `} <a href="#">{"quisque"}</a>{ `  sapien sagittis non sociis ligula penatibus dignissim vitae, enim vulputate nullam semper potenti etiam volutpat libero.`}
+            </AccordionContent>
+        </AccordionItem>
+    </Accordion>
+}
+
+export component Chromatic(){
+    const items = ['One', 'Two', 'Three', 'Four'];
+    <h1>{"Uncontrolled"}</h1>
+    <h2>{"Single closed"}</h2>
+    <Accordion type="single" class={styles.root}>
+        for(let value of items) {
+            <AccordionItem class={styles.item} {value}>
+                <AccordionHeader class={styles.header}>
+                    <AccordionTrigger class={styles.trigger}>{value}</AccordionTrigger>
+                </AccordionHeader>
+                <AccordionContent class={styles.content}>
+                    <div style={{ paddingTop: '10px', paddingBottom: '10px' }}>
+                        {`${value}: Per erat orci nostra luctus sociosqu mus risus penatibus, duis elit vulputate viverra integer ullamcorper congue curabitur sociis, nisi malesuada scelerisque quam suscipit habitant sed.`}
+                    </div>
+                </AccordionContent>
+            </AccordionItem>
+        }
+    </Accordion>
+
+    <h2>{"Single open"}</h2>
+    <Accordion type="single" class={styles.root} defaultValue="Two">
+        for(let value of items) {
+            <AccordionItem class={styles.item} {value}>
+                <AccordionHeader class={styles.header}>
+                    <AccordionTrigger class={styles.trigger}>{value}</AccordionTrigger>
+                </AccordionHeader>
+                <AccordionContent class={styles.content}>
+                    <div style={{ paddingTop: '10px', paddingBottom: '10px' }}>
+                        {`${value}: Per erat orci nostra luctus sociosqu mus risus penatibus, duis elit vulputate viverra integer ullamcorper congue curabitur sociis, nisi malesuada scelerisque quam suscipit habitant sed.`}
+                    </div>
+                </AccordionContent>
+            </AccordionItem>
+        }
+    </Accordion>
+
+    <h2>{"Multiple close"}</h2>
+    <Accordion type="multiple" class={styles.root}>
+        for(let value of items) {
+            <AccordionItem class={styles.item} {value}>
+                <AccordionHeader class={styles.header}>
+                    <AccordionTrigger class={styles.trigger}>{value}</AccordionTrigger>
+                </AccordionHeader>
+                <AccordionContent class={styles.content}>
+                    <div style={{ paddingTop: '10px', paddingBottom: '10px' }}>
+                        {`${value}: Per erat orci nostra luctus sociosqu mus risus penatibus, duis elit vulputate viverra integer ullamcorper congue curabitur sociis, nisi malesuada scelerisque quam suscipit habitant sed.`}
+                    </div>
+                </AccordionContent>
+            </AccordionItem>
+        }
+    </Accordion>
+
+    <h2>{"Multiple open"}</h2>
+    <Accordion type="multiple" class={styles.root} defaultValue={['One', 'Two']}>
+        for(let value of items) {
+            <AccordionItem class={styles.item} {value}>
+                <AccordionHeader class={styles.header}>
+                    <AccordionTrigger class={styles.trigger}>{value}</AccordionTrigger>
+                </AccordionHeader>
+                <AccordionContent class={styles.content}>
+                    <div style={{ paddingTop: '10px', paddingBottom: '10px' }}>
+                        {`${value}: Per erat orci nostra luctus sociosqu mus risus penatibus, duis elit vulputate viverra integer ullamcorper congue curabitur sociis, nisi malesuada scelerisque quam suscipit habitant sed.`}
+                    </div>
+                </AccordionContent>
+            </AccordionItem>
+        }
+    </Accordion>
+
+    <h1>{"Controlled"}</h1>
+    <h2>{"Single open"}</h2>
+    const value = track('Three')
+    <Accordion type="single" class={styles.root} {value}>
+        for(let value of items) {
+            <AccordionItem class={styles.item} {value}>
+                <AccordionHeader class={styles.header}>
+                    <AccordionTrigger class={styles.trigger}>{value}</AccordionTrigger>
+                </AccordionHeader>
+                <AccordionContent class={styles.content}>
+                    <div style={{ paddingTop: '10px', paddingBottom: '10px' }}>
+                        {`${value}: Per erat orci nostra luctus sociosqu mus risus penatibus, duis elit vulputate viverra integer ullamcorper congue curabitur sociis, nisi malesuada scelerisque quam suscipit habitant sed.`}
+                    </div>
+                </AccordionContent>
+            </AccordionItem>
+        }
+    </Accordion>
+
+    <h2>{"Multiple open"}</h2>
+    const values = track(['Two','Three'])
+    <Accordion type="multiple" class={styles.root} value={values}>
+        for(let value of items) {
+            <AccordionItem class={styles.item} {value}>
+                <AccordionHeader class={styles.header}>
+                    <AccordionTrigger class={styles.trigger}>{value}</AccordionTrigger>
+                </AccordionHeader>
+                <AccordionContent class={styles.content}>
+                    <div style={{ paddingTop: '10px', paddingBottom: '10px' }}>
+                        {`${value}: Per erat orci nostra luctus sociosqu mus risus penatibus, duis elit vulputate viverra integer ullamcorper congue curabitur sociis, nisi malesuada scelerisque quam suscipit habitant sed.`}
+                    </div>
+                </AccordionContent>
+            </AccordionItem>
+        }
+    </Accordion>
+
+    <h1>{"Disabled (whole)"}</h1>
+    <Accordion type="single" class={styles.root} disabled>
+        for(let value of items) {
+            <AccordionItem class={styles.item} {value}>
+                <AccordionHeader class={styles.header}>
+                    <AccordionTrigger class={styles.trigger}>{value}</AccordionTrigger>
+                </AccordionHeader>
+                <AccordionContent class={styles.content}>
+                    <div style={{ paddingTop: '10px', paddingBottom: '10px' }}>
+                        {`${value}: Per erat orci nostra luctus sociosqu mus risus penatibus, duis elit vulputate viverra integer ullamcorper congue curabitur sociis, nisi malesuada scelerisque quam suscipit habitant sed.`}
+                    </div>
+                </AccordionContent>
+            </AccordionItem>
+        }
+    </Accordion>
+
+    <h1>{"Disabled (item)"}</h1>
+    <h2>{"Just item"}</h2>
+    <Accordion type="single" class={styles.root}>
+        for(let value of items) {
+            <AccordionItem class={styles.item} {value} disabled={value === 'Two'}>
+                <AccordionHeader class={styles.header}>
+                    <AccordionTrigger class={styles.trigger}>{value}</AccordionTrigger>
+                </AccordionHeader>
+                <AccordionContent class={styles.content}>
+                    <div style={{ paddingTop: '10px', paddingBottom: '10px' }}>
+                        {`${value}: Per erat orci nostra luctus sociosqu mus risus penatibus, duis elit vulputate viverra integer ullamcorper congue curabitur sociis, nisi malesuada scelerisque quam suscipit habitant sed.`}
+                    </div>
+                </AccordionContent>
+            </AccordionItem>
+        }
+    </Accordion>
+
+    <h2>{"with `disabled=false` on top-level"}</h2>
+    <Accordion type="single" class={styles.root} disabled={false}>
+        for(let value of items) {
+            <AccordionItem class={styles.item} {value} disabled={value === 'Two'}>
+                <AccordionHeader class={styles.header}>
+                    <AccordionTrigger class={styles.trigger}>{value}</AccordionTrigger>
+                </AccordionHeader>
+                <AccordionContent class={styles.content}>
+                    <div style={{ paddingTop: '10px', paddingBottom: '10px' }}>
+                        {`${value}: Per erat orci nostra luctus sociosqu mus risus penatibus, duis elit vulputate viverra integer ullamcorper congue curabitur sociis, nisi malesuada scelerisque quam suscipit habitant sed.`}
+                    </div>
+                </AccordionContent>
+            </AccordionItem>
+        }
+    </Accordion>
+
+    <h1>{"Force mounted contents"}</h1>
+    <Accordion type="single" class={styles.root}>
+        for(let value of items) {
+            <AccordionItem class={styles.item} {value}>
+                <AccordionHeader class={styles.header}>
+                    <AccordionTrigger class={styles.trigger}>{value}</AccordionTrigger>
+                </AccordionHeader>
+                <AccordionContent class={styles.content} forceMount>
+                    <div style={{ paddingTop: '10px', paddingBottom: '10px' }}>
+                        {`${value}: Per erat orci nostra luctus sociosqu mus risus penatibus, duis elit vulputate viverra integer ullamcorper congue curabitur sociis, nisi malesuada scelerisque quam suscipit habitant sed.`}
+                    </div>
+                </AccordionContent>
+            </AccordionItem>
+        }
+    </Accordion>
+
+    <h1>{"State attributes"}</h1>
+    <h2>{"Accordion disabled"}</h2>
+    <Accordion type="single" class={styles.rootAttr} defaultValue="Two" disabled>
+        for(let value of items) {
+            <AccordionItem class={styles.itemAttr} {value}>
+                <AccordionHeader class={styles.headerAttr}>
+                    <AccordionTrigger class={styles.triggerAttr}>{value}</AccordionTrigger>
+                </AccordionHeader>
+                <AccordionContent class={styles.contentAttr}>
+                    <div style={{ paddingTop: '10px', paddingBottom: '10px' }}>
+                        {`${value}: Per erat orci nostra luctus sociosqu mus risus penatibus, duis elit vulputate viverra integer ullamcorper congue curabitur sociis, nisi malesuada scelerisque quam suscipit habitant sed.`}
+                    </div>
+                </AccordionContent>
+            </AccordionItem>
+        }
+    </Accordion>
+
+    <h2>{"Accordion enabled with item override"}</h2>
+    <Accordion type="single" class={styles.rootAttr} defaultValue="Two">
+        for(let value of items) {
+            <AccordionItem class={styles.itemAttr} {value} disabled={['Two', 'Four'].includes(value)}>
+                <AccordionHeader class={styles.headerAttr}>
+                    <AccordionTrigger class={styles.triggerAttr}>{value}</AccordionTrigger>
+                </AccordionHeader>
+                <AccordionContent class={styles.contentAttr}>
+                    <div style={{ paddingTop: '10px', paddingBottom: '10px' }}>
+                        {`${value}: Per erat orci nostra luctus sociosqu mus risus penatibus, duis elit vulputate viverra integer ullamcorper congue curabitur sociis, nisi malesuada scelerisque quam suscipit habitant sed.`}
+                    </div>
+                </AccordionContent>
+            </AccordionItem>
+        }
+    </Accordion>
+
+    <h2>{"Accordion disabled with item override"}</h2>
+    <Accordion type="single" class={styles.rootAttr} defaultValue="Two" disabled={true}>
+        for(let value of items) {
+            <AccordionItem class={styles.itemAttr} {value} disabled={['Two', 'Four'].includes(value)}>
+                <AccordionHeader class={styles.headerAttr}>
+                    <AccordionTrigger class={styles.triggerAttr}>{value}</AccordionTrigger>
+                </AccordionHeader>
+                <AccordionContent class={styles.contentAttr}>
+                    <div style={{ paddingTop: '10px', paddingBottom: '10px' }}>
+                        {`${value}: Per erat orci nostra luctus sociosqu mus risus penatibus, duis elit vulputate viverra integer ullamcorper congue curabitur sociis, nisi malesuada scelerisque quam suscipit habitant sed.`}
+                    </div>
+                </AccordionContent>
+            </AccordionItem>
+        }
+    </Accordion>
+}
+Chromatic.parameters = { chromatic: { disable: false } };

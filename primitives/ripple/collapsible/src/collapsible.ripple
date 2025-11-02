@@ -1,4 +1,4 @@
-import { Context, track, effect, untrack, bindNode } from "ripple";
+import { Context, track, effect, untrack, bindNode, tick } from "ripple";
 import { Primitive, trackProps } from "@ripple-primitives/primitive-ui";
 import { UseControllableState } from "@ripple-primitives/use-controllable-state";
 import { composeEventHandlers } from "@ripple-primitives/primitive";
@@ -19,14 +19,14 @@ export component Collapsible(props){
 
   const open = UseControllableState({
     prop: openProp, 
-    defaultProp: defaultOpen, 
+    defaultProp: defaultOpen ?? false, 
     onChange: onOpenChange, 
     caller: NAME
   });
 
   const contentId = track(() => Date.now());
   const onOpenToggle = () => {
-        @open = !@open;
+    @open = !@open;
   }
   CollapsibleContext.set({ open, onOpenToggle, disabled, contentId});
 
@@ -72,34 +72,49 @@ const CONTENT_NAME = 'CollapsibleContent';
 export component CollapsibleContent(props){
   const { forceMount, ...contentProps } = trackProps(props);
   const context = CollapsibleContext.get();
-  <CollapsibleContentImpl {...contentProps} />
+  <Presence present={@forceMount || context.@open}>
+    component children({ present, ...presentProps }){
+      <CollapsibleContentImpl {...contentProps} {...presentProps} {present} />
+    }
+  </Presence>
 }
 
 component CollapsibleContentImpl(props){
   const { present, children: Children, style, ...contentProps } = props;
   const context = CollapsibleContext.get();
-  const isPresent = track(() => @present)
+  const isPresent = track(@present);
   // when opening we want it to immediately open to retrieve dimensions
   // when closing we delay `present` to retrieve dimensions before closing
   const isOpen = track(() => context.@open || @isPresent);
-  const height = track(() => 0);
-  const width = track(() => 0);
-  let node = track(() => null);
+  const height = track(0);
+  const width = track(0);
+  let node = track<HTMLElement>(null);
 
   effect(() => {
-    if(context.@open && @node) {
-      setTimeout(() => {
-        const rect = @node.getBoundingClientRect();
-        const originalTransitionDuration = @node.style.transitionDuration;
-        const originalAnimationName = @node.style.animationName;
-        @node.style.transitionDuration = '0s';
-        @node.style.animationName = 'none';
-        @height = rect.height;
-        @width = rect.width;
-        @node.style.transitionDuration = originalTransitionDuration;
-        @node.style.animationName = originalAnimationName;
-      })
-    }
+    //const hasOpen = context.@open;
+    const hasPresent = @present;
+    const nodeRef = untrack(() => @node)
+    const styleRef = untrack(() => @node.style)
+    
+      //tick().then(() => {
+        if(nodeRef) {
+          const { rect, originalTransitionDuration, originalAnimationName } = untrack(() => {
+            const originalTransitionDuration = styleRef.transitionDuration;
+            const originalAnimationName = styleRef.animationName;
+            styleRef.transitionDuration = '0s';
+            styleRef.animationName = 'none';
+            const rect = nodeRef.getBoundingClientRect()
+            return { rect, originalAnimationName, originalTransitionDuration};
+          });
+          @height = rect.height;
+          @width = rect.width;
+          //console.log("calculated..", untrack(() => ({ @height, @width})));
+          nodeRef.style.transitionDuration = originalTransitionDuration;
+          nodeRef.style.animationName = originalAnimationName;
+          
+          @isPresent = hasPresent;
+        }
+      //});
   });
 
   <Primitive.div 

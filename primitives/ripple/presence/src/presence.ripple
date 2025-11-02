@@ -1,28 +1,149 @@
-import { trackSplit, effect, track } from 'ripple'
+import { trackSplit, effect, track, bindNode, untrack } from 'ripple';
+import type { Tracked } from 'ripple';
+import { trackProps } from "@ripple-primitives/primitive-ui";
 const NAME = 'Presence';
 
 export component Presence(props){
-  const [rest] = trackSplit(props, [])
-  const { children, present = true } = rest;
-  const presence = usePresence(present);
-  effect(() => {
-    console.log(presence)
-  })
-  <@children presence={presence.@isPresent} />
+  const { present, children } = trackProps(props)
+  const { isPresent, ref } = usePresence(present);
+  <@children present={isPresent} {ref ref} />
 }
+Presence.displayName = 'Presence';
 
-export function usePresence(present){
-  const initialState = present ? 'mounted' : 'unmounted';
-  const state = track(() => initialState);
+export function usePresence(present: Tracked<boolean>){
+  const node = track<HTMLElement>(null);
+  const stylesRef = track<CSSStyleDeclaration | null>(null);
+  const prevAnimationNameRef = track('none');
+  const prevPresentRef = track(@present);
+  const initialState = track(@present ? 'mounted' : 'unmounted');
+  const { state, send } = useStateMachine(initialState, MACHINE);
+  const isPresent = track(() => ['mounted', 'unmountSuspended'].includes(@state))
 
   effect(() => {
+    const styles = untrack(() => @stylesRef);
+    const currentAnimationName = getAnimationName(styles);
+    if(@state === 'mounted') {
+      untrack(() => {
+        @prevAnimationNameRef = currentAnimationName
+      });
+    }
+    else {
+      untrack(() => {
+        @prevAnimationNameRef = 'none';
+      });
+    }
+  });
 
-    return () => {
+  effect(() => {
+    if(@node) {
+      @stylesRef = getComputedStyle(@node)
+    }
+  })
 
+  effect(() => {
+    const styles = untrack(() => @stylesRef);
+    const wasPresent = untrack(() => @prevPresentRef);
+    const prevAnimationName = untrack(() => @prevAnimationNameRef);
+    const hasPresentChanged = wasPresent !== @present;
+    if(hasPresentChanged) {
+      const currentAnimationName = getAnimationName(styles);
+      const isDisplayNone = styles?.display === 'none';
+      if(@present) {
+        send("MOUNT")
+      }
+      else if(currentAnimationName === 'none' || isDisplayNone){
+        console.log("non animated..")
+        // If there is no exit animation or the element is hidden, animations won't run
+        // so we unmount instantly
+        send('UNMOUNT');
+      }
+      else {
+        console.log("animated..")
+        const isAnimating = prevAnimationName !== currentAnimationName;
+        if (wasPresent && isAnimating) {
+          send('ANIMATION_OUT');
+        } else {
+          send('UNMOUNT');
+        }
+      }
+      untrack(() => {
+        @prevPresentRef = @present
+      });
+    }
+  });
+
+  effect(() => {
+    if(@node) {
+      const styles = untrack(() => @stylesRef);
+      const handleAnimationEnd = (event: AnimationEvent) => {
+        const currentAnimationName = getAnimationName(styles);
+        // The event.animationName is unescaped for CSS syntax,
+        // so we need to escape it to compare with the animationName computed from the style.
+        const isCurrentAnimation = currentAnimationName.includes(CSS.escape(event.animationName));
+        if (event.target === @node && isCurrentAnimation) {
+          send('ANIMATION_END');
+        }
+      }
+
+      const handleAnimationStart = (event: AnimationEvent) => {
+        if (event.target === @node) {
+          untrack(() => {
+            // if animation occurred, store its name as the previous animation.
+            @prevAnimationNameRef = getAnimationName(styles)
+          });
+        }
+      }
+
+      @node.addEventListener('animationstart', handleAnimationStart);
+      @node.addEventListener('animationcancel', handleAnimationEnd);
+      @node.addEventListener('animationend', handleAnimationEnd);
+      return () => {
+        //ownerWindow.clearTimeout(timeoutId);
+        @node.removeEventListener('animationstart', handleAnimationStart);
+        @node.removeEventListener('animationcancel', handleAnimationEnd);
+        @node.removeEventListener('animationend', handleAnimationEnd);
+      };
+    }
+    else {
+      // Transition to the unmounted state if the node is removed prematurely.
+      // We avoid doing so during cleanup as the node may change but still exist.
+      send('ANIMATION_END');
     }
   })
 
   return {
-    isPresent: track(() => ['mounted', 'unmountSuspended'].includes(state))
+    isPresent,
+    ref: bindNode(node)
   }
+}
+
+const MACHINE = {
+    mounted: {
+      UNMOUNT: 'unmounted',
+      ANIMATION_OUT: 'unmountSuspended',
+    },
+    unmountSuspended: {
+      MOUNT: 'mounted',
+      ANIMATION_END: 'unmounted',
+    },
+    unmounted: {
+      MOUNT: 'mounted',
+    },
+  }
+
+function useStateMachine(state, machine){
+  const _state = track(state);
+
+  const send = (event) => {
+    const nextState = machine[@_state][event];
+    @_state = nextState ?? @state;
+  }
+
+  return { state: _state, send };
+}
+
+/* -----------------------------------------------------------------------------------------------*/
+
+function getAnimationName(styles: CSSStyleDeclaration | null) {
+  return styles?.animationName || 'none';
 }

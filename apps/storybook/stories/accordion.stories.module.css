@@ -73,10 +73,10 @@
 .animatedContent {
   overflow: hidden;
   &[data-state='open'] {
-    animation: accordion-slideDown 300ms ease-out;
+    animation: accordion-slideDown 300ms ease-in;
   }
   &[data-state='closed'] {
-    animation: accordion-slideUp 300ms ease-out;
+    animation: accordion-slideUp 300ms ease-in;
   }
 }
 

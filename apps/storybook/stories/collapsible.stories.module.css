@@ -92,6 +92,7 @@
 
 .animatedWidthContent {
   overflow: hidden;
+  border: 2px solid blue;
   &[data-state='open'] {
     animation: collapsible-openRight 300ms ease-out;
   }

@@ -1,0 +1,34 @@
+{
+  "name": "ripple-ui",
+  "version": "1.0.0",
+  "description": "A Ripple application created for ripple primitives",
+  "type": "module",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "start": "vite",
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "serve": "vite preview",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^9.39.0",
+    "eslint-plugin-ripple": "catalog:",
+    "prettier": "^3.6.2",
+    "prettier-plugin-ripple": "catalog:",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.12",
+    "vite-plugin-ripple": "catalog:",
+    "typescript-plugin-ripple": "catalog:",
+    "tailwindcss": "^4.1.16",
+    "@tailwindcss/vite": "^4.1.16"
+  },
+  "dependencies": {
+    "ripple": "catalog:"
+  }
+}

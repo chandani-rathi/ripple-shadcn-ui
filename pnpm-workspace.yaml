@@ -4,9 +4,10 @@
     "apps/*"
   ],
   "catalog": {
-    "eslint-plugin-ripple": "0.2.151",
-    "prettier-plugin-ripple": "0.2.151",
-    "ripple": "0.2.151",
-    "vite-plugin-ripple": "0.2.151"
+    "eslint-plugin-ripple": "0.2.152",
+    "prettier-plugin-ripple": "0.2.152",
+    "ripple": "0.2.152",
+    "vite-plugin-ripple": "0.2.152",
+    "typescript-plugin-ripple" : "0.2.152"
   }
 }

@@ -39,6 +39,7 @@
 		"shadcn": "^3.5.0",
 		"tailwindcss": "^4.1.16",
 		"typescript": "^5.9.3",
+		"typescript-plugin-ripple": "catalog:",
 		"vite": "^7.1.12",
 		"vite-plugin-ripple": "catalog:",
 		"vitest": "^4.0.6"

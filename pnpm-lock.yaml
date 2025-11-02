@@ -7,17 +7,20 @@ settings:
 catalogs:
   default:
     eslint-plugin-ripple:
-      specifier: 0.2.151
-      version: 0.2.151
+      specifier: 0.2.152
+      version: 0.2.152
     prettier-plugin-ripple:
-      specifier: 0.2.151
-      version: 0.2.151
+      specifier: 0.2.152
+      version: 0.2.152
     ripple:
-      specifier: 0.2.151
-      version: 0.2.151
+      specifier: 0.2.152
+      version: 0.2.152
+    typescript-plugin-ripple:
+      specifier: 0.2.152
+      version: 0.2.152
     vite-plugin-ripple:
-      specifier: 0.2.151
-      version: 0.2.151
+      specifier: 0.2.152
+      version: 0.2.152
 
 importers:
 
@@ -37,7 +40,7 @@ importers:
         version: 2.1.1
       ripple:
         specifier: 'catalog:'
-        version: 0.2.151
+        version: 0.2.152
       tailwind-merge:
         specifier: ^3.3.1
         version: 3.3.1
@@ -59,7 +62,7 @@ importers:
         version: 9.39.0(jiti@2.6.1)
       eslint-plugin-ripple:
         specifier: 'catalog:'
-        version: 0.2.151(eslint@9.39.0(jiti@2.6.1))
+        version: 0.2.152(eslint@9.39.0(jiti@2.6.1))
       jsdom:
         specifier: ^27.1.0
         version: 27.1.0(postcss@8.5.6)
@@ -71,7 +74,7 @@ importers:
         version: 3.6.2
       prettier-plugin-ripple:
         specifier: 'catalog:'
-        version: 0.2.151(prettier@3.6.2)(ripple@0.2.151)
+        version: 0.2.152(prettier@3.6.2)(ripple@0.2.152)
       shadcn:
         specifier: ^3.5.0
         version: 3.5.0(@types/node@24.7.2)(babel-plugin-macros@3.1.0)(typescript@5.9.3)
@@ -81,21 +84,61 @@ importers:
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
+      typescript-plugin-ripple:
+        specifier: 'catalog:'
+        version: 0.2.152(ripple@0.2.152)(typescript@5.9.3)
       vite:
         specifier: ^7.1.12
         version: 7.1.12(@types/node@24.7.2)(jiti@2.6.1)(lightningcss@1.30.2)(yaml@2.8.1)
       vite-plugin-ripple:
         specifier: 'catalog:'
-        version: 0.2.151
+        version: 0.2.152
       vitest:
         specifier: ^4.0.6
         version: 4.0.6(@types/node@24.7.2)(jiti@2.6.1)(jsdom@27.1.0(postcss@8.5.6))(lightningcss@1.30.2)(msw@2.11.5(@types/node@24.7.2)(typescript@5.9.3))(yaml@2.8.1)
+
+  apps/ripple-ui:
+    dependencies:
+      ripple:
+        specifier: 'catalog:'
+        version: 0.2.152
+    devDependencies:
+      '@tailwindcss/vite':
+        specifier: ^4.1.16
+        version: 4.1.16(vite@7.1.12(@types/node@24.7.2)(jiti@2.6.1)(lightningcss@1.30.2)(yaml@2.8.1))
+      eslint:
+        specifier: ^9.39.0
+        version: 9.39.0(jiti@2.6.1)
+      eslint-plugin-ripple:
+        specifier: 'catalog:'
+        version: 0.2.152(eslint@9.39.0(jiti@2.6.1))
+      prettier:
+        specifier: ^3.6.2
+        version: 3.6.2
+      prettier-plugin-ripple:
+        specifier: 'catalog:'
+        version: 0.2.152(prettier@3.6.2)(ripple@0.2.152)
+      tailwindcss:
+        specifier: ^4.1.16
+        version: 4.1.16
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      typescript-plugin-ripple:
+        specifier: 'catalog:'
+        version: 0.2.152(ripple@0.2.152)(typescript@5.9.3)
+      vite:
+        specifier: ^7.1.12
+        version: 7.1.12(@types/node@24.7.2)(jiti@2.6.1)(lightningcss@1.30.2)(yaml@2.8.1)
+      vite-plugin-ripple:
+        specifier: 'catalog:'
+        version: 0.2.152
 
   apps/storybook:
     dependencies:
       ripple:
         specifier: 'catalog:'
-        version: 0.2.151
+        version: 0.2.152
       ripple-primitives:
         specifier: workspace:*
         version: link:../../primitives/ripple/ripple-primitives
@@ -120,28 +163,28 @@ importers:
         version: 9.1.10(@testing-library/dom@10.4.1)(msw@2.11.5(@types/node@24.7.2)(typescript@5.9.3))(prettier@3.6.2)(vite@7.1.12(@types/node@24.7.2)(jiti@2.6.1)(lightningcss@1.30.2)(yaml@2.8.1))
       vite-plugin-ripple:
         specifier: 'catalog:'
-        version: 0.2.151
+        version: 0.2.152
 
   apps/storybook-framework-ripple:
     dependencies:
       ripple:
         specifier: 'catalog:'
-        version: 0.2.151
+        version: 0.2.152
       vite-plugin-ripple:
         specifier: 'catalog:'
-        version: 0.2.151
+        version: 0.2.152
 
   primitives/core/primitive:
     dependencies:
       ripple:
         specifier: 'catalog:'
-        version: 0.2.151
+        version: 0.2.152
 
   primitives/core/utils:
     dependencies:
       ripple:
         specifier: 'catalog:'
-        version: 0.2.151
+        version: 0.2.152
 
   primitives/ripple/accessible-icon:
     dependencies:
@@ -150,49 +193,49 @@ importers:
         version: link:../visually-hidden
       ripple:
         specifier: 'catalog:'
-        version: 0.2.151
+        version: 0.2.152
 
   primitives/ripple/accordion:
     dependencies:
       ripple:
         specifier: 'catalog:'
-        version: 0.2.151
+        version: 0.2.152
 
   primitives/ripple/arrow:
     dependencies:
       ripple:
         specifier: 'catalog:'
-        version: 0.2.151
+        version: 0.2.152
 
   primitives/ripple/aspect-ratio:
     dependencies:
       ripple:
         specifier: 'catalog:'
-        version: 0.2.151
+        version: 0.2.152
 
   primitives/ripple/collapsible:
     dependencies:
       ripple:
         specifier: 'catalog:'
-        version: 0.2.151
+        version: 0.2.152
 
   primitives/ripple/collection:
     dependencies:
       ripple:
         specifier: 'catalog:'
-        version: 0.2.151
+        version: 0.2.152
 
   primitives/ripple/direction:
     dependencies:
       ripple:
         specifier: 'catalog:'
-        version: 0.2.151
+        version: 0.2.152
 
   primitives/ripple/focus-scope:
     dependencies:
       ripple:
         specifier: 'catalog:'
-        version: 0.2.151
+        version: 0.2.152
 
   primitives/ripple/label:
     dependencies:
@@ -201,13 +244,13 @@ importers:
         version: link:../primitive
       ripple:
         specifier: 'catalog:'
-        version: 0.2.151
+        version: 0.2.152
 
   primitives/ripple/presence:
     dependencies:
       ripple:
         specifier: 'catalog:'
-        version: 0.2.151
+        version: 0.2.152
 
   primitives/ripple/primitive:
     dependencies:
@@ -216,13 +259,13 @@ importers:
         version: link:../../core/utils
       ripple:
         specifier: 'catalog:'
-        version: 0.2.151
+        version: 0.2.152
 
   primitives/ripple/progress:
     dependencies:
       ripple:
         specifier: 'catalog:'
-        version: 0.2.151
+        version: 0.2.152
 
   primitives/ripple/ripple-primitives:
     dependencies:
@@ -268,6 +311,9 @@ importers:
       '@ripple-primitives/separator':
         specifier: workspace:*
         version: link:../separator
+      '@ripple-primitives/switch':
+        specifier: workspace:*
+        version: link:../switch
       '@ripple-primitives/toggle':
         specifier: workspace:*
         version: link:../toggle
@@ -291,19 +337,25 @@ importers:
         version: link:../visually-hidden
       ripple:
         specifier: 'catalog:'
-        version: 0.2.151
+        version: 0.2.152
 
   primitives/ripple/roving-focus-group:
     dependencies:
       ripple:
         specifier: 'catalog:'
-        version: 0.2.151
+        version: 0.2.152
 
   primitives/ripple/separator:
     dependencies:
       ripple:
         specifier: 'catalog:'
-        version: 0.2.151
+        version: 0.2.152
+
+  primitives/ripple/switch:
+    dependencies:
+      ripple:
+        specifier: 'catalog:'
+        version: 0.2.152
 
   primitives/ripple/toggle:
     dependencies:
@@ -315,31 +367,31 @@ importers:
         version: link:../primitive
       ripple:
         specifier: 'catalog:'
-        version: 0.2.151
+        version: 0.2.152
 
   primitives/ripple/toggle-group:
     dependencies:
       ripple:
         specifier: 'catalog:'
-        version: 0.2.151
+        version: 0.2.152
 
   primitives/ripple/use-controllable-state:
     dependencies:
       ripple:
         specifier: 'catalog:'
-        version: 0.2.151
+        version: 0.2.152
 
   primitives/ripple/use-escape-keydown:
     dependencies:
       ripple:
         specifier: 'catalog:'
-        version: 0.2.151
+        version: 0.2.152
 
   primitives/ripple/use-size:
     dependencies:
       ripple:
         specifier: 'catalog:'
-        version: 0.2.151
+        version: 0.2.152
 
   primitives/ripple/visually-hidden:
     dependencies:
@@ -348,7 +400,7 @@ importers:
         version: link:../primitive
       ripple:
         specifier: 'catalog:'
-        version: 0.2.151
+        version: 0.2.152
 
 packages:
 
@@ -1266,6 +1318,15 @@ packages:
   '@vitest/utils@4.0.6':
     resolution: {integrity: sha512-bG43VS3iYKrMIZXBo+y8Pti0O7uNju3KvNn6DrQWhQQKcLavMB+0NZfO1/QBAEbq0MaQ3QjNsnnXlGQvsh0Z6A==}
 
+  '@volar/language-core@2.4.23':
+    resolution: {integrity: sha512-hEEd5ET/oSmBC6pi1j6NaNYRWoAiDhINbT8rmwtINugR39loROSlufGdYMF9TaKGfz+ViGs1Idi3mAhnuPcoGQ==}
+
+  '@volar/source-map@2.4.23':
+    resolution: {integrity: sha512-Z1Uc8IB57Lm6k7q6KIDu/p+JWtf3xsXJqAX/5r18hYOTpJyBn0KXUR8oTJ4WFYOcDzWC9n3IflGgHowx6U6z9Q==}
+
+  '@volar/typescript@2.4.23':
+    resolution: {integrity: sha512-lAB5zJghWxVPqfcStmAP1ZqQacMpe90UrP5RJ3arDyrhy4aCUQqmxPPLB2PWDKugvylmO41ljK7vZ+t6INMTag==}
+
   accepts@2.0.0:
     resolution: {integrity: sha512-5cvg6CtKwfgdmVqY1WIiXKc3Q1bkRqGLi+2W/6ao+6Y7gu/RCwRuAhGEzh5B4KlszSuTLgZYuqFqo5bImjNKng==}
     engines: {node: '>= 0.6'}
@@ -1696,13 +1757,13 @@ packages:
     resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
     engines: {node: '>=10'}
 
-  eslint-plugin-ripple@0.2.151:
-    resolution: {integrity: sha512-JeaYOrNTeYELs7UhBn1zfR1dJq5J0ct08TOtzMAnJgcJu9oagNqa4pY1BAY9wFTgJNCRS2jfEULG+t53YozTzQ==}
+  eslint-plugin-ripple@0.2.152:
+    resolution: {integrity: sha512-nMI5vjivLHy+SY1n9gHfuZ3TVzKlMT2BwsqDD9IrbH7+Nnb3Tnqxx1mO8UyFhPOSSvF4pQv+WSKvuxr1siXyyg==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
       '@typescript-eslint/parser': ^8.20.0
       eslint: '>=9.0.0'
-      eslint-parser-ripple: 0.2.151
+      eslint-parser-ripple: 0.2.152
     peerDependenciesMeta:
       '@typescript-eslint/parser':
         optional: true
@@ -2667,8 +2728,8 @@ packages:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
 
-  prettier-plugin-ripple@0.2.151:
-    resolution: {integrity: sha512-YJF6HzSyhTsq9tMLp8SuFBrWE0jGHIAJGhqyF3LYQSZR/ax7gUDKhL2Hx9Ln6KyF9S9ncoQnYGjo+DP+M+1N0Q==}
+  prettier-plugin-ripple@0.2.152:
+    resolution: {integrity: sha512-snb1j64I/U7vNoMK5Tr44Pj79cu0+Fa3B9GheCTLkf2AUov7nWAyBU5rNYA+9WsIycTsP4Pp7ZQAmVMuiRY0yQ==}
     peerDependencies:
       prettier: '>=2.0.0'
       ripple: '*'
@@ -2768,8 +2829,8 @@ packages:
     resolution: {integrity: sha512-g6QUff04oZpHs0eG5p83rFLhHeV00ug/Yf9nZM6fLeUrPguBTkTQOdpAWWspMh55TZfVQDPaN3NQJfbVRAxdIw==}
     engines: {iojs: '>=1.0.0', node: '>=0.10.0'}
 
-  ripple@0.2.151:
-    resolution: {integrity: sha512-Xe9sxirvZMIbW5z7W6g72RvqMkHAiyKnH90oYaWi/6piHdfrBcdhe8KQ0QHWIHV4a9lRvR5QzknjHyhXBEwflg==}
+  ripple@0.2.152:
+    resolution: {integrity: sha512-cbH3q3jB5rnGEafWkHnTNod23HkZEa6FmX66EAKE5voJT7c3/PVIrV5MA7dcgpZJtC828y0hasdKGfMHB1MdLg==}
 
   rollup@4.52.4:
     resolution: {integrity: sha512-CLEVl+MnPAiKh5pl4dEWSyMTpuflgNQiLGhMv8ezD5W/qP8AKvmYpCOKRRNOh7oRKnauBZ4SyeYkMS+1VSyKwQ==}
@@ -3056,6 +3117,12 @@ packages:
     resolution: {integrity: sha512-OZs6gsjF4vMp32qrCbiVSkrFmXtG/AZhY3t0iAMrMBiAZyV9oALtXO8hsrHbMXF9x6L3grlFuwW2oAz7cav+Gw==}
     engines: {node: '>= 0.6'}
 
+  typescript-plugin-ripple@0.2.152:
+    resolution: {integrity: sha512-H0qybSZlsWOib6KN1FWYUSdXBYjFD+jTWb3td6Q74h1nO08Y5g4HUgHoXcCN8dIUU1zzVvqcpO1omZ+AimqF3g==}
+    peerDependencies:
+      ripple: 0.2.152
+      typescript: ^5.9.2
+
   typescript@5.9.3:
     resolution: {integrity: sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==}
     engines: {node: '>=14.17'}
@@ -3112,8 +3179,8 @@ packages:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
 
-  vite-plugin-ripple@0.2.151:
-    resolution: {integrity: sha512-SQTNMWxGLlWKyUAOxLWkpz66kjURD3uWENUReo17AI4O1C5k5mfPRZcCqw7mnnCut/B3IgGHlDgHWbOEHa6C4Q==}
+  vite-plugin-ripple@0.2.152:
+    resolution: {integrity: sha512-VVwuYe3XJm4oDhRtkIvTKNORGum9I8bNDpBFrCrJ/aNmcUkSOKW32VYOExDfciU6Ls9lx9VlZVQuHUnwFGWsDw==}
 
   vite@7.1.12:
     resolution: {integrity: sha512-ZWyE8YXEXqJrrSLvYgrRP7p62OziLW7xI5HYGWFzOvupfAlrLvURSzv/FyGyy0eidogEM3ujU+kUG1zuHgb6Ug==}
@@ -3193,6 +3260,9 @@ packages:
         optional: true
       jsdom:
         optional: true
+
+  vscode-uri@3.1.0:
+    resolution: {integrity: sha512-/BpdSx+yCQGnCvecbyXdxHDkuk55/G3xwnC0GqY4gmQ3j+A+g8kzzgB4Nk/SINjqn6+waqw3EgbVF2QKExkRxQ==}
 
   w3c-xmlserializer@5.0.0:
     resolution: {integrity: sha512-o8qghlI8NZHU1lLPrpi2+Uq7abh4GGPpYANlalzWxyWteJOCsr/P+oPBA49TOLu5FTZO4d3F9MnWJfiMo4BkmA==}
@@ -4204,6 +4274,18 @@ snapshots:
       '@vitest/pretty-format': 4.0.6
       tinyrainbow: 3.0.3
 
+  '@volar/language-core@2.4.23':
+    dependencies:
+      '@volar/source-map': 2.4.23
+
+  '@volar/source-map@2.4.23': {}
+
+  '@volar/typescript@2.4.23':
+    dependencies:
+      '@volar/language-core': 2.4.23
+      path-browserify: 1.0.1
+      vscode-uri: 3.1.0
+
   accepts@2.0.0:
     dependencies:
       mime-types: 3.0.1
@@ -4601,7 +4683,7 @@ snapshots:
 
   escape-string-regexp@4.0.0: {}
 
-  eslint-plugin-ripple@0.2.151(eslint@9.39.0(jiti@2.6.1)):
+  eslint-plugin-ripple@0.2.152(eslint@9.39.0(jiti@2.6.1)):
     dependencies:
       eslint: 9.39.0(jiti@2.6.1)
 
@@ -5587,10 +5669,10 @@ snapshots:
 
   prelude-ls@1.2.1: {}
 
-  prettier-plugin-ripple@0.2.151(prettier@3.6.2)(ripple@0.2.151):
+  prettier-plugin-ripple@0.2.152(prettier@3.6.2)(ripple@0.2.152):
     dependencies:
       prettier: 3.6.2
-      ripple: 0.2.151
+      ripple: 0.2.152
 
   prettier@3.6.2: {}
 
@@ -5687,7 +5769,7 @@ snapshots:
 
   reusify@1.1.0: {}
 
-  ripple@0.2.151:
+  ripple@0.2.152:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.5
       '@sveltejs/acorn-typescript': 1.0.6(acorn@8.15.0)
@@ -6040,6 +6122,13 @@ snapshots:
       media-typer: 1.1.0
       mime-types: 3.0.1
 
+  typescript-plugin-ripple@0.2.152(ripple@0.2.152)(typescript@5.9.3):
+    dependencies:
+      '@volar/language-core': 2.4.23
+      '@volar/typescript': 2.4.23
+      ripple: 0.2.152
+      typescript: 5.9.3
+
   typescript@5.9.3: {}
 
   uglify-js@3.19.3:
@@ -6080,7 +6169,7 @@ snapshots:
 
   vary@1.1.2: {}
 
-  vite-plugin-ripple@0.2.151: {}
+  vite-plugin-ripple@0.2.152: {}
 
   vite@7.1.12(@types/node@24.7.2)(jiti@2.6.1)(lightningcss@1.30.2)(yaml@2.8.1):
     dependencies:
@@ -6145,6 +6234,8 @@ snapshots:
       - terser
       - tsx
       - yaml
+
+  vscode-uri@3.1.0: {}
 
   w3c-xmlserializer@5.0.0:
     dependencies:

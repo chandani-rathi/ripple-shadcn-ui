@@ -81,6 +81,9 @@
             ],
             "@ripple-primitives/switch": [
                 "primitives/ripple/switch/src"
+            ],
+            "@ripple-primitives/ripple-live": [
+                "primitives/core/ripple-live/src"
             ]
         }
     }

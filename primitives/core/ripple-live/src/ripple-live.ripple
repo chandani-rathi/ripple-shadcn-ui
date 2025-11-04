@@ -1,0 +1,50 @@
+import { trackProps, UseControllableState } from "ripple-primitives";
+import { Context, track, effect } from "ripple";
+import { generateElement } from "./utils/transpile"
+
+const NAME = 'RippleLive';
+
+export const LiveContext = new Context({});
+
+export component LiveProvider(props){
+  const { code, onChange, scopes } = trackProps(props);
+  const Component = track(undefined);
+  effect(() => {
+    console.log("code effect", @code);
+    const codeString = @code;
+    const Component = generateElement(codeString, scopes);
+    console.log(Component)
+  })
+  LiveContext.set({ code, onChange, scopes, Component });
+  <props.@children />
+}
+
+export component LiveEditor(props) {
+  const { code: codeProp, defaultCode, onChange } = LiveContext.get();
+  const { ...editorProps } = trackProps(props);
+  const code = UseControllableState({
+    prop: codeProp,
+    defaultProp: defaultCode ?? '',
+    onChange: onChange,
+    caller: NAME
+  });
+  <textarea
+      editableContent
+			{...editorProps}
+			value={@code}
+			onChange={({ target }) => @code = target.value}
+		/>
+}
+
+export component LivePreview(props) {
+  const { Component } = LiveContext.get();
+  <div>
+    try {
+        if (@Component) {
+            <@Component />
+        }
+    } catch (e) {
+          <div>{e?.toString()}</div>
+    }
+  </div>
+}

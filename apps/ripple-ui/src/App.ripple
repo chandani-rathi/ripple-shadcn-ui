@@ -1,60 +1,73 @@
-import { track } from 'ripple';
+import { track, bindValue, effect, bindNode } from 'ripple';
+import { compile, parse } from 'ripple/compiler';
+import * as rippleClient from 'ripple/internal/client';
+import { Toggle as TogglePrimitive} from 'ripple-primitives';
+import {  LiveProvider, LiveEditor, LivePreview } from "ripple-live";
+
+// const evalCode = (code: string, scope: Record<string, unknown>) => {
+// 	const scopeKeys = Object.keys(scope);
+// 	const scopeValues = scopeKeys.map((key) => scope[key]);
+// 	console.log(scopeValues, 'scopeValues');
+// 	code = code.replace('import * as _$_ from \'ripple/internal/client\';\n', '');
+// 	console.log('code', code);
+// 	return new Function(...scopeKeys, code)(...scopeValues);
+// };
+
+component Toggle({ children, ...props }) {
+	<TogglePrimitive
+		class="flex size-[35px] items-center justify-center rounded bg-white leading-4 text-mauve11 shadow-[0_2px_10px] shadow-blackA4 hover:bg-violet3 focus:shadow-[0_0_0_2px] focus:shadow-black data-[state=on]:bg-violet-500 data-[state=on]:text-violet-300"
+		{...props}
+	>
+		if (@children) {
+			<@children />
+		}
+	</TogglePrimitive>
+}
+
+// effect(() => {
+// 		@Component = null;
+// 		console.log('code', @code);
+// 		try {
+// 			const result = compile(
+// 				`
+//         component __APP(props) {
+//           ${@code}
+//         }
+        
+//         `,
+// 				'file.ripple',
+// 				{ mode: 'client' },
+// 			);
+// 			console.log(result);
+// 			const componentFn = evalCode(
+// 				`
+//       ${result.js.code} 
+      
+//       return __APP;
+//         `,
+// 				{
+// 					_$_: rippleClient,
+// 					Toggle: Toggle,
+// 				},
+// 			);
+// 			console.log(componentFn);
+// 			setTimeout(() => {
+// 				@Component = componentFn;
+// 			});
+// 		} catch (e) {
+// 			console.error(e);
+// 		}
+// 	});
 
 export component App() {
-	<div class='container'>
-		<h1>{'Welcome to Ripple!'}</h1>
-		<div class='counter'>
-			let count = track(0);
-
-			<button onClick={() => @count--}>{'-'}</button>
-			<span class='count'>{@count}</span>
-			<button onClick={() => @count++}>{'+'}</button>
-		</div>
-		<div>
-			<p>{'This is a basic Ripple application template.'}</p>
-			<p>
-				{'Edit '}
-				<code>{'src/App.ripple'}</code>
-				{' to get started.'}
-			</p>
-		</div>
+	const code = track('<Toggle>{"i"}</Toggle>');
+	
+	<div class="h-screen">
+    <LiveProvider {code} scope={{ Toggle }}>
+      <div class="grid grid-cols-2 gap-4 border-2">
+        <LiveEditor />
+        <LivePreview />
+      </div>
+    </LiveProvider>
 	</div>
-
-  <style>
-    .container {
-      text-align: center;
-      font-family: "Arial", sans-serif;
-    }
-
-    p {
-      margin: 12px 0;
-      font-family: "Arial", sans-serif;
-    }
-
-    code {
-      background: #f4f4f4;
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-family: "Courier New", monospace;
-      color: #333;
-    }
-
-    button {
-      font-size: 1.5em;
-      padding: 6px 12px;
-      margin: 0 6px;
-      cursor: pointer;
-      border: none;
-      font-family: "Courier New", monospace;
-    }
-
-    button:hover {
-      background-color: #e0e0e0;
-    }
-
-    .count {
-      margin: 0 12px;
-      font-size: 1.5em;
-    }
-  </style>
 }

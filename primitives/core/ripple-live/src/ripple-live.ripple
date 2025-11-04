@@ -7,15 +7,15 @@ const NAME = 'RippleLive';
 export const LiveContext = new Context({});
 
 export component LiveProvider(props){
-  const { code, onChange, scopes } = trackProps(props);
+  const { code, onChange, scope } = trackProps(props);
   const Component = track(undefined);
   effect(() => {
     console.log("code effect", @code);
     const codeString = @code;
-    const Component = generateElement(codeString, scopes);
-    console.log(Component)
+    @Component = generateElement({@code, @scope});
+    console.log(@Component)
   })
-  LiveContext.set({ code, onChange, scopes, Component });
+  LiveContext.set({ code, onChange, scope, Component });
   <props.@children />
 }
 

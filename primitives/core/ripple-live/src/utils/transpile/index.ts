@@ -15,22 +15,25 @@ const addDeclareComponent = (code: string) => (`
         ${code}
 }`);
 const log = (code:string) => {console.log(code); return code}
-const wrapReturn = (code: string) => `${code}; return (${defaultComponent};)`;
+const wrapReturn = (code: string) => `${code}; return (${defaultComponent});`;
 const trimCode = (code: string) => code.trim().replace(/;$/, "");
+const replaceImports = code => code.replace('import * as _$_ from \'ripple/internal/client\';\n', '');
 
 
 export const generateElement = (
     { code = "", scope = {} }: GenerateOptions,
 ) => {
     console.log("start generateElement", code)
-    const transformed = compose<string>(
-        log,
-        addDeclareComponent,
-        log,
-        transform(),
-        wrapReturn,
-        trimCode
-    )(code);
-    console.log("end generateElement")
+    // const transformed = compose<string>(
+    //     log,
+    //     addDeclareComponent,
+    //     log,
+    //     transform(),
+    //     wrapReturn,
+    //     replaceImports,
+    //     trimCode
+    // )(code);
+    const transformed = replaceImports(wrapReturn(log(transform()(log(addDeclareComponent(code))))))
+    console.log("end generateElement", transformed)
     return evalCode(transformed, { "_$_": rippleClient, ...scope });
 }

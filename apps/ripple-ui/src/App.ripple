@@ -1,28 +1,8 @@
 import { track, bindValue, effect, bindNode } from 'ripple';
 import { compile, parse } from 'ripple/compiler';
 import * as rippleClient from 'ripple/internal/client';
-import { Toggle as TogglePrimitive, Primitive} from 'ripple-primitives';
+import { Primitive} from 'ripple-primitives';
 import {  LiveProvider, LiveEditor, LivePreview } from "ripple-live";
-
-// const evalCode = (code: string, scope: Record<string, unknown>) => {
-// 	const scopeKeys = Object.keys(scope);
-// 	const scopeValues = scopeKeys.map((key) => scope[key]);
-// 	console.log(scopeValues, 'scopeValues');
-// 	code = code.replace('import * as _$_ from \'ripple/internal/client\';\n', '');
-// 	console.log('code', code);
-// 	return new Function(...scopeKeys, code)(...scopeValues);
-// };
-
-component Toggle({ children, ...props }) {
-	<TogglePrimitive
-		class="flex size-[35px] items-center justify-center rounded bg-white leading-4 text-mauve11 shadow-[0_2px_10px] shadow-blackA4 hover:bg-violet3 focus:shadow-[0_0_0_2px] focus:shadow-black data-[state=on]:bg-violet-500 data-[state=on]:text-violet-300"
-		{...props}
-	>
-		if (@children) {
-			<@children />
-		}
-	</TogglePrimitive>
-}
 
 export component App() {
 	const code = track(`
@@ -31,12 +11,17 @@ export component App() {
 </Primitive.h3>
 	`);
 	
-	<div class="h-screen p-4">
-		<LiveProvider {code} scope={{ Toggle, Primitive }}>
-		<div class="grid grid-cols-1 gap-4">
-			<LiveEditor class="font-mono *:overflow-auto" />
-			<LivePreview />
+	<div class="h-screen p-4 flex">
+		<div class="flex-1 grid grid-cols-3 gap-2">
+			<div class="grid-cols-1 border-r bg-black text-white rounded-lg">
+				<textarea class="w-full h-full rounded-lg p-2 text-lg resize-none" placeholder="your detailed component prompt for generating screens... " />
+			</div>
+			<LiveProvider {code} scope={{ Primitive }} disabled>
+				<div class="col-span-2 grid grid-cols-1 gap-4">
+					<LivePreview class="h-full" />
+					<LiveEditor class="font-mono  *:rounded-lg *:p-2 *:overflow-auto *:h-full" />
+				</div>
+			</LiveProvider>
 		</div>
-		</LiveProvider>
 	</div>
 }

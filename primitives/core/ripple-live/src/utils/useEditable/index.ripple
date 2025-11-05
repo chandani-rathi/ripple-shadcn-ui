@@ -178,7 +178,6 @@ const useEditable = (
     onChange: (text: string, position: Position) => void,
     opts?: Options = {}
 ): Edit => {
-
     if (!opts) opts = {};
 
     const state: State = #{
@@ -274,6 +273,7 @@ const useEditable = (
 
     effect(() => {
       const element = @elementRef;
+      console.log("connected");
       if (!element || opts.disabled) {
         state.history.length = 0;
         state.historyAt = -1;
@@ -478,6 +478,7 @@ const useEditable = (
         element.removeEventListener('keyup', onKeyUp);
         element.style.whiteSpace = prevWhiteSpace;
         element.contentEditable = prevContentEditable;
+        console.log("connected");
       }
     });
 

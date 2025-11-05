@@ -7,12 +7,13 @@ export component CodeEditor(props){
     const { code, disabled, options = {}, ...editorProps } = trackProps(props);
     const editorRef = track("");
     const editorContent = track("");
-
     const edit = useEditable(editorRef, (text: string) => {
             const t = text.slice(0, -1);
             untrack(() => {
                 @code = t;
             })
+    }, {
+        @disabled
     });
 
     

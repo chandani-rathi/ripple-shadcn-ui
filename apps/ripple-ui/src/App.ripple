@@ -1,7 +1,7 @@
 import { track, bindValue, effect, bindNode } from 'ripple';
 import { compile, parse } from 'ripple/compiler';
 import * as rippleClient from 'ripple/internal/client';
-import { Toggle as TogglePrimitive} from 'ripple-primitives';
+import { Toggle as TogglePrimitive, Primitive} from 'ripple-primitives';
 import {  LiveProvider, LiveEditor, LivePreview } from "ripple-live";
 
 // const evalCode = (code: string, scope: Record<string, unknown>) => {
@@ -24,50 +24,19 @@ component Toggle({ children, ...props }) {
 	</TogglePrimitive>
 }
 
-// effect(() => {
-// 		@Component = null;
-// 		console.log('code', @code);
-// 		try {
-// 			const result = compile(
-// 				`
-//         component __APP(props) {
-//           ${@code}
-//         }
-        
-//         `,
-// 				'file.ripple',
-// 				{ mode: 'client' },
-// 			);
-// 			console.log(result);
-// 			const componentFn = evalCode(
-// 				`
-//       ${result.js.code} 
-      
-//       return __APP;
-//         `,
-// 				{
-// 					_$_: rippleClient,
-// 					Toggle: Toggle,
-// 				},
-// 			);
-// 			console.log(componentFn);
-// 			setTimeout(() => {
-// 				@Component = componentFn;
-// 			});
-// 		} catch (e) {
-// 			console.error(e);
-// 		}
-// 	});
-
 export component App() {
-	const code = track('<Toggle>{"i"}</Toggle>');
+	const code = track(`
+<Primitive.h3 class="text-xl font-semibold text-white bg-blue-800 rounded-lg p-1">
+  {"Hello World! 👋"}
+</Primitive.h3>
+	`);
 	
-	<div class="h-screen">
-    <LiveProvider {code} scope={{ Toggle }}>
-      <div class="grid grid-cols-2 gap-4 border-2">
-        <LiveEditor />
-        <LivePreview />
-      </div>
-    </LiveProvider>
+	<div class="h-screen p-4">
+		<LiveProvider {code} scope={{ Toggle, Primitive }}>
+		<div class="grid grid-cols-1 gap-4">
+			<LiveEditor class="font-mono *:overflow-auto" />
+			<LivePreview />
+		</div>
+		</LiveProvider>
 	</div>
 }

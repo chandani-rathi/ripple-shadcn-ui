@@ -23,17 +23,15 @@ const replaceImports = code => code.replace('import * as _$_ from \'ripple/inter
 export const generateElement = (
     { code = "", scope = {} }: GenerateOptions,
 ) => {
-    console.log("start generateElement", code)
-    // const transformed = compose<string>(
-    //     log,
-    //     addDeclareComponent,
-    //     log,
-    //     transform(),
-    //     wrapReturn,
-    //     replaceImports,
-    //     trimCode
-    // )(code);
-    const transformed = replaceImports(wrapReturn(log(transform()(log(addDeclareComponent(code))))))
-    console.log("end generateElement", transformed)
+    //bottom to top execution using compose
+    const transformed = compose<string>(
+        log,
+        replaceImports,
+        wrapReturn,
+        transform(),
+        addDeclareComponent,
+        trimCode,
+        log
+    )(code);
     return evalCode(transformed, { "_$_": rippleClient, ...scope });
 }

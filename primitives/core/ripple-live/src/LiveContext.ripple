@@ -1,0 +1,20 @@
+import type { Component } from "ripple";
+import { Context } from "ripple";
+
+
+
+type ContextValue = {
+  error?: string;
+  element?: Component | null;
+  code: string;
+  newCode?: string;
+  disabled: boolean;
+  theme?//: typeof themes.nightOwl;
+  onError(error: Error): string;
+  onChange(value: string): void;
+};
+
+
+const LiveContext = new Context<ContextValue>({});
+
+export default LiveContext;

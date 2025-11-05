@@ -1,5 +1,5 @@
 /**
- * Creates a new composite function that invokes the functions from right to left
+ * Creates a new composite function that invokes the functions from right to left or //bottom to top
  */
 
 export default function compose<T>(...functions: ((...args: T[]) => T)[]) {

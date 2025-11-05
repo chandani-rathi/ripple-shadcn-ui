@@ -1,0 +1,20 @@
+import { trackProps, UseControllableState } from "ripple-primitives";
+import LiveContext from "./LiveContext.ripple";
+import { CodeEditor } from "./editor/Editor.ripple";
+
+export component LiveEditor(props) {
+  const { 
+    ...editorProps
+  } = trackProps(props);
+  const { code: codeProp, disabled, defaultCode, onChange } = LiveContext.get();
+  const code = UseControllableState({
+    prop: codeProp,
+    defaultProp: defaultCode ?? '',
+    onChange: onChange,
+    caller: "LiveEditor"
+  });
+
+
+ <CodeEditor {code} {...editorProps} {disabled} />
+}
+LiveEditor.displayName = "LiveEditor";

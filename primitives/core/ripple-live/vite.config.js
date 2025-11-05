@@ -32,7 +32,7 @@ export default defineConfig({
 				globals: {},
 				exports: 'named',
 			},
-			external: ['ripple', 'ripple/internal/client', ...workspaceDeps],
+			external: ['ripple', 'ripple/internal/client', 'ripple/compiler', ...workspaceDeps],
 			plugins: [],
 		},
 	},

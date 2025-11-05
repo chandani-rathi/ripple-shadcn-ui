@@ -1,0 +1,29 @@
+import { track, effect, bindNode, untrack } from "ripple";
+import { Primitive, trackProps } from "ripple-primitives";
+import { highlightCode } from "./highlighter";
+import useEditable from "../utils/useEditable/index.ripple";
+
+export component CodeEditor(props){
+    const { code, disabled, options = {}, ...editorProps } = trackProps(props);
+    const editorRef = track("");
+    const editorContent = track("");
+
+    const edit = useEditable(editorRef, (text: string) => {
+            const t = text.slice(0, -1);
+            untrack(() => {
+                @code = t;
+            })
+    });
+
+    
+
+    effect(() => {
+        highlightCode(@code.trim(), @options).then((html) => {
+            @editorContent = html;
+        });
+    });
+
+    <Primitive.div {ref untrack(() => bindNode(editorRef))} {...editorProps} contenteditable={!@disabled}>
+        {html @editorContent}
+    </Primitive.div>
+}

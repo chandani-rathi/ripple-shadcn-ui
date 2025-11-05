@@ -1,0 +1,37 @@
+import { Primitive, trackProps } from "ripple-primitives";
+import LiveContext from "./LiveContext.ripple";
+
+component Preview(){
+  const { Component, onError } = LiveContext.get();
+  try {
+    if (@Component) {
+      <@Component />
+    }
+  } catch (e) {
+      const error = onError ? e?.toString(): onError(e);
+      if(error) {
+        <div>{error}</div>
+      }
+  }
+}
+
+export component LivePreview(props) {
+  const { 
+    children: Children,
+    ...rest
+  } = trackProps(props);
+  
+  <Primitive.div {...rest}>
+    component children(props) {
+      if(rest.@asChild) {
+        <@Children {...props}>
+          <Preview />
+        </@Children>
+      }
+      else {
+        <Preview />
+      }
+    }
+  </Primitive.div>
+}
+LivePreview.displayName = "LivePreview";

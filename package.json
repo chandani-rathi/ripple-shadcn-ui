@@ -30,7 +30,7 @@
 	"devDependencies": {
 		"@tailwindcss/vite": "^4.1.16",
 		"@testing-library/jest-dom": "^6.9.1",
-		"eslint": "^9.39.0",
+		"eslint": "^9.39.1",
 		"eslint-plugin-ripple": "catalog:",
 		"jsdom": "^27.1.0",
 		"plop": "^4.0.4",
@@ -40,8 +40,8 @@
 		"tailwindcss": "^4.1.16",
 		"typescript": "^5.9.3",
 		"typescript-plugin-ripple": "catalog:",
-		"vite": "^7.1.12",
+		"vite": "^7.2.0",
 		"vite-plugin-ripple": "catalog:",
-		"vitest": "^4.0.6"
+		"vitest": "^4.0.7"
 	}
 }

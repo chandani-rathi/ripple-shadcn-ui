@@ -12,9 +12,9 @@
   },
   "devDependencies": {
     "@radix-ui/colors": "^3.0.0",
-    "@storybook/builder-vite": "^10.0.2",
+    "@storybook/builder-vite": "^10.0.5",
     "@storybook/ripple": "workspace:*",
-    "eslint-plugin-storybook": "10.0.2",
+    "eslint-plugin-storybook": "10.0.5",
     "lit": "3.3.1",
     "storybook": "9.1.10",
     "vite-plugin-ripple": "catalog:"

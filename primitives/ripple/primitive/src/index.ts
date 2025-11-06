@@ -1,4 +1,5 @@
 export * from "./primitive.ripple";
+export * from "./trackProps"
 
 export function composeEventHandlers<E extends Event & { isPropagationStopped?: () => boolean }>(
   originalEventHandler?: (event: E ) => void,

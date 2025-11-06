@@ -1,7 +1,7 @@
 import { Primitive, trackProps } from "@ripple-primitives/primitive-ui";
 import { Toggle } from "@ripple-primitives/toggle";
 import { useDirection } from "@ripple-primitives/direction"
-import { UseControllableState, ControllableState } from '@ripple-primitives/use-controllable-state';
+import { UseControllableState } from '@ripple-primitives/use-controllable-state';
 import { track, effect, Context } from "ripple";
 import { RovingFocusGroup, RovingFocusGroupItem, RovingFocusContext } from "@ripple-primitives/roving-focus-group";
 

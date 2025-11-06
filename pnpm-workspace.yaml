@@ -6,7 +6,7 @@
   "catalog": {
     "eslint-plugin-ripple": "0.2.152",
     "prettier-plugin-ripple": "0.2.152",
-    "ripple": "0.2.156",
+    "ripple": "0.2.158",
     "vite-plugin-ripple": "0.2.152",
     "typescript-plugin-ripple": "0.2.152"
   }

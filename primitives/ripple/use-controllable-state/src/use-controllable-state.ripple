@@ -7,7 +7,7 @@ function useUncontrolledState({
 {
   const value = track(() => @defaultProp, undefined,
     (next, prev) => {
-      @onChange(next);
+      onChange(next);
       return next;
     });
   return value;

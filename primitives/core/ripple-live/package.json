@@ -24,7 +24,7 @@
   "packageManager": "pnpm@10.20.0",
   "devDependencies": {
     "@ripple-ts/vscode-plugin": "^0.0.46",
-    "shiki": "^3.14.0",
+    "shiki": "^3.15.0",
     "vite-plugin-node-polyfills": "^0.24.0"
   }
 }

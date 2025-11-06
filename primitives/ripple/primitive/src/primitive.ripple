@@ -1,4 +1,4 @@
-import { track, effect } from "ripple"
+import { track, effect, trackSplit } from "ripple"
 import type { PropsWithChildren } from "ripple";
 import { normalizeStyleObject } from "@ripple-primitives/utils";
 import type { Tracked } from "ripple";
@@ -102,18 +102,18 @@ type PrimitiveProps<T extends object = {}> = PropsWithChildren<{ asChild?: boole
 export const Primitive = NODES.reduce(
     (primitive, node) => {
         component Node(props : PrimitiveProps){
-            const {children, asChild, style, ...nodeProps} = trackProps(props);
+            const { children, asChild, style, ...nodeProps } = trackProps(props);
             let tag = track(node);
             if(@asChild) {
-                <@children style={normalizeStyleObject(@style)} {...nodeProps} />
+                <@children style={normalizeStyleObject(@style)} {...@nodeProps} />
             }
             else if(@children){
-                <@tag style={normalizeStyleObject(@style)} {...nodeProps}>
+                <@tag style={normalizeStyleObject(@style)} {...@nodeProps}>
                     <@children />    
                 </@tag> 
             }
             else {
-                <@tag style={normalizeStyleObject(@style)} {...nodeProps} />
+                <@tag style={normalizeStyleObject(@style)} {...@nodeProps} />
             }
         }
         return {
@@ -157,11 +157,16 @@ export function trackProps(v: Record<string|symbol, any>) {
             
 			let t = undefined;
 			const prop = Object.getOwnPropertyDescriptor(v, key);
-			if (prop) {
+            if (prop && typeof prop.get === "undefined" && typeof prop.set == "undefined") {
+                return prop.value
+            }
+
+            if(prop){
                 t = track(undefined);
 				t = Object.defineProperty(t, '__v', prop);
                 t.isTrackedProxy = !prop.set;
-			}
+            }
+            
 			return t;
 		}
 	});

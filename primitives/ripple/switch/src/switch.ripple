@@ -26,7 +26,7 @@ export component Switch(props){
     defaultProp: defaultChecked ?? false,
     onChange: onCheckedChange,
     caller: SWITCH_NAME,
-  })
+  });
 
   const button = track<HTMLElement>(null);
   // We set this to true by default so that events bubble to forms without JS (SSR)
@@ -37,6 +37,7 @@ export component Switch(props){
   
   <Primitive.button
     {ref bindNode(button)}
+    {...switchProps}
     type="button"
     role="switch"
     aria-checked={@checked}
@@ -45,12 +46,10 @@ export component Switch(props){
     data-disabled={@disabled ? '' : undefined}
     disabled={@disabled}
     value={@value}
-    {...switchProps}
     onClick={composeEventHandlers(props.onClick, (event) => {
             @checked = !@checked;
             if (@isFormControl) {
               @hasConsumerStoppedPropagationRef = event.isPropagationStopped();
-              console.log("isStopped", @hasConsumerStoppedPropagationRef)
               // if switch is in a form, stop propagation from the button so that we only propagate
               // one click event (from the input). We propagate changes from an input so that native
               // form validation works and form events reflect switch updates.
